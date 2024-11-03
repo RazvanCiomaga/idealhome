@@ -38,7 +38,6 @@ return [
     'imobmanager' => [
         'url' => env('IMOBMANAGER_URL'),
         'id' => env('IMOBMANAGER_ID'),
-        'key' => env('IMOBMANAGER_KEY'),
     ],
 
 ];
