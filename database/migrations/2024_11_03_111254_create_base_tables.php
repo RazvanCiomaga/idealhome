@@ -43,7 +43,7 @@ return new class extends Migration
             $table->string('county')->nullable();
             $table->integer('rooms')->nullable();
             $table->integer('bathrooms')->nullable();
-            $table->integer('floor')->nullable();
+            $table->string('floor')->nullable();
             $table->string('max_floor')->nullable();
             $table->string('floor_formatted')->nullable();
             $table->integer('area')->nullable();
@@ -59,7 +59,7 @@ return new class extends Migration
             $table->string('energy_class')->nullable();
             $table->string('general')->nullable();
             $table->boolean('exclusive')->default(false)->nullable();
-            $table->boolean('comission')->default(false)->nullable();
+            $table->bigInteger('comission')->default(false)->nullable();
             $table->string('thumb')->nullable();
             $table->string('featured_image')->nullable();
             $table->json('images')->nullable();

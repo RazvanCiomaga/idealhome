@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Estate
@@ -35,7 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $energy_class
  * @property string|null $general
  * @property bool|null $exclusive
- * @property bool|null $comission
+ * @property int|null $comission
  * @property string|null $thumb
  * @property string|null $featured_image
  * @property array|null $images
@@ -53,5 +54,11 @@ class Estate extends Model
         'images' => 'array',
         'sale_price' => MoneyCast::class,
         'rent_price' => MoneyCast::class,
+        'comission' => MoneyCast::class,
     ];
+
+    public function agent(): BelongsTo
+    {
+        return $this->belongsTo(Agent::class, 'agent_id', 'id');
+    }
 }
