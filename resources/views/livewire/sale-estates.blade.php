@@ -34,30 +34,30 @@
 
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="form-group">
-                                        <select class="form-control" id="cities">
-                                            <option>All Cities</option>
-                                            <option>Riga</option>
-                                            <option>Melbourne</option>
-                                            <option>Vienna</option>
-                                            <option>Vancouver</option>
-                                            <option>Toronto</option>
-                                            <option>Calgary</option>
-                                            <option>Adelaide</option>
-                                            <option>Perth</option>
-                                            <option>Auckland</option>
-                                            <option>Helsinki</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-4 col-lg-3">
-                                    <div class="form-group">
                                         <select class="form-control" wire:model="roomEntrance">
                                             <option value="">Select Room Entrance</option>
                                             @foreach($filters['roomEntrances'] as $key => $value)
                                                 <option value="{{ $key }}">{{ $value }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        <select class="form-control" wire:model="zone">
+                                            <option value="">Zone</option>
+                                            @foreach($filters['zones'] as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" name="input" placeholder="Year" wire:model="year">
                                     </div>
                                 </div>
 
@@ -276,7 +276,7 @@
                             </div>
                             <!-- Property Content -->
                             <div class="property-content">
-                                <h5>{{ $estate->title ?? '' }}</h5>
+                                <h5>{{ $estate->room_entrances . ' - ' . $estate->construction_year }}</h5>
                                 <p class="location"><img src="img/icons/location.png" alt="">{{ $estate->zone }}</p>
                                 <p>{{ substr($estate->description, 0, 100) . '...' }}</p>
                                 <div class="property-meta-data d-flex align-items-end justify-content-between">

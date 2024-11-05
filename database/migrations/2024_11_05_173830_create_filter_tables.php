@@ -17,12 +17,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('cities', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->nullable();
-            $table->timestamps();
-        });
-
         Schema::create('zones', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
@@ -32,12 +26,6 @@ return new class extends Migration
         Schema::create('room_entrances', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->timestamps();
-        });
-
-        Schema::create('years', function (Blueprint $table) {
-            $table->id();
-            $table->year('name')->nullable();
             $table->timestamps();
         });
     }

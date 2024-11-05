@@ -146,13 +146,6 @@ class SyncEstates extends Command
                 ]
             );
 
-            if ($estateData['city']) {
-                $city = City::query()->where('name', $estateData['city'])->first();
-                if (!$city) {
-                    City::query()->create(['name' => $estateData['city']]);
-                }
-            }
-
             if ($estateData['zone']) {
                 $zone = Zone::query()->where('name', $estateData['zone'])->first();
                 if (!$zone) {
@@ -171,13 +164,6 @@ class SyncEstates extends Command
                 $roomEntrance = RoomEntrance::query()->where('name', $estateData['room_entrances'])->first();
                 if (!$roomEntrance) {
                     RoomEntrance::query()->create(['name' => $estateData['room_entrances']]);
-                }
-            }
-
-            if ($estateData['construction_year']) {
-                $year = Year::query()->where('name', $estateData['construction_year'])->first();
-                if (!$year) {
-                    Year::query()->create(['name' => $estateData['construction_year']]);
                 }
             }
         }
