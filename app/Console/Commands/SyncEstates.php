@@ -3,6 +3,11 @@
 namespace App\Console\Commands;
 
 use App\Models\Agent;
+use App\Models\City;
+use App\Models\County;
+use App\Models\RoomEntrance;
+use App\Models\Year;
+use App\Models\Zone;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use App\Models\Estate;
@@ -140,6 +145,41 @@ class SyncEstates extends Command
                     'agent_id' => $agent?->id ?? null,
                 ]
             );
+
+            if ($estateData['city']) {
+                $city = City::query()->where('name', $estateData['city'])->first();
+                if (!$city) {
+                    City::query()->create(['name' => $estateData['city']]);
+                }
+            }
+
+            if ($estateData['zone']) {
+                $zone = Zone::query()->where('name', $estateData['zone'])->first();
+                if (!$zone) {
+                    Zone::query()->create(['name' => $estateData['zone']]);
+                }
+            }
+
+            if ($estateData['county']) {
+                $county = County::query()->where('name', $estateData['county'])->first();
+                if (!$county) {
+                    County::query()->create(['name' => $estateData['county']]);
+                }
+            }
+
+            if ($estateData['room_entrances']) {
+                $roomEntrance = RoomEntrance::query()->where('name', $estateData['room_entrances'])->first();
+                if (!$roomEntrance) {
+                    RoomEntrance::query()->create(['name' => $estateData['room_entrances']]);
+                }
+            }
+
+            if ($estateData['construction_year']) {
+                $year = Year::query()->where('name', $estateData['construction_year'])->first();
+                if (!$year) {
+                    Year::query()->create(['name' => $estateData['construction_year']]);
+                }
+            }
         }
     }
 }

@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Town
+ * Class City
  *
  * @property string|null $name
  */
-class Town extends Model
+class City extends Model
 {
     use HasFactory;
 
