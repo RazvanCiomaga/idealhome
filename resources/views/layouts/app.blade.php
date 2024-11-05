@@ -150,12 +150,10 @@
 <!-- ##### Header Area End ##### -->
 
 <main>
-    {{ $slot }}
+    <div class="content">
+        @yield('content')
+    </div>
 </main>
-
-<div class="content">
-    @yield('content')
-</div>
 
 <!-- ##### Footer Area Start ##### -->
 <footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(img/bg-img/cta.jpg);">
@@ -274,8 +272,8 @@
 <!-- Active js -->
 <script src="js/active.js"></script>
 <!-- Google Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuyLRa1uKNtbgx6xAJVmWy-zADgegA2s"></script>
-<script src="js/map-active.js"></script>
+{{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuyLRa1uKNtbgx6xAJVmWy-zADgegA2s"></script>--}}
+{{--<script src="js/map-active.js"></script>--}}
 
 @livewireScripts
 

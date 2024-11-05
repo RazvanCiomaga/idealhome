@@ -23,7 +23,7 @@
                             <p>Search for your home</p>
                         </div>
                         <!-- Search Form -->
-                        <form action="#" method="post" id="advanceSearch">
+                        <form id="advanceSearch">
                             <div class="row">
 
                                 <div class="col-12 col-md-4 col-lg-3">
@@ -52,16 +52,15 @@
 
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="form-group">
-                                        <select class="form-control" id="catagories">
-                                            <option>All Catagories</option>
-                                            <option>Apartment</option>
-                                            <option>Bar</option>
-                                            <option>Farm</option>
-                                            <option>House</option>
-                                            <option>Store</option>
+                                        <select class="form-control" wire:model="roomEntrance">
+                                            <option value="">Select Room Entrance</option>
+                                            @foreach($filters['roomEntrances'] as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
+
 
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="form-group">
@@ -226,7 +225,7 @@
                                     </div>
                                     <!-- Submit -->
                                     <div class="form-group mb-0">
-                                        <button type="submit" class="btn south-btn">Search</button>
+                                        <button type="button" class="btn south-btn" wire:click="applyFilters">Search</button>
                                     </div>
                                 </div>
                             </div>
@@ -269,7 +268,7 @@
                                 <img src="{{ $estate->featured_image }}" alt="{{ $estate->title . 'featured image' }}" style="height: 250px; width: 100%">
 
                                 <div class="tag">
-                                    <span>For Sale</span>
+                                    <span>For Sale </span>
                                 </div>
                                 <div class="list-price">
                                     <p>€{{ number_format($estate->sale_price, 2, ',', '.') }}</p>
@@ -309,33 +308,27 @@
                         <nav aria-label="Page navigation">
                             <ul class="pagination">
                                 {{-- Previous Page Link --}}
-                                @if ($estates->onFirstPage())
-                                    <li class="page-item disabled mx-2">
-                                        <span class="page-link">&#60;</span> <!-- Left arrow -->
-                                    </li>
-                                @else
-                                    <li class="page-item mx-2">
-                                        <a class="page-link" href="{{ $estates->previousPageUrl() }}" rel="prev">&#60;</a> <!-- Left arrow -->
-                                    </li>
-                                @endif
+                                <li class="page-item {{ $estates->onFirstPage() ? 'disabled' : '' }} mx-2">
+                                    <button class="page-link" wire:click="previousPage" wire:loading.attr="disabled">
+                                        &#60; <!-- Left arrow -->
+                                    </button>
+                                </li>
 
                                 {{-- Pagination Elements --}}
                                 @foreach ($estates->getUrlRange(1, $estates->lastPage()) as $page => $url)
                                     <li class="page-item {{ $page == $estates->currentPage() ? 'active' : '' }} mx-1">
-                                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                        <button class="page-link" wire:click="gotoPage({{ $page }})" wire:loading.attr="disabled">
+                                            {{ $page }}
+                                        </button>
                                     </li>
                                 @endforeach
 
                                 {{-- Next Page Link --}}
-                                @if ($estates->hasMorePages())
-                                    <li class="page-item mx-2">
-                                        <a class="page-link" href="{{ $estates->nextPageUrl() }}" rel="next">&#62;</a> <!-- Right arrow -->
-                                    </li>
-                                @else
-                                    <li class="page-item disabled mx-2">
-                                        <span class="page-link">&#62;</span> <!-- Right arrow -->
-                                    </li>
-                                @endif
+                                <li class="page-item {{ $estates->hasMorePages() ? '' : 'disabled' }} mx-2">
+                                    <button class="page-link" wire:click="nextPage" wire:loading.attr="disabled">
+                                        &#62; <!-- Right arrow -->
+                                    </button>
+                                </li>
                             </ul>
                         </nav>
                     </div>
