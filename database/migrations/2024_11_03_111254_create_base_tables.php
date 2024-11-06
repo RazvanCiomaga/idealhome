@@ -65,6 +65,7 @@ return new class extends Migration
             $table->json('images')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
+            $table->dateTime('published_date')->nullable();
             $table->timestamps();
         });
 

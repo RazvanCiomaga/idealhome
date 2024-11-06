@@ -33,7 +33,7 @@ class SyncEstates extends Command
      */
     public function handle(): int
     {
-        $this->info('Fetching estates from the external API...');
+        $this->info('Fetching estates from ImobManager...');
 
         try {
             $imobManagerAgencyId = config('services.imobmanager.id');
@@ -143,6 +143,7 @@ class SyncEstates extends Command
                     'longitude' => $estateData['longitude'] ?? null,
                     'agency_id' => $agency?->id ?? null,
                     'agent_id' => $agent?->id ?? null,
+                    'published_date' => $estateData['publish_date'] ?? null,
                 ]
             );
 

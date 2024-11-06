@@ -50,6 +50,7 @@ class SaleEstates extends Component
                     $query->where('construction_year', '>=', 1977);
                 }
             })
+            ->orderBy('published_date', 'desc')
             ->paginate(12);
     }
 
