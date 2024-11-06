@@ -11,7 +11,7 @@
 ################################################## */
 /* ##### Index of Stylesheet #####
 
-:: 1.0 Import Fonts 
+:: 1.0 Import Fonts
 :: 2.0 Import All CSS
 :: 3.0 Base CSS
 :: 4.0 Preloader Area CSS
@@ -30,7 +30,7 @@
 :: 17.0 About Us Area CSS
 :: 18.0 Team Member Area CSS
 :: 19.0 Listings Area CSS
-:: 20.0 Blog Area CSS 
+:: 20.0 Blog Area CSS
 :: 21.0 Contact Area CSS
 :: 22.0 Shortcode Area CSS
 
@@ -860,8 +860,9 @@ img {
       -webkit-transition-duration: 500ms;
       transition-duration: 500ms; }
   .single-featured-property .property-content {
-    padding: 30px;
-    border: 1px solid #e1dddd; }
+    padding: 25px;
+    border: 1px solid #e1dddd;
+    height: 20rem; }
     .single-featured-property .property-content h5 {
       font-size: 18px; }
     .single-featured-property .property-content p {
@@ -1790,4 +1791,18 @@ img {
   margin-bottom: 0;
   color: #7d7d7d; }
 
+.filter-input {
+    background-color: #ffffff;
+    border: 1px solid #aaa;
+    border-radius: 0.2rem;
+    box-sizing: border-box;
+    color: #747474;
+    display: block;
+    font-size: 1rem;
+    height: 1.78rem;
+    line-height: 1.5;
+    outline: 0;
+    padding: 0.5rem 1rem;
+    width: 100%;
+}
 /*# sourceMappingURL=style.css.map */

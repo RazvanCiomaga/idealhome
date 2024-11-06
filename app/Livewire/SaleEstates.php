@@ -2,12 +2,9 @@
 
 namespace App\Livewire;
 
-use App\Models\City;
 use App\Models\Estate;
 use App\Models\RoomEntrance;
-use App\Models\Year;
 use App\Models\Zone;
-use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,9 +12,11 @@ class SaleEstates extends Component
 {
     use WithPagination;
 
-    public string $roomEntrance = '';
+    public string $defaultSelect = 'none';
 
-    public string $zone = '';
+    public string $roomEntrance = 'none';
+
+    public string $zone = 'none';
 
     public $year = '';
 
@@ -25,9 +24,14 @@ class SaleEstates extends Component
     {
         return view('livewire.sale-estates', [
             'estates' => $this->getEstates(),
+            'defaultSelect' => $this->defaultSelect,
             'filters' => [
                 'roomEntrances' => RoomEntrance::query()->orderBy('name')->get()->pluck('name', 'name')->toArray(),
                 'zones' => Zone::query()->orderBy('name')->get()->pluck('name', 'name')->toArray(),
+                'construction_year' => [
+                    'before' => 'Before 1977',
+                    'after' => 'After 1977',
+                ]
             ],
         ]);
     }
@@ -37,9 +41,15 @@ class SaleEstates extends Component
         return Estate::query()
             ->where('sale_price', '>', 0)
             ->where('rent_price', '=', 0)
-            ->when($this->roomEntrance, fn($query) => $query->where('room_entrances', '=', $this->roomEntrance))
-            ->when($this->zone, fn($query) => $query->where('zone', '=', $this->zone))
-            ->when($this->year, fn($query) => $query->where('construction_year', '=', $this->year))
+            ->when($this->roomEntrance !== $this->defaultSelect, fn($query) => $query->where('room_entrances', '=', $this->roomEntrance))
+            ->when($this->zone !== $this->defaultSelect, fn($query) => $query->where('zone', '=', $this->zone))
+            ->when($this->year, function ($query) {
+                if ($this->year === 'before') {
+                    $query->where('construction_year', '<', 1977);
+                } elseif ($this->year === 'after') {
+                    $query->where('construction_year', '>=', 1977);
+                }
+            })
             ->paginate(12);
     }
 
