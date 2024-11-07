@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Casts\MoneyCast;
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -43,6 +44,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property float|null $latitude
  * @property float|null $longitude
  * @property int|null $agency_id
+ * @property DateTime|null $published_date
+ * @property string|null $slug
  */
 class Estate extends Model
 {
