@@ -20,6 +20,12 @@ class SaleEstates extends Component
 
     public $year = '';
 
+    public $floor = 'none';
+
+    public $title = 'Vanzari';
+
+    public $type = 'sale';
+
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
         return view('livewire.sale-estates', [
@@ -31,7 +37,21 @@ class SaleEstates extends Component
                 'construction_year' => [
                     'before' => 'Before 1977',
                     'after' => 'After 1977',
-                ]
+                ],
+                'floors' => [
+                    'Parter' => 'Parter',
+                    1 => 1,
+                    2 => 2,
+                    3 => 3,
+                    4 => 4,
+                    5 => 5,
+                    6 => 6,
+                    7 => 7,
+                    8 => 8,
+                    9 => 9,
+                    10 => 10,
+                ],
+
             ],
         ]);
     }
@@ -39,8 +59,15 @@ class SaleEstates extends Component
     public function getEstates(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         return Estate::query()
-            ->where('sale_price', '>', 0)
-            ->where('rent_price', '=', 0)
+            ->when($this->type, function ($query) {
+                if ($this->type === 'sale') {
+                    $query->where('sale_price', '>', 0)
+                        ->where('rent_price', '=', 0);
+                } elseif ($this->type === 'rent') {
+                    $query->where('sale_price', '=', 0)
+                        ->where('rent_price', '>', 0);
+                }
+            })
             ->when($this->roomEntrance !== $this->defaultSelect, fn($query) => $query->where('room_entrances', '=', $this->roomEntrance))
             ->when($this->zone !== $this->defaultSelect, fn($query) => $query->where('zone', '=', $this->zone))
             ->when($this->year, function ($query) {
@@ -50,6 +77,7 @@ class SaleEstates extends Component
                     $query->where('construction_year', '>=', 1977);
                 }
             })
+            ->when($this->floor !== $this->defaultSelect, fn($query) => $query->where('floor', '=', $this->floor))
             ->orderBy('published_date', 'desc')
             ->paginate(12);
     }

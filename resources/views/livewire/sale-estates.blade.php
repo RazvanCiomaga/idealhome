@@ -4,7 +4,7 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcumb-content">
-                        <h3 class="breadcumb-title">Listings</h3>
+                        <h3 class="breadcumb-title">{{ $this->title }}</h3>
                     </div>
                 </div>
             </div>
@@ -24,13 +24,6 @@
                         </div>
                         <!-- Search Form -->
                             <div class="row">
-
-                                <div class="col-12 col-md-4 col-lg-3">
-                                    <div class="form-group">
-                                        <input type="input" class="form-control" name="input" placeholder="Keyword">
-                                    </div>
-                                </div>
-
                                 <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                     <div class="form-group">
                                         <select id="select-room-entrance" class="form-control" wire:model="roomEntrance" >
@@ -56,6 +49,17 @@
 
                                 <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                     <div class="form-group">
+                                        <select id="floors" class="form-control" wire:model="floor">
+                                            <option value="{{ $defaultSelect }}">Floor</option>
+                                            @foreach($filters['floors'] as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-3" wire:ignore>
+                                    <div class="form-group">
                                         <select id="year" class="form-control" wire:model="year">
                                             <option value="{{ $defaultSelect }}">Construction year</option>
                                             @foreach($filters['construction_year'] as $key => $value)
@@ -69,7 +73,7 @@
                                 <div class="col-12 d-flex justify-content-between align-items-end">
                                     <!-- More Filter -->
                                     <div class="more-filter">
-                                        <a href="#" id="moreFilter">+ More filters</a>
+                                        <a href="#" id="moreFilter"></a>
                                     </div>
                                     <!-- Submit -->
                                     <div class="form-group mb-0">
@@ -115,10 +119,10 @@
                                 <img src="{{ $estate->featured_image }}" alt="{{ $estate->title . 'featured image' }}" style="height: 250px; width: 100%">
 
                                 <div class="tag">
-                                    <span>For Sale </span>
+                                    <span>{{ $this->type === 'rent' ? 'For Rent' : 'For Sale' }} </span>
                                 </div>
                                 <div class="list-price">
-                                    <p>€{{ number_format($estate->sale_price, 2, ',', '.') }}</p>
+                                    <p>€{{ $this->type === 'sale' ?  number_format($estate->sale_price, 2) : number_format($estate->rent_price, 2) }}</p>
                                 </div>
                             </div>
                             <!-- Property Content -->
@@ -192,11 +196,13 @@
             const selectRoomEntranceInput = $('#select-room-entrance').select2();
             const zonesInput = $('#zones').select2();
             const yearInput = $('#year').select2();
+            const floorsInput = $('#floors').select2();
 
             // Local variables to store selected values
             let selectedRoomEntrance = 'none';
             let selectedZones = 'none';
             let selectedYear = 'none';
+            let selectedFloor = 'none';
 
             // Update local variables on selection change (no Livewire re-render here)
             selectRoomEntranceInput.on('change', function () {
@@ -211,6 +217,10 @@
                 selectedYear = $(this).val(); // Store selected year locally
             });
 
+            floorsInput.on('change', function () {
+                selectedFloor = $(this).val(); // Store selected floor locally
+            });
+
             document.querySelector('.btn.south-btn').addEventListener('click', function () {
                 // Set Livewire properties right before calling applyFilters()
 
@@ -219,6 +229,8 @@
                 @this.set('zone', selectedZones);
 
                 @this.set('year', selectedYear);
+
+                @this.set('floor', selectedFloor);
 
                 @this.call('applyFilters');
             });
