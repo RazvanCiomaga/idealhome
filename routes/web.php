@@ -12,3 +12,7 @@ Route::get('/proprietati-vanzare', function () {
 Route::get('/proprietati-inchiriere', function () {
     return view('pages.rent-estates');
 })->name('rent-listings');
+
+Route::get('/{slug}', function ($slug) {
+    return view('pages.estate', compact('slug'));
+})->name('estate.show');

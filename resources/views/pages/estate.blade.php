@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <livewire:rent-estates />
+    <livewire:estate :slug="$slug" />
 @endsection

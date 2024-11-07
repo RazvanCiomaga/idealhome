@@ -127,7 +127,9 @@
                             </div>
                             <!-- Property Content -->
                             <div class="property-content">
-                                <h5>{{ $estate->title . ' - ' . $estate->construction_year . ' - ' . $estate->room_entrances }}</h5>
+                                <a href="{{ route('estate.show', ['slug' => $estate->slug]) }}">
+                                    <h5>{{ $estate->title . ' - ' . $estate->construction_year . ' - ' . $estate->room_entrances }}</h5>
+                                </a>
                                 <p class="location"><img src="img/icons/location.png" alt="">{{ $estate->zone }}</p>
                                 <p>{{ substr($estate->description, 0, 100) . '...' }}</p>
                                 <div class="property-meta-data d-flex align-items-end justify-content-between">
