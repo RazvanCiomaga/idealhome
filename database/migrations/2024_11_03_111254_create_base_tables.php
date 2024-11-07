@@ -66,6 +66,7 @@ return new class extends Migration
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
             $table->dateTime('published_date')->nullable();
+            $table->text('slug')->nullable();
             $table->timestamps();
         });
 
