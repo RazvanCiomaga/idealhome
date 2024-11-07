@@ -8,3 +8,7 @@ Route::get('/', function () {
 Route::get('/proprietati-vanzare', function () {
     return view('pages.sale-estates');
 })->name('sales-listings');
+
+Route::get('/proprietati-inchiriere', function () {
+    return view('pages.rent-estates');
+})->name('rent-listings');
