@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Agent;
+use App\Models\User;
 use App\Models\Estate as EstateModel;
 use Livewire\Component;
 
@@ -10,7 +10,7 @@ class Estate extends Component
 {
     public string $slug;
     public EstateModel|null $estate;
-    public Agent|null $agent;
+    public User|null $agent;
 
     public function mount($slug): void
     {

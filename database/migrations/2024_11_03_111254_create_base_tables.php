@@ -69,19 +69,6 @@ return new class extends Migration
             $table->text('slug')->nullable();
             $table->timestamps();
         });
-
-        // Agents table
-        Schema::create('agents', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('imobmanager_id')->unique()->nullable();
-            $table->string('name')->nullable();
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('position')->nullable();
-            $table->text('description')->nullable();
-            $table->string('picture')->nullable();
-            $table->timestamps();
-        });
     }
 
     /**
@@ -92,7 +79,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('agencies');
-        Schema::dropIfExists('agents');
         Schema::dropIfExists('estates');
     }
 };

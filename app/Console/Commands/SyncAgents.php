@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Agent;
+use App\Models\User;
 use App\Services\ImobManager as ImobManagerService;
 use Illuminate\Console\Command;
 
@@ -73,7 +73,7 @@ class SyncAgents extends Command
     protected function createOrUpdateAgents(array $agents): void
     {
         foreach ($agents['data'] ?? [] as $agentData) {
-            Agent::query()->updateOrCreate(
+            User::query()->updateOrCreate(
                 ['imobmanager_id' => $agentData['id']], // Identify agents by their unique external ID
                 [
                     'name' => $agentData['name'] ?? null,
@@ -83,6 +83,7 @@ class SyncAgents extends Command
                     'agency_id' => $agentData['agency_id'] ?? null,
                     'description' => $agentData['description'] ?? null,
                     'picture' => $agentData['picture'] ?? null,
+                    'password' => env('FILAMENT_BASE_PASSWORD'),
                 ]
             );
         }

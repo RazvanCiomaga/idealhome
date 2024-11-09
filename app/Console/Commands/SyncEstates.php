@@ -2,11 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Agent;
-use App\Models\City;
 use App\Models\County;
 use App\Models\RoomEntrance;
-use App\Models\Year;
+use App\Models\User;
 use App\Models\Zone;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -101,8 +99,8 @@ class SyncEstates extends Command
             $salePrice = $estateData['sale_price'] ?? null;
             $rentPrice = $estateData['rent_price'] ?? null;
 
-            /** @var Agent $agent */
-            $agent = Agent::query()->where('imobmanager_id', $estateData['agent']['id'])->first();
+            /** @var User $agent */
+            $agent = User::query()->where('imobmanager_id', $estateData['agent']['id'])->first();
 
             /** @var Agency $agency */
             $agency = Agency::query()->where('imobmanager_id', $estateData['agency_id'])->first();
