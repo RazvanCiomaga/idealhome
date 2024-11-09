@@ -122,7 +122,7 @@
                                     <span>{{ $this->type === 'rent' ? 'For Rent' : 'For Sale' }} </span>
                                 </div>
                                 <div class="list-price">
-                                    <p>€{{ $this->type === 'sale' ?  number_format($estate->sale_price, 2) : number_format($estate->rent_price, 2) }}</p>
+                                    <p>€{{ $this->type === 'sale' ?  number_format($estate->sale_price, 2, ',', '.') : number_format($estate->rent_price, 2, ',', '.') }}</p>
                                 </div>
                             </div>
                             <!-- Property Content -->

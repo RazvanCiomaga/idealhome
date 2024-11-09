@@ -29,7 +29,7 @@
                     <div class="listings-content">
                         <!-- Price -->
                         <div class="list-price">
-                            <p>€{{ $this->estate->sale_price > 0 ? number_format($this->estate->sale_price, 2) : number_format($this->estate->rent_price, 2)  }}</p>
+                            <p>€{{ $this->estate->sale_price > 0 ? number_format($this->estate->sale_price, 2, ',', '.') : number_format($this->estate->rent_price, 2, ',', '.')  }}</p>
                         </div>
                         <h5>{{ $this->estate->title }}</h5>
                         <p class="location"><img src="img/icons/location.png" alt="">{{ $this->estate->zone }}</p>
