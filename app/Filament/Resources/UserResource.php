@@ -44,6 +44,13 @@ class UserResource extends Resource
                         Forms\Components\Textarea::make('description')
                             ->label('Descriere')
                             ->columnSpanFull(),
+                        Forms\Components\Select::make('roles')
+                            ->label('Roluri')
+                            ->multiple()
+                            ->relationship('roles', 'name')
+                            ->columnSpanFull()
+                            ->searchable()
+                            ->preload(),
                     ])->columns(),
             ]);
     }
@@ -68,6 +75,8 @@ class UserResource extends Resource
                     ->label('Grad')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->label('Roluri'),
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descriere')
                     ->searchable()
@@ -111,6 +120,25 @@ class UserResource extends Resource
     public static function getPluralModelLabel(): string
     {
         return 'Agenti';
+    }
+
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        /** @var User|null $user */
+        $user = auth()->user();
+
+        if ($user && $user->hasRole('super_admin')) {
+            return $query;
+        }
+
+        if ($user && $user->hasRole('agent')) {
+            return $query->where('id', $user->id);
+        }
+
+        return $query;
     }
 
     public static function getNavigationBadge(): ?string

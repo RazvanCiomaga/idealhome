@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\EstateResource\Pages;
 use App\Filament\Resources\EstateResource\RelationManagers;
 use App\Models\Estate;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -230,6 +231,24 @@ class EstateResource extends Resource
     public static function getPluralModelLabel(): string
     {
         return 'Proprietati';
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        /** @var User|null $user */
+        $user = auth()->user();
+
+        if ($user && $user->hasRole('super_admin')) {
+            return $query;
+        }
+
+        if ($user && $user->hasRole('agent')) {
+            return $query->where('agent_id', $user->id);
+        }
+
+        return $query;
     }
 
     public static function getNavigationBadge(): ?string
