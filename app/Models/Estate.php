@@ -57,11 +57,17 @@ class Estate extends Model
         'images' => 'array',
         'sale_price' => MoneyCast::class,
         'rent_price' => MoneyCast::class,
+        'rent_price_sqm' => MoneyCast::class,
         'comission' => MoneyCast::class,
     ];
 
     public function agent(): BelongsTo
     {
         return $this->belongsTo(User::class, 'agent_id', 'id');
+    }
+
+    public function properties(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Property::class, 'estate_property');
     }
 }

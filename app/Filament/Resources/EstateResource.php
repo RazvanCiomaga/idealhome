@@ -47,6 +47,15 @@ class EstateResource extends Resource
                         ])
                         ->columns(2)
                         ->columnSpan(3),
+                    Forms\Components\Section::make('Caracteristici')
+                        ->schema([
+                            Forms\Components\Select::make('properties')
+                                ->label('Caracteristici')
+                                ->multiple()
+                                ->relationship('properties', 'name')
+                                ->preload()
+                                ->searchable(),
+                        ]),
                     Forms\Components\Section::make('Preturi')
                         ->schema([
                             Forms\Components\TextInput::make('sale_price')
@@ -57,8 +66,7 @@ class EstateResource extends Resource
                                         $money($input, ',', '.', 2)
                                         JS
                                 ))
-                                ->label('Pret vanzare')
-                                ->numeric(),
+                                ->label('Pret vanzare'),
                             Forms\Components\TextInput::make('rent_price')
                                 ->label('Pret inchiriere')
                                 ->prefix('€')
@@ -222,5 +230,10 @@ class EstateResource extends Resource
     public static function getPluralModelLabel(): string
     {
         return 'Proprietati';
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getEloquentQuery()->count();
     }
 }
