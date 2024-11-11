@@ -27,6 +27,9 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->text('description')->nullable();
             $table->string('logo')->nullable();
+            $table->string('weekly_hours')->nullable();
+            $table->string('saturday_hours')->nullable();
+            $table->string('sunday_hours')->nullable();
             $table->timestamps();
         });
 

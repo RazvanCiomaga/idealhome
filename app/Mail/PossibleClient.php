@@ -35,7 +35,8 @@ class PossibleClient extends Mailable
 
     public function build(): PossibleClient
     {
-        return $this->from($this->data['email'])
+        return $this->from(config('mail.from.address'), config('mail.from.name'))
+            ->replyTo($this->data['email'])
             ->subject($this->data['subject'])
             ->view('emails.possible-client')
             ->with('data', $this->data);

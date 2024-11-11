@@ -45,6 +45,15 @@ class AgencyResource extends Resource
                         Forms\Components\Textarea::make('description')
                             ->label('Descriere')
                             ->columnSpanFull(),
+                        Forms\Components\TextInput::make('weekly_hours')
+                            ->label('Ore de lucru')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('saturday_hours')
+                            ->label('Ore de lucru Sambata')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('sunday_hours')
+                            ->label('Ore de lucru Duminică')
+                            ->maxLength(255),
                     ]),
             ]);
     }

@@ -39,6 +39,10 @@ class PossibleClientResource extends Resource
                             ->label('Nr. telefon')
                             ->readOnly()
                             ->maxLength(255),
+                        Forms\Components\Textarea::make('message')
+                            ->label('Mesaj')
+                            ->rows(5)
+                            ->readOnly(),
                     ]),
             ]);
     }

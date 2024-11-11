@@ -72,13 +72,13 @@
                     </div>
 
                     <!-- Nav Start -->
-                    <div class="classynav">
+                    <div class="classynav row">
                         <ul>
                             <li><a href="index.html">Home</a></li>
                             <li><a href="{{ route('sales-listings') }}">Vanzari</a></li>
                             <li><a href="{{ route('rent-listings') }}">Inchirieri</a></li>
                             <li><a href="contact.html">Echipa</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="{{ route('contact') }}">Contact</a></li>
                         </ul>
                     </div>
                     <!-- Nav End -->

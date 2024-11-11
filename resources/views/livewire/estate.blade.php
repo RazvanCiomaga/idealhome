@@ -75,10 +75,10 @@
                                     <input type="text" class="form-control" id="realtor-name" placeholder="Nume" wire:model="clientName">
                                 </div>
                                 <div class="form-group">
-                                    <input type="number" class="form-control" id="realtor-number" placeholder="Nr. telefon" wire:model="clientPhone">
+                                    <input type="tel" class="form-control" id="realtor-number" placeholder="Nr. telefon" wire:model="clientPhone">
                                 </div>
                                 <div class="form-group">
-                                    <input type="enumber" class="form-control" id="realtor-email" placeholder="Email" wire:model="clientEmail">
+                                    <input type="email" class="form-control" id="realtor-email" placeholder="Email" wire:model="clientEmail">
                                 </div>
                                 <div class="form-group">
                                     <textarea name="message" class="form-control" id="realtor-message" cols="30" rows="10" placeholder="Mesaj..." wire:model="clientMessage"></textarea>

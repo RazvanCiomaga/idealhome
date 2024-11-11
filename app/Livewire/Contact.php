@@ -3,51 +3,45 @@
 namespace App\Livewire;
 
 use App\Mail\PossibleClient as PossibleClientMail;
+use App\Models\Agency;
 use App\Models\PossibleClient;
-use App\Models\User;
-use App\Models\Estate as EstateModel;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
-class Estate extends Component
+class Contact extends Component
 {
-    public string $slug;
-    public EstateModel|null $estate;
-    public User|null $agent;
-
     public string $clientName = '';
     public string $clientEmail = '';
     public string $clientPhone = '';
     public string $clientMessage = '';
 
-    public function mount($slug): void
+    public Agency|null $agency;
+
+    public function mount(): void
     {
-        $this->slug = $slug;
-        $this->estate = EstateModel::query()->where('slug', $this->slug)->first();
-        $this->agent = $this->estate?->agent;
+        $this->agency = Agency::query()->first();
     }
+
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
-        return view('livewire.estate');
+        return view('livewire.contact');
     }
 
     public function sendMessage(): void
     {
-        if (empty($this->clientEmail)) {
+        if (!$this->agency?->email) {
             return;
         }
 
         try {
             // Send the email
-            Mail::to($this->agent->email)->send(new PossibleClientMail([
+            Mail::to($this->agency->email)->send(new PossibleClientMail([
                 'name' => $this->clientName,
                 'email' => $this->clientEmail,
                 'phone' => $this->clientPhone,
                 'message' => $this->clientMessage,
-                'subject' => $this->estate->title,
+                'subject' => 'Posibil Client',
             ]));
-
-            $possibleClient = PossibleClient::query()->where('email', $this->clientEmail)->first();
 
             $possibleClient = PossibleClient::query()->where('email', $this->clientEmail)->first() ?? new PossibleClient();
 
@@ -56,8 +50,6 @@ class Estate extends Component
             $possibleClient->phone = $this->clientPhone;
             $possibleClient->message = $this->clientMessage;
             $possibleClient->save();
-
-            $possibleClient->estates()->syncWithoutDetaching([$this->estate->id]);
 
             $this->clientName = '';
             $this->clientEmail = '';

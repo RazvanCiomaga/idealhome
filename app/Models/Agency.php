@@ -19,6 +19,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $phone
  * @property string|null $description
  * @property string|null $logo
+ * @property string|null $weekly_hours
+ * @property string|null $saturday_hours
+ * @property string|null $sunday_hours
  */
 class Agency extends Model
 {

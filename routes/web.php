@@ -13,6 +13,10 @@ Route::get('/proprietati-inchiriere', function () {
     return view('pages.rent-estates');
 })->name('rent-listings');
 
+Route::get('/contact', function () {
+    return view('pages.contact');
+})->name('contact');
+
 Route::get('/{slug}', function ($slug) {
     return view('pages.estate', compact('slug'));
 })->name('estate.show');
