@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PossibleClientResource\Pages;
 use App\Filament\Resources\PossibleClientResource\RelationManagers;
 use App\Models\PossibleClient;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -47,10 +48,15 @@ class PossibleClientResource extends Resource
             ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('estates.agent.name')
+                    ->label('Agent'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nume')
                     ->searchable()
@@ -71,8 +77,22 @@ class PossibleClientResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
+                Tables\Filters\Filter::make('agent')
+                    ->label('Agent')
+                    ->form([
+                        Forms\Components\Select::make('agent')
+                            ->label('Agent')
+                            ->options(fn () => User::query()->whereNotNull('imobmanager_id')->pluck('name', 'id')->toArray()),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when($data['agent'], function (Builder $query, $agent) {
+                                $query->whereHas('estates', function (Builder $query) use ($agent) {
+                                    $query->where('agent_id', $agent);
+                                });
+                            });
+                    }),
+            ],layout: Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
