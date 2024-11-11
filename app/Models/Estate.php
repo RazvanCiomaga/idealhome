@@ -70,4 +70,9 @@ class Estate extends Model
     {
         return $this->belongsToMany(Property::class, 'estate_property');
     }
+
+    public function possibleClients(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(PossibleClient::class, 'estate_possible_client');
+    }
 }

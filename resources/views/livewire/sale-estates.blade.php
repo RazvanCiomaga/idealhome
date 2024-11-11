@@ -91,22 +91,22 @@
     <!-- ##### Listing Content Wrapper Area Start ##### -->
     <section class="listings-content-wrapper section-padding-100">
         <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="listings-top-meta d-flex justify-content-between mb-100">
-                        <div class="order-by-area d-flex align-items-center">
-                            <span class="mr-15">Order by:</span>
-                            <select>
-                                <option selected>Default</option>
-                                <option value="1">Newest</option>
-                                <option value="2">Sales</option>
-                                <option value="3">Ratings</option>
-                                <option value="3">Popularity</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{{--            <div class="row">--}}
+{{--                <div class="col-12">--}}
+{{--                    <div class="listings-top-meta d-flex justify-content-between mb-100">--}}
+{{--                        <div class="order-by-area d-flex align-items-center">--}}
+{{--                            <span class="mr-15">Order by:</span>--}}
+{{--                            <select>--}}
+{{--                                <option selected>Default</option>--}}
+{{--                                <option value="1">Newest</option>--}}
+{{--                                <option value="2">Sales</option>--}}
+{{--                                <option value="3">Ratings</option>--}}
+{{--                                <option value="3">Popularity</option>--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
             <div class="row">
 

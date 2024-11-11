@@ -18,7 +18,7 @@
                     <!-- Single Listings Slides -->
                     <div class="single-listings-sliders owl-carousel">
                         @foreach($this->estate->images as $image)
-                            <img src="{{ $image }}" alt="{{ $this->estate->title }}" class="img-fluid" style="height: 65vh;">
+                            <img src="{{ $image }}" alt="{{ $this->estate->title }}" class="img-fluid" style="height: 70vh;">
                         @endforeach
                     </div>
                 </div>
@@ -41,37 +41,23 @@
                             </div>
                             <div class="bathroom">
                                 <img src="img/icons/bathtub.png" alt="">
-                                <span>2</span>
+                                <span>{{ $this->estate->bathrooms }}</span>
                             </div>
                             <div class="garage">
                                 <img src="img/icons/garage.png" alt="">
-                                <span>2</span>
+                                <span>{{ $this->estate->rooms }}</span>
                             </div>
                             <div class="space">
                                 <img src="img/icons/space.png" alt="">
-                                <span>120 sq ft</span>
+                                <span>{{ $estate->area }} &#13217;</span>
                             </div>
                         </div>
                         <!-- Core Features -->
                         <ul class="listings-core-features d-flex align-items-center">
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Gated Community</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Automatic Sprinklers</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Fireplace</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Window Shutters</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Ocean Views</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Heated Floors</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Heated Floors</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Private Patio</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Window Shutters</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Fireplace</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Beach Access</li>
-                            <li><i class="fa fa-check" aria-hidden="true"></i> Rooftop Terrace</li>
+                            @foreach($this->estate->properties as $property)
+                                <li><i class="fa fa-check" aria-hidden="true"></i> {{ $property->name }}</li>
+                            @endforeach
                         </ul>
-                        <!-- Listings Btn Groups -->
-                        <div class="listings-btn-groups">
-                            <a href="#" class="btn south-btn">See Floor plans</a>
-                            <a href="#" class="btn south-btn active">calculate mortgage</a>
-                        </div>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
@@ -85,21 +71,19 @@
                                 <h6><img src="img/icons/envelope.png" alt=""> {{ $this->agent->email }}</h6>
                             </div>
                             <div class="realtor--contact-form">
-                                <form action="#" method="post">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="realtor-name" placeholder="Your Name">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" id="realtor-number" placeholder="Your Number">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="enumber" class="form-control" id="realtor-email" placeholder="Your Mail">
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea name="message" class="form-control" id="realtor-message" cols="30" rows="10" placeholder="Your Message"></textarea>
-                                    </div>
-                                    <button type="submit" class="btn south-btn">Send Message</button>
-                                </form>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="realtor-name" placeholder="Nume" wire:model="clientName">
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" class="form-control" id="realtor-number" placeholder="Nr. telefon" wire:model="clientPhone">
+                                </div>
+                                <div class="form-group">
+                                    <input type="enumber" class="form-control" id="realtor-email" placeholder="Email" wire:model="clientEmail">
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="message" class="form-control" id="realtor-message" cols="30" rows="10" placeholder="Mesaj..." wire:model="clientMessage"></textarea>
+                                </div>
+                                <button type="button" class="btn south-btn" wire:click="sendMessage">Trimite mesajul</button>
                             </div>
                         </div>
                     </div>
