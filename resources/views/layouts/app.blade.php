@@ -29,6 +29,10 @@
     <div class="south-load"></div>
 </div>
 
+@php
+    $agency = App\Models\Agency::query()->first();
+@endphp
+
 <!-- ##### Header Area Start ##### -->
 <header class="header-area">
 
@@ -36,14 +40,14 @@
     <div class="top-header-area">
         <div class="h-100 d-md-flex justify-content-between align-items-center">
             <div class="email-address">
-                <a href="mailto:contact@southtemplate.com">contact@southtemplate.com</a>
+                <a href="mailto:{{ $agency?->email }}">{{ $agency?->email }}</a>
             </div>
             <div class="phone-number d-flex">
                 <div class="icon">
                     <img src="img/icons/phone-call.png" alt="">
                 </div>
                 <div class="number">
-                    <a href="tel:+45 677 8993000 223">+45 677 8993000 223</a>
+                    <a href="tel:+45 677 8993000 223">{{ $agency?->phone }}</a>
                 </div>
             </div>
         </div>
@@ -128,16 +132,16 @@
                         <!-- Office Hours -->
                         <div class="weekly-office-hours">
                             <ul>
-                                <li class="d-flex align-items-center justify-content-between"><span>Monday - Friday</span> <span>09 AM - 19 PM</span></li>
-                                <li class="d-flex align-items-center justify-content-between"><span>Saturday</span> <span>09 AM - 14 PM</span></li>
-                                <li class="d-flex align-items-center justify-content-between"><span>Sunday</span> <span>Closed</span></li>
+                                <li class="d-flex align-items-center justify-content-between"><span>Luni - Vineri</span> <span>{{ $agency?->weekly_hours }}</span></li>
+                                <li class="d-flex align-items-center justify-content-between"><span>Sambata</span> <span>{{ $agency?->saturday_hours }}</span></li>
+                                <li class="d-flex align-items-center justify-content-between"><span>Duminica</span> <span>{{ $agency?->sunday_hours }}</span></li>
                             </ul>
                         </div>
                         <!-- Address -->
                         <div class="address">
-                            <h6><img src="img/icons/phone-call.png" alt=""> +45 677 8993000 223</h6>
-                            <h6><img src="img/icons/envelope.png" alt=""> office@template.com</h6>
-                            <h6><img src="img/icons/location.png" alt=""> Main Str. no 45-46, b3, 56832, Los Angeles, CA</h6>
+                            <h6><img src="img/icons/phone-call.png" alt=""> {{ $agency?->phone }}</h6>
+                            <h6><img src="img/icons/envelope.png" alt=""> {{ $agency?->email }}</h6>
+                            <h6><img src="img/icons/location.png" alt=""> {{ $agency?->address }}</h6>
                         </div>
                     </div>
                 </div>
@@ -151,19 +155,11 @@
                         </div>
                         <!-- Nav -->
                         <ul class="useful-links-nav d-flex align-items-center">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About us</a></li>
-                            <li><a href="#">About us</a></li>
-                            <li><a href="#">Services</a></li>
-                            <li><a href="#">Properties</a></li>
-                            <li><a href="#">Listings</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                            <li><a href="#">Properties</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Elements</a></li>
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="{{ route('sales-listings') }}">Vanzari</a></li>
+                            <li><a href="{{ route('rent-listings') }}">Inchirieri</a></li>
+                            <li><a href="{{ route('team') }}">Echipa</a></li>
+                            <li><a href="{{ route('contact') }}">Contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -177,18 +173,17 @@
                         </div>
                         <!-- Featured Properties Slides -->
                         <div class="featured-properties-slides owl-carousel">
-                            <!-- Single Slide -->
-                            <div class="single-featured-properties-slide">
-                                <a href="#"><img src="img/bg-img/fea-product.jpg" alt=""></a>
-                            </div>
-                            <!-- Single Slide -->
-                            <div class="single-featured-properties-slide">
-                                <a href="#"><img src="img/bg-img/fea-product.jpg" alt=""></a>
-                            </div>
-                            <!-- Single Slide -->
-                            <div class="single-featured-properties-slide">
-                                <a href="#"><img src="img/bg-img/fea-product.jpg" alt=""></a>
-                            </div>
+                            @php
+                                $properties = \App\Models\Estate::query()->orderBy('sale_price', 'desc')->limit(3)->get();
+                            @endphp
+
+                            @foreach($properties as $property)
+                                <div class="single-featured-properties">
+                                    <a href="{{ route('estate.show', $property->slug) }}">
+                                        <img src="{{ $property->featured_image }}" alt="">
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
