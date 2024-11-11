@@ -77,7 +77,7 @@
                             <li><a href="index.html">Home</a></li>
                             <li><a href="{{ route('sales-listings') }}">Vanzari</a></li>
                             <li><a href="{{ route('rent-listings') }}">Inchirieri</a></li>
-                            <li><a href="contact.html">Echipa</a></li>
+                            <li><a href="{{ route('team') }}">Echipa</a></li>
                             <li><a href="{{ route('contact') }}">Contact</a></li>
                         </ul>
                     </div>

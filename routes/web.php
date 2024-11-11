@@ -17,6 +17,10 @@ Route::get('/contact', function () {
     return view('pages.contact');
 })->name('contact');
 
+Route::get('/echipa', function () {
+    return view('pages.team');
+})->name('team');
+
 Route::get('/{slug}', function ($slug) {
     return view('pages.estate', compact('slug'));
 })->name('estate.show');
