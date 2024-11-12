@@ -104,7 +104,7 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <div class="section-heading text-left wow fadeInUp" data-wow-delay="250ms">
-                        <h2>We search for the perfect home</h2>
+                        <h2>{{ label('Search perfect home') }}</h2>
                         <p>Suspendisse dictum enim sit amet libero</p>
                     </div>
                     <div class="about-content">
