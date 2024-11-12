@@ -40,7 +40,7 @@
     <div class="top-header-area">
         <div class="h-100 d-md-flex justify-content-between align-items-center">
             <div class="email-address">
-                <a href="mailto:{{ $agency?->email }}">{{ $agency?->email }}</a>
+                <a href="{{ 'mailto:'.$agency?->email }}">{{ $agency?->email }}</a>
             </div>
             <div class="phone-number d-flex">
                 <div class="icon">
@@ -60,7 +60,7 @@
             <nav class="classy-navbar justify-content-between" id="southNav">
 
                 <!-- Logo -->
-                <a class="nav-brand" href="index.html"><img src="img/core-img/logo.png" alt="" style="width: 20%; height: 20%;"></a>
+                <a class="nav-brand" href="{{ route('home') }}"><img src="img/core-img/logo.png" alt="" style="width: 20%; height: 20%;"></a>
 
                 <!-- Navbar Toggler -->
                 <div class="classy-navbar-toggler">

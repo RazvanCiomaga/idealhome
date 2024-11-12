@@ -18,7 +18,7 @@
                     <!-- Single Listings Slides -->
                     <div class="single-listings-sliders owl-carousel">
                         @foreach($this->estate->images as $image)
-                            <img src="{{ $image }}" alt="{{ $this->estate->title }}" class="img-fluid" style="height: 70vh;">
+                            <img src="{{ $image }}" alt="{{ $this->estate->title }}" class="img-fluid" style="height: 70vh; object-fit: contain;">
                         @endforeach
                     </div>
                 </div>
