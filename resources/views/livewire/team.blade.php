@@ -28,8 +28,7 @@
                         <div class="single-team-member mb-100 wow fadeInUp" data-wow-delay="250ms">
                             <!-- Team Member Thumb -->
                             <div class="team-member-thumb">
-{{--                                <img src="{{ $agent->picture }}" alt="{{ $agent->name . ' ' . 'profile' }}">--}}
-                                <img src="img/bg-img/team1.jpg" alt="">
+                                <img src="{{ $agent->picture }}" alt="{{ $agent->name . ' ' . 'profile' }}">
                             </div>
                             <!-- Team Member Info -->
                             <div class="team-member-info">

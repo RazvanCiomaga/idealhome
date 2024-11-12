@@ -26,6 +26,22 @@ class SaleEstates extends Component
 
     public $type = 'sale';
 
+    protected $queryString = [
+        'roomEntrance',
+        'zone',
+        'year',
+        'floor'
+    ];
+
+    public function mount(): void
+    {
+        // Initialize properties using query string if available, otherwise use defaults
+        $this->roomEntrance = request()->query('roomEntrance', 'none');
+        $this->zone = request()->query('zone', 'none');
+        $this->year = request()->query('year', '');
+        $this->floor = request()->query('floor', 'none');
+    }
+
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
         return view('livewire.sale-estates', [
@@ -51,7 +67,6 @@ class SaleEstates extends Component
                     9 => 9,
                     10 => 10,
                 ],
-
             ],
         ]);
     }

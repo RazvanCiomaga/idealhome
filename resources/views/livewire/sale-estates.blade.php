@@ -26,22 +26,23 @@
                             <div class="row">
                                 <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                     <div class="form-group">
-                                        <select id="select-room-entrance" class="form-control" wire:model="roomEntrance" >
-                                            <option value="none">Select Room Entrance</option>
+                                        <select id="select-room-entrance" class="form-control" wire:model="roomEntrance">
+                                            <!-- 'none' option is always available for resetting the filter -->
+                                            <option value="none" @if($roomEntrance === 'none') selected @endif>Select Room Entrance</option>
                                             @foreach($filters['roomEntrances'] as $key => $value)
-                                                <option value="{{ $key }}">{{ $value }}</option>
+                                                <option value="{{ $key }}" @if($key === $roomEntrance) selected @endif>{{ $value }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
 
-
                                 <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                     <div class="form-group">
                                         <select id="zones" class="form-control" wire:model="zone">
-                                            <option value="{{ $defaultSelect }}">Zone</option>
+                                            <!-- 'none' option for zone, similar to roomEntrance -->
+                                            <option value="{{ $defaultSelect }}" @if($zone === $defaultSelect) selected @endif>Zone</option>
                                             @foreach($filters['zones'] as $key => $value)
-                                                <option value="{{ $key }}">{{ $value }}</option>
+                                                <option value="{{ $key }}" @if($key === $zone) selected @endif>{{ $value }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -50,9 +51,10 @@
                                 <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                     <div class="form-group">
                                         <select id="floors" class="form-control" wire:model="floor">
-                                            <option value="{{ $defaultSelect }}">Floor</option>
+                                            <!-- 'none' option for floor -->
+                                            <option value="{{ $defaultSelect }}" @if($floor === $defaultSelect) selected @endif>Floor</option>
                                             @foreach($filters['floors'] as $key => $value)
-                                                <option value="{{ $key }}">{{ $value }}</option>
+                                                <option value="{{ $key }}" @if($key === $floor) selected @endif>{{ $value }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -61,9 +63,10 @@
                                 <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                     <div class="form-group">
                                         <select id="year" class="form-control" wire:model="year">
-                                            <option value="{{ $defaultSelect }}">Construction year</option>
+                                            <!-- 'none' should not be selected as default here, so 'year' is empty -->
+                                            <option value="{{ $defaultSelect }}" @if($year === '') selected @endif>Construction year</option>
                                             @foreach($filters['construction_year'] as $key => $value)
-                                                <option value="{{ $key }}">{{ $value }}</option>
+                                                <option value="{{ $key }}" @if($key === $year) selected @endif>{{ $value }}</option>
                                             @endforeach
                                         </select>
                                     </div>

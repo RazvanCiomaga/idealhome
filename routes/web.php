@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('index');
-});
+    return view('pages.home');
+})->name('home');
 Route::get('/proprietati-vanzare', function () {
     return view('pages.sale-estates');
 })->name('sales-listings');

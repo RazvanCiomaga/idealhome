@@ -78,7 +78,7 @@
                     <!-- Nav Start -->
                     <div class="classynav row">
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="{{ route('home') }}">Home</a></li>
                             <li><a href="{{ route('sales-listings') }}">Vanzari</a></li>
                             <li><a href="{{ route('rent-listings') }}">Inchirieri</a></li>
                             <li><a href="{{ route('team') }}">Echipa</a></li>
@@ -155,7 +155,7 @@
                         </div>
                         <!-- Nav -->
                         <ul class="useful-links-nav d-flex align-items-center">
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="{{ route('home') }}">Home</a></li>
                             <li><a href="{{ route('sales-listings') }}">Vanzari</a></li>
                             <li><a href="{{ route('rent-listings') }}">Inchirieri</a></li>
                             <li><a href="{{ route('team') }}">Echipa</a></li>
