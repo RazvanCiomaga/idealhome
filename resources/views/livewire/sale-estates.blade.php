@@ -20,7 +20,7 @@
                     <div class="advanced-search-form">
                         <!-- Search Title -->
                         <div class="search-title">
-                            <p>Search for your home</p>
+                            <p>{{ label('Cautati o proprietate') }}</p>
                         </div>
                         <!-- Search Form -->
                             <div class="row">
@@ -28,7 +28,7 @@
                                     <div class="form-group">
                                         <select id="select-room-entrance" class="form-control" wire:model="roomEntrance">
                                             <!-- 'none' option is always available for resetting the filter -->
-                                            <option value="none" @if($roomEntrance === 'none') selected @endif>Select Room Entrance</option>
+                                            <option value="none" @if($roomEntrance === 'none') selected @endif>{{ label('Selecteaza compartimentarea') }}</option>
                                             @foreach($filters['roomEntrances'] as $key => $value)
                                                 <option value="{{ $key }}" @if($key === $roomEntrance) selected @endif>{{ $value }}</option>
                                             @endforeach
@@ -40,7 +40,7 @@
                                     <div class="form-group">
                                         <select id="zones" class="form-control" wire:model="zone">
                                             <!-- 'none' option for zone, similar to roomEntrance -->
-                                            <option value="{{ $defaultSelect }}" @if($zone === $defaultSelect) selected @endif>Zone</option>
+                                            <option value="{{ $defaultSelect }}" @if($zone === $defaultSelect) selected @endif>{{ label('Selecteaza zona') }}</option>
                                             @foreach($filters['zones'] as $key => $value)
                                                 <option value="{{ $key }}" @if($key === $zone) selected @endif>{{ $value }}</option>
                                             @endforeach
@@ -52,7 +52,7 @@
                                     <div class="form-group">
                                         <select id="floors" class="form-control" wire:model="floor">
                                             <!-- 'none' option for floor -->
-                                            <option value="{{ $defaultSelect }}" @if($floor === $defaultSelect) selected @endif>Floor</option>
+                                            <option value="{{ $defaultSelect }}" @if($floor === $defaultSelect) selected @endif>{{ label('Selecteaza etaj') }}</option>
                                             @foreach($filters['floors'] as $key => $value)
                                                 <option value="{{ $key }}" @if($key === $floor) selected @endif>{{ $value }}</option>
                                             @endforeach
@@ -64,7 +64,7 @@
                                     <div class="form-group">
                                         <select id="year" class="form-control" wire:model="year">
                                             <!-- 'none' should not be selected as default here, so 'year' is empty -->
-                                            <option value="{{ $defaultSelect }}" @if($year === '') selected @endif>Construction year</option>
+                                            <option value="{{ $defaultSelect }}" @if($year === '') selected @endif>{{ label('Selecteaza anul constructiei') }}</option>
                                             @foreach($filters['construction_year'] as $key => $value)
                                                 <option value="{{ $key }}" @if($key === $year) selected @endif>{{ $value }}</option>
                                             @endforeach
@@ -80,7 +80,7 @@
                                     </div>
                                     <!-- Submit -->
                                     <div class="form-group mb-0">
-                                        <button type="button" class="btn south-btn" wire:click="applyFilters">Search</button>
+                                        <button type="button" class="btn south-btn" wire:click="applyFilters">{{ label('Cauta') }}</button>
                                     </div>
                                 </div>
                             </div>

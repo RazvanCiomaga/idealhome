@@ -4,7 +4,7 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcumb-content">
-                        <h3 class="breadcumb-title">Property</h3>
+                        <h3 class="breadcumb-title">{{ label('Pagina proprietate') }}</h3>
                     </div>
                 </div>
             </div>
@@ -72,18 +72,18 @@
                             </div>
                             <div class="realtor--contact-form">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="realtor-name" placeholder="Nume" wire:model="clientName">
+                                    <input type="text" class="form-control" id="realtor-name" placeholder="{{ label('Nume') }}" wire:model="clientName">
                                 </div>
                                 <div class="form-group">
-                                    <input type="tel" class="form-control" id="realtor-number" placeholder="Nr. telefon" wire:model="clientPhone">
+                                    <input type="tel" class="form-control" id="realtor-number" placeholder="{{ label('Nr. telefon') }}" wire:model="clientPhone">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" id="realtor-email" placeholder="Email" wire:model="clientEmail">
+                                    <input type="email" class="form-control" id="realtor-email" placeholder="{{ label('Email') }}" wire:model="clientEmail">
                                 </div>
                                 <div class="form-group">
-                                    <textarea name="message" class="form-control" id="realtor-message" cols="30" rows="10" placeholder="Mesaj..." wire:model="clientMessage"></textarea>
+                                    <textarea name="message" class="form-control" id="realtor-message" cols="30" rows="10" placeholder="{{ label('Mesaj...') }}" wire:model="clientMessage"></textarea>
                                 </div>
-                                <button type="button" class="btn south-btn" wire:click="sendMessage">Trimite mesajul</button>
+                                <button type="button" class="btn south-btn" wire:click="sendMessage">{{ label('Contacteaza agentul') }}</button>
                             </div>
                         </div>
                     </div>

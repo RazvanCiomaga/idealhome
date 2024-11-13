@@ -11,5 +11,11 @@ use Livewire\WithPagination;
 class RentEstates extends SaleEstates
 {
    public $type = 'rent';
-   public $title = 'Inchirieri';
+
+   public $title = '';
+
+   public function mount(): void
+   {
+       $this->title = label('Proprietati de inchiriat');
+   }
 }

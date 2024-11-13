@@ -22,7 +22,7 @@ class SaleEstates extends Component
 
     public $floor = 'none';
 
-    public $title = 'Vanzari';
+    public $title = '';
 
     public $type = 'sale';
 
@@ -40,6 +40,7 @@ class SaleEstates extends Component
         $this->zone = request()->query('zone', 'none');
         $this->year = request()->query('year', '');
         $this->floor = request()->query('floor', 'none');
+        $this->title = label('Proprietati de vanzare');
     }
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application

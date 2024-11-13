@@ -5,7 +5,7 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcumb-content">
-                        <h3 class="breadcumb-title">About us</h3>
+                        <h3 class="breadcumb-title">{{ label('Pagina principala') }}</h3>
                     </div>
                 </div>
             </div>
@@ -21,14 +21,14 @@
                     <div class="advanced-search-form">
                         <!-- Search Title -->
                         <div class="search-title">
-                            <p>Search for your home</p>
+                            <p>{{ label('Cautati o proprietate') }}</p>
                         </div>
                         <!-- Search Form -->
                         <div class="row">
                             <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                 <div class="form-group">
                                     <select id="select-transaction-types" class="form-control" wire:model="transactionType">
-                                        <option value="none" @if($transactionType === 'none') selected @endif>Select transaction type</option>
+                                        <option value="none" @if($transactionType === 'none') selected @endif>{{ label('Selecteaza tipul tranzactiei') }}</option>
                                         @foreach($filters['transactionTypes'] as $key => $value)
                                             <option value="{{ $key }}" @if($key === $transactionType) selected @endif>{{ $value }}</option>
                                         @endforeach
@@ -39,7 +39,7 @@
                             <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                 <div class="form-group">
                                     <select id="select-room-entrance" class="form-control" wire:model="roomEntrance" >
-                                        <option value="none">Select Room Entrance</option>
+                                        <option value="none">{{ label('Selecteaza compartimentarea') }}</option>
                                         @foreach($filters['roomEntrances'] as $key => $value)
                                             <option value="{{ $key }}">{{ $value }}</option>
                                         @endforeach
@@ -51,7 +51,7 @@
                             <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                 <div class="form-group">
                                     <select id="zones" class="form-control" wire:model="zone">
-                                        <option value="{{ $defaultSelect }}">Zone</option>
+                                        <option value="{{ $defaultSelect }}">{{ label('Selecteaza zona') }}</option>
                                         @foreach($filters['zones'] as $key => $value)
                                             <option value="{{ $key }}">{{ $value }}</option>
                                         @endforeach
@@ -62,7 +62,7 @@
                             <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                 <div class="form-group">
                                     <select id="floors" class="form-control" wire:model="floor">
-                                        <option value="{{ $defaultSelect }}">Floor</option>
+                                        <option value="{{ $defaultSelect }}">{{ label('Selecteaza etaj') }}</option>
                                         @foreach($filters['floors'] as $key => $value)
                                             <option value="{{ $key }}">{{ $value }}</option>
                                         @endforeach
@@ -73,7 +73,7 @@
                             <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                 <div class="form-group">
                                     <select id="year" class="form-control" wire:model="year">
-                                        <option value="{{ $defaultSelect }}">Construction year</option>
+                                        <option value="{{ $defaultSelect }}">{{ label('Selecteaza anul constructiei') }}</option>
                                         @foreach($filters['construction_year'] as $key => $value)
                                             <option value="{{ $key }}">{{ $value }}</option>
                                         @endforeach
@@ -89,7 +89,7 @@
                                 </div>
                                 <!-- Submit -->
                                 <div class="form-group mb-0">
-                                    <button type="button" class="btn south-btn" wire:click="applyFilters">Search</button>
+                                    <button type="button" class="btn south-btn" wire:click="applyFilters">{{ label('Cauta') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -104,19 +104,19 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <div class="section-heading text-left wow fadeInUp" data-wow-delay="250ms">
-                        <h2>{{ label('Search perfect home') }}</h2>
-                        <p>Suspendisse dictum enim sit amet libero</p>
+                        <h2>{{ label('Cauta proprietatea perfecta') }}</h2>
+                        <p>{{ label('Descriere cautare proprietate') }}</p>
                     </div>
                     <div class="about-content">
                         <img class="wow fadeInUp" data-wow-delay="350ms" src="img/bg-img/about.jpg" alt="">
-                        <p class="wow fadeInUp" data-wow-delay="450ms">Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada. Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada feugiat. Praesent malesuada congue magna at finibus. In hac habitasse platea dictumst. Curabitur rhoncus auctor eleifend. Fusce venenatis diam urna, eu pharetra arcu varius ac. Etiam cursus turpis lectus, id iaculis risus tempor id. Phasellus fringilla nisl sed sem scelerisque, eget aliquam magna vehicula.</p>
+                        <p class="wow fadeInUp" data-wow-delay="450ms">{{ label('Descriere agentie IdealHome pagina principala') }}</p>
                     </div>
                 </div>
 
                 <div class="col-12 col-lg-4">
                     <div class="section-heading text-left wow fadeInUp" data-wow-delay="250ms">
-                        <h2>Featured Properties</h2>
-                        <p>Suspendisse dictum enim sit amet libero</p>
+                        <h2>{{ label('Proprietati prezentare') }}</h2>
+                        <p>{{ label('Proprietati prezentare scurta descriere.') }}</p>
                     </div>
 
                     <div class="featured-properties-slides owl-carousel wow fadeInUp" data-wow-delay="350ms">
@@ -128,7 +128,7 @@
                                     <img src="{{ $estate->featured_image }}" alt="{{ $estate->title . 'featured image' }}" style="height: 250px; width: 100%">
 
                                     <div class="tag">
-                                        <span>For Sale</span>
+                                        <span>{{ label('Tag vanzare') }}</span>
                                     </div>
                                     <div class="list-price">
                                         <p>€{{ number_format($estate->sale_price, 2, ',', '.') }}</p>
@@ -172,9 +172,9 @@
             <div class="row align-items-center h-100">
                 <div class="col-12">
                     <div class="cta-content text-center">
-                        <h2 class="wow fadeInUp" data-wow-delay="300ms">Are you looking for a place to rent?</h2>
-                        <h6 class="wow fadeInUp" data-wow-delay="400ms">Suspendisse dictum enim sit amet libero malesuada feugiat.</h6>
-                        <a href="{{ route('rent-listings') }}" class="btn south-btn mt-50 wow fadeInUp" data-wow-delay="500ms">Search</a>
+                        <h2 class="wow fadeInUp" data-wow-delay="300ms">{{ label('Cauti loc de inchiriat?') }}</h2>
+                        <h6 class="wow fadeInUp" data-wow-delay="400ms">{{ label('Loc de inchiriat scurta descriere.') }}</h6>
+                        <a href="{{ route('rent-listings') }}" class="btn south-btn mt-50 wow fadeInUp" data-wow-delay="500ms">{{ label('Vezi anunturi de inchiriere') }}</a>
                     </div>
                 </div>
             </div>
