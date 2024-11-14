@@ -7,6 +7,7 @@ use App\Models\RoomEntrance;
 use App\Models\User;
 use App\Models\Zone;
 use Illuminate\Console\Command;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\DB;
 use App\Models\Estate;
 use App\Models\Agency;
@@ -15,6 +16,8 @@ use Illuminate\Support\Str;
 
 class SyncEstates extends Command
 {
+    use Dispatchable;
+
     protected $signature = 'app:sync-estates';
     protected $description = 'Sync estates from ImobManager.';
     protected ImobManagerService $imobManager;
@@ -32,8 +35,6 @@ class SyncEstates extends Command
      */
     public function handle(): int
     {
-        $this->info('Fetching estates from ImobManager...');
-
         try {
             $imobManagerAgencyId = config('services.imobmanager.id');
             $allEstates = []; // Array to hold all estates
@@ -62,18 +63,14 @@ class SyncEstates extends Command
                     foreach (array_chunk($response['data'], 100) as $chunk) {
                         // Here, you can process each chunk of 100 records
                         $this->createOrUpdateEstates($chunk); // Update or create estates in the database
-                        $this->info('Processed a chunk of 100 estates.'); // Log for progress
                     }
                     $allEstates = array_merge($allEstates, $response['data']); // Store all records
                 } else {
                     break; // Exit loop if no data returned (though unlikely if totalCount is accurate)
                 }
             }
-
-            $this->info('Estates synced successfully. Total estates processed: ' . count($allEstates));
         } catch (\Exception $e) {
             // Provide a simplified error message without exposing details
-            $this->error('Error syncing estates: ' . $e->getMessage());
             return 1; // Indicate failure
         }
 

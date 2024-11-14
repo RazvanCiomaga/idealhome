@@ -5,9 +5,12 @@ namespace App\Console\Commands;
 use App\Models\User;
 use App\Services\ImobManager as ImobManagerService;
 use Illuminate\Console\Command;
+use Illuminate\Foundation\Bus\Dispatchable;
 
 class SyncAgents extends Command
 {
+    use Dispatchable;
+
     /**
      * The name and signature of the console command.
      *
@@ -45,16 +48,12 @@ class SyncAgents extends Command
      */
     public function handle()
     {
-        $this->info('Syncing agents data from imobmanager...');
-
         try {
             $imobManagerAgencyId = config('services.imobmanager.id');
 
             $agents = $this->imobManagerService->get("agency/{$imobManagerAgencyId}/agent");
             $this->createOrUpdateAgents($agents);
-            $this->info('Agents data synced successfully');
         } catch (\Exception $e) {
-            $this->error('Failed to sync agents: ' . $e->getMessage());
             return 1;
         }
 

@@ -3,12 +3,15 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\DB;
 use App\Models\Agency;
 use App\Services\ImobManager as ImobManagerService;
 
 class SyncAgencies extends Command
 {
+    use Dispatchable;
+
     protected $signature = 'app:sync-agencies';
     protected $description = 'Sync agencies from ImobManager.';
     protected ImobManagerService $imobManagerService;
@@ -26,9 +29,6 @@ class SyncAgencies extends Command
      */
     public function handle(): int
     {
-        // Fetch agencies from the external API
-        $this->info('Fetching agency data from imobmanager...');
-
         try {
             $imobManagerAgencyId = config('services.imobmanager.id');
             $agencyData = $this->imobManagerService->get("agency/{$imobManagerAgencyId}");
@@ -48,11 +48,8 @@ class SyncAgencies extends Command
                     'logo' => $agencyData['logo'] ?? null,
                 ]
             );
-
-            $this->info('Agency data synced successfully.');
         } catch (\Exception $e) {
             // Provide a simplified error message without exposing details
-            $this->error('Error syncing agencies: ' . $e->getMessage());
             return 1; // Indicate failure
         }
 
