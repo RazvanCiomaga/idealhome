@@ -4,7 +4,7 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcumb-content">
-                        <h3 class="breadcumb-title">Team</h3>
+                        <h3 class="breadcumb-title">{{ label('Titlu pagina echipa') }}</h3>
                     </div>
                 </div>
             </div>
@@ -16,8 +16,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-heading">
-                        <h2>Meet The Team</h2>
-                        <p>Suspendisse dictum enim sit amet libero</p>
+                        <h2>{{ label('Intalneste echipa') }}</h2>
+                        <p>{{ label('Intalneste echipa scurta descriere.') }}</p>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                                 <div class="section-heading">
                                     <img src="img/icons/prize.png" alt="">
                                     <h2>{{ $agent->name }}</h2>
-                                    <p>{{ strlen($agent->position ?? '') ? ucfirst($agent->position) : 'Agent' }}</p>
+                                    <p>{{ strlen($agent->position ?? '') ? ucfirst($agent->position) : label('Agent') }}</p>
                                 </div>
                                 <div class="address">
                                     <h6><img src="img/icons/phone-call.png" alt=""> {{ $agent->phone }}</h6>

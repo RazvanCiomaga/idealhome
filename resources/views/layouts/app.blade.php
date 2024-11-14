@@ -78,11 +78,11 @@
                     <!-- Nav Start -->
                     <div class="classynav row">
                         <ul>
-                            <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('sales-listings') }}">Vanzari</a></li>
-                            <li><a href="{{ route('rent-listings') }}">Inchirieri</a></li>
-                            <li><a href="{{ route('team') }}">Echipa</a></li>
-                            <li><a href="{{ route('contact') }}">Contact</a></li>
+                            <li><a href="{{ route('home') }}">{{ label('Pagina principala') }}</a></li>
+                            <li><a href="{{ route('sales-listings') }}">{{ label('Pagina vanzari') }}</a></li>
+                            <li><a href="{{ route('rent-listings') }}">{{ label('Pagina inchirieri') }}</a></li>
+                            <li><a href="{{ route('team') }}">{{ label('Pagina echipa') }}</a></li>
+                            <li><a href="{{ route('contact') }}">{{ label('Pagina contact') }}</a></li>
                         </ul>
                     </div>
                     <!-- Nav End -->
@@ -111,14 +111,14 @@
                     <div class="footer-widget-area mb-100">
                         <!-- Widget Title -->
                         <div class="widget-title">
-                            <h6>About Us</h6>
+                            <h6>{{ label('Despre noi') }}</h6>
                         </div>
 
                         <img src="img/bg-img/footer.jpg" alt="">
                         <div class="footer-logo my-4">
                             <img src="img/core-img/logo.png" alt="" style="height: 60%; width: 60%;">
                         </div>
-                        <p>Integer nec bibendum lacus. Suspen disse dictum enim sit amet libero males uada feugiat. Praesent malesuada.</p>
+                        <p>{{ label('Footer scurta descriere a agentiei.') }}</p>
                     </div>
                 </div>
 
@@ -127,14 +127,14 @@
                     <div class="footer-widget-area mb-100">
                         <!-- Widget Title -->
                         <div class="widget-title">
-                            <h6>Hours</h6>
+                            <h6>{{ label('Program de lucru') }}</h6>
                         </div>
                         <!-- Office Hours -->
                         <div class="weekly-office-hours">
                             <ul>
-                                <li class="d-flex align-items-center justify-content-between"><span>Luni - Vineri</span> <span>{{ $agency?->weekly_hours }}</span></li>
-                                <li class="d-flex align-items-center justify-content-between"><span>Sambata</span> <span>{{ $agency?->saturday_hours }}</span></li>
-                                <li class="d-flex align-items-center justify-content-between"><span>Duminica</span> <span>{{ $agency?->sunday_hours }}</span></li>
+                                <li class="d-flex align-items-center justify-content-between"><span>{{ label('Luni - Vineri') }}</span> <span>{{ $agency?->weekly_hours }}</span></li>
+                                <li class="d-flex align-items-center justify-content-between"><span>{{ label('Sambata') }}</span> <span>{{ $agency?->saturday_hours }}</span></li>
+                                <li class="d-flex align-items-center justify-content-between"><span>{{ label('Duminica') }}</span> <span>{{ $agency?->sunday_hours }}</span></li>
                             </ul>
                         </div>
                         <!-- Address -->
@@ -151,15 +151,15 @@
                     <div class="footer-widget-area mb-100">
                         <!-- Widget Title -->
                         <div class="widget-title">
-                            <h6>Useful Links</h6>
+                            <h6>{{ label('Link-uri utile') }}</h6>
                         </div>
                         <!-- Nav -->
                         <ul class="useful-links-nav d-flex align-items-center">
-                            <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('sales-listings') }}">Vanzari</a></li>
-                            <li><a href="{{ route('rent-listings') }}">Inchirieri</a></li>
-                            <li><a href="{{ route('team') }}">Echipa</a></li>
-                            <li><a href="{{ route('contact') }}">Contact</a></li>
+                            <li><a href="{{ route('home') }}">{{ label('Pagina principala') }}</a></li>
+                            <li><a href="{{ route('sales-listings') }}">{{ label('Pagina vanzari') }}</a></li>
+                            <li><a href="{{ route('rent-listings') }}">{{ label('Pagina inchirieri') }}</a></li>
+                            <li><a href="{{ route('team') }}">{{ label('Pagina echipa') }}</a></li>
+                            <li><a href="{{ route('contact') }}">{{ label('Pagina contact') }}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -169,7 +169,7 @@
                     <div class="footer-widget-area mb-100">
                         <!-- Widget Title -->
                         <div class="widget-title">
-                            <h6>Featured Properties</h6>
+                            <h6>{{ label('Proprietati prezentare') }}</h6>
                         </div>
                         <!-- Featured Properties Slides -->
                         <div class="featured-properties-slides owl-carousel">

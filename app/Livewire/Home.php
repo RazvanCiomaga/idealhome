@@ -44,11 +44,11 @@ class Home extends Component
             'roomEntrances' => RoomEntrance::query()->orderBy('name')->get()->pluck('name', 'name')->toArray(),
             'zones' => Zone::query()->orderBy('name')->get()->pluck('name', 'name')->toArray(),
             'construction_year' => [
-                'before' => 'Before 1977',
-                'after' => 'After 1977',
+                'before' => label('Inainte de 1977'),
+                'after' => label('Dupa 1977'),
             ],
             'floors' => [
-                'Parter' => 'Parter',
+                'Parter' => label('Parter'),
                 1 => 1,
                 2 => 2,
                 3 => 3,
@@ -61,8 +61,8 @@ class Home extends Component
                 10 => 10,
             ],
             'transactionTypes' => [
-                'sale' => 'Sale',
-                'rent' => 'Rent',
+                'sale' => label('Vanzari'),
+                'rent' => label('Inchirieri'),
             ],
         ];
     }
