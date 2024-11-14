@@ -24,6 +24,12 @@
                         </div>
                         <!-- Search Form -->
                             <div class="row">
+                                <div class="col-12 col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="input" placeholder="{{ label('Cauta...') }}" style="background-color: #fff; border: 1px solid #aaa; border-radius: 4px; height: 1.75rem;">
+                                    </div>
+                                </div>
+
                                 <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                     <div class="form-group">
                                         <select id="select-room-entrance" class="form-control" wire:model="roomEntrance">
@@ -113,7 +119,7 @@
 
             <div class="row">
 
-                @foreach($estates as $estate)
+                @foreach($this->getEstates() as $estate)
                     <!-- Single Featured Property -->
                     <div class="col-12 col-md-6 col-xl-4">
                         <div class="single-featured-property mb-50">
@@ -160,34 +166,9 @@
 
             <div class="row">
                 <div class="col-12">
-                    <div class="south-pagination d-flex justify-content-end">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                                {{-- Previous Page Link --}}
-                                <li class="page-item {{ $estates->onFirstPage() ? 'disabled' : '' }} mx-2">
-                                    <button class="page-link" wire:click="previousPage" wire:loading.attr="disabled">
-                                        &#60; <!-- Left arrow -->
-                                    </button>
-                                </li>
-
-                                {{-- Pagination Elements --}}
-                                @foreach ($estates->getUrlRange(1, $estates->lastPage()) as $page => $url)
-                                    <li class="page-item {{ $page == $estates->currentPage() ? 'active' : '' }} mx-1">
-                                        <button class="page-link" wire:click="gotoPage({{ $page }})" wire:loading.attr="disabled">
-                                            {{ $page }}
-                                        </button>
-                                    </li>
-                                @endforeach
-
-                                {{-- Next Page Link --}}
-                                <li class="page-item {{ $estates->hasMorePages() ? '' : 'disabled' }} mx-2">
-                                    <button class="page-link" wire:click="nextPage" wire:loading.attr="disabled">
-                                        &#62; <!-- Right arrow -->
-                                    </button>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+{{--                    <div class="south-pagination d-flex justify-content-end">--}}
+                        {{ $this->getEstates()->links() }}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>

@@ -12,6 +12,8 @@ class SaleEstates extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap';
+
     public string $defaultSelect = 'none';
 
     public string $roomEntrance = 'none';
@@ -25,6 +27,8 @@ class SaleEstates extends Component
     public $title = '';
 
     public $type = 'sale';
+
+    public $searchTerm = '';
 
     protected $queryString = [
         'roomEntrance',
@@ -46,7 +50,6 @@ class SaleEstates extends Component
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
         return view('livewire.sale-estates', [
-            'estates' => $this->getEstates(),
             'defaultSelect' => $this->defaultSelect,
             'filters' => [
                 'roomEntrances' => RoomEntrance::query()->orderBy('name')->get()->pluck('name', 'name')->toArray(),

@@ -1552,15 +1552,10 @@ img {
   color: #ffffff;
   background-color: #323232; }
 .pagination .page-link {
-  padding: 0;
   margin-left: 3px;
-  line-height: 20px;
   color: #323232;
   border: none;
-  width: 20px;
-  height: 20px;
   background-color: #947054;
-  font-size: 12px;
   color: #ffffff;
   text-align: center;
   margin-bottom: 5px; }
