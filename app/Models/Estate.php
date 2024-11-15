@@ -79,4 +79,19 @@ class Estate extends Model
     {
         return $this->belongsToMany(PossibleClient::class, 'estate_possible_client');
     }
+
+    public function getFormattedProperties(): ?array
+    {
+        $props = [];
+
+        if (!empty($this->estate_properties)) {
+            $props = $this->estate_properties;
+        }
+
+        if ($this->properties->count() > 0) {
+            $props = array_merge($props, $this->properties->pluck('name')->toArray());
+        }
+
+        return array_unique($props);
+    }
 }

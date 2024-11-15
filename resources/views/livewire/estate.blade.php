@@ -54,8 +54,8 @@
                         </div>
                         <!-- Core Features -->
                         <ul class="listings-core-features d-flex align-items-center">
-                            @foreach($this->estate->properties as $property)
-                                <li><i class="fa fa-check" aria-hidden="true"></i> {{ $property->name }}</li>
+                            @foreach($this->estate->getFormattedProperties() as $property)
+                                <li><i class="fa fa-check" aria-hidden="true"></i> {{ $property }}</li>
                             @endforeach
                         </ul>
                     </div>

@@ -50,6 +50,10 @@ class EstateResource extends Resource
                         ->columnSpan(3),
                     Forms\Components\Section::make('Caracteristici')
                         ->schema([
+                            Forms\Components\Placeholder::make('caracteristici')
+                                ->label('Caracteristici existente')
+                                ->content(fn (Estate $record): string => implode(', ', $record->estate_properties)),
+
                             Forms\Components\Select::make('properties')
                                 ->label('Caracteristici')
                                 ->multiple()
