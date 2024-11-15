@@ -98,11 +98,10 @@
                             <div class="col-12 d-flex justify-content-between align-items-end">
                                 <!-- More Filter -->
                                 <div class="more-filter">
-                                    <a href="#" id="moreFilter"></a>
                                 </div>
                                 <!-- Submit -->
                                 <div class="form-group mb-0">
-                                    <button type="button" class="btn south-btn" wire:click="applyFilters">{{ label('Cauta') }}</button>
+                                    <button type="button" id="apply-filters" class="btn south-btn" wire:click="applyFilters">{{ label('Cauta') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -238,7 +237,7 @@
                 selectedEstateType = $(this).val(); // Store selected floor locally
             });
 
-            document.querySelector('.btn.south-btn').addEventListener('click', function () {
+            document.querySelector('#apply-filters').addEventListener('click', function () {
                 // Set Livewire properties right before calling applyFilters()
 
                 @this.set('roomEntrance', selectedRoomEntrance);

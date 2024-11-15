@@ -26,7 +26,7 @@
                             <div class="row">
                                 <div class="col-12 col-md-4 col-lg-3">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="input" placeholder="{{ label('Cauta...') }}" style="background-color: #fff; border: 1px solid #aaa; border-radius: 4px; height: 1.75rem;">
+                                        <input type="text" class="form-control" name="input" wire:model.live="searchTerm" placeholder="{{ label('Cauta...') }}" style="background-color: #fff; border: 1px solid #aaa; border-radius: 4px; height: 1.75rem;">
                                     </div>
                                 </div>
 
@@ -94,11 +94,11 @@
                                 <div class="col-12 d-flex justify-content-between align-items-end">
                                     <!-- More Filter -->
                                     <div class="more-filter">
-                                        <a href="#" id="moreFilter"></a>
+                                        <button type="button" class="btn" id="moreFilter" wire:click="clearFilters">{{ label('Sterge filtre') }}</button>
                                     </div>
                                     <!-- Submit -->
                                     <div class="form-group mb-0">
-                                        <button type="button" class="btn south-btn" wire:click="applyFilters">{{ label('Cauta') }}</button>
+                                        <button type="button" id="apply-filters" class="btn south-btn" wire:click="applyFilters">{{ label('Cauta') }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -130,57 +130,60 @@
 {{--            </div>--}}
 
             <div class="row">
+                @if ($this->getEstates()->total() > 0)
+                    @foreach($this->getEstates() as $estate)
+                        <!-- Single Featured Property -->
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <div class="single-featured-property mb-50">
+                                <!-- Property Thumbnail -->
+                                <div class="property-thumb">
+                                    <img src="{{ $estate->featured_image }}" alt="{{ $estate->title . 'featured image' }}" style="height: 250px; width: 100%">
 
-                @foreach($this->getEstates() as $estate)
-                    <!-- Single Featured Property -->
-                    <div class="col-12 col-md-6 col-xl-4">
-                        <div class="single-featured-property mb-50">
-                            <!-- Property Thumbnail -->
-                            <div class="property-thumb">
-                                <img src="{{ $estate->featured_image }}" alt="{{ $estate->title . 'featured image' }}" style="height: 250px; width: 100%">
-
-                                <div class="tag">
-                                    <span>{{ $this->offerType === 2 ? label('Tag inchiriere') : label('Tag vanzare') }} </span>
+                                    <div class="tag">
+                                        <span>{{ $this->offerType === 2 ? label('Tag inchiriere') : label('Tag vanzare') }} </span>
+                                    </div>
+                                    <div class="list-price">
+                                        <p>€{{ $this->offerType === 1 ?  number_format($estate->sale_price, 2, ',', '.') : number_format($estate->rent_price, 2, ',', '.') }}</p>
+                                    </div>
                                 </div>
-                                <div class="list-price">
-                                    <p>€{{ $this->offerType === 1 ?  number_format($estate->sale_price, 2, ',', '.') : number_format($estate->rent_price, 2, ',', '.') }}</p>
-                                </div>
-                            </div>
-                            <!-- Property Content -->
-                            <div class="property-content">
-                                <a href="{{ route('estate.show', ['slug' => $estate->slug]) }}">
-                                    <h5>{{ $estate->title . ' - ' . $estate->construction_year . ' - ' . $estate->room_entrances }}</h5>
-                                </a>
-                                <p class="location"><img src="img/icons/location.png" alt="">{{ $estate->zone }}</p>
-                                <p>{{ substr($estate->description, 0, 100) . '...' }}</p>
-                                <div class="property-meta-data d-flex align-items-end justify-content-between">
-                                    <div class="new-tag">
-                                        <img src="img/icons/new.png" alt="">
-                                    </div>
-                                    <div class="bathroom">
-                                        <img src="img/icons/bathtub.png" alt="">
-                                        <span>{{ $estate->bathrooms }}</span>
-                                    </div>
-                                    <div class="garage">
-                                        <img src="img/icons/garage.png" alt="">
-                                        <span>{{ $estate->rooms }}</span>
-                                    </div>
-                                    <div class="space">
-                                        <img src="img/icons/space.png" alt="">
-                                        <span>{{ $estate->area }} &#13217;</span>
+                                <!-- Property Content -->
+                                <div class="property-content">
+                                    <a href="{{ route('estate.show', ['slug' => $estate->slug]) }}">
+                                        <h5>{{ $estate->title . ' - ' . $estate->construction_year . ' - ' . $estate->room_entrances }}</h5>
+                                    </a>
+                                    <p class="location"><img src="img/icons/location.png" alt="">{{ $estate->zone }}</p>
+                                    <p>{{ substr($estate->description, 0, 100) . '...' }}</p>
+                                    <div class="property-meta-data d-flex align-items-end justify-content-between">
+                                        <div class="new-tag">
+                                            <img src="img/icons/new.png" alt="">
+                                        </div>
+                                        <div class="bathroom">
+                                            <img src="img/icons/bathtub.png" alt="">
+                                            <span>{{ $estate->bathrooms }}</span>
+                                        </div>
+                                        <div class="garage">
+                                            <img src="img/icons/garage.png" alt="">
+                                            <span>{{ $estate->rooms }}</span>
+                                        </div>
+                                        <div class="space">
+                                            <img src="img/icons/space.png" alt="">
+                                            <span>{{ $estate->area }} &#13217;</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    @endforeach
+                @else
+                    <div class="d-flex justify-content-center align-items-center vh-100 col-12 col-md-6 col-xl-4">
+                        {{ label('Nu sunt rezultate') }}
                     </div>
-                @endforeach
+                @endif
             </div>
 
             <div class="row">
                 <div class="col-12">
-{{--                    <div class="south-pagination d-flex justify-content-end">--}}
-                        {{ $this->getEstates()->links() }}
-{{--                    </div>--}}
+                    {{ $this->getEstates()->links() }}
                 </div>
             </div>
         </div>
@@ -225,7 +228,7 @@
                 selectedEstateType = $(this).val(); // Store selected floor locally
             });
 
-            document.querySelector('.btn.south-btn').addEventListener('click', function () {
+            document.querySelector('#apply-filters').addEventListener('click', function () {
                 // Set Livewire properties right before calling applyFilters()
 
                 @this.set('roomEntrance', selectedRoomEntrance);

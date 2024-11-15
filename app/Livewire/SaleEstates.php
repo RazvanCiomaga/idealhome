@@ -96,11 +96,32 @@ class SaleEstates extends Component
             })
             ->when($this->floor !== $this->defaultSelect, fn($query) => $query->where('floor', '=', $this->floor))
             ->when($this->estateType !== $this->defaultSelect, fn($query) => $query->where('estate_type_id', '=', $this->estateType))
+            ->when($this->searchTerm, function ($query) {
+                $query->where(function ($query) {
+                    $query->whereRaw('LOWER(title) like ?', ['%' . strtolower($this->searchTerm) . '%'])
+                        ->orWhereRaw('LOWER(description) like ?', ['%' . strtolower($this->searchTerm) . '%']);
+                });
+            })
             ->orderBy('published_date', 'desc')
             ->paginate(12);
     }
 
     public function applyFilters(): void
+    {
+        $this->resetPage();
+    }
+
+    public function clearFilters(): void
+    {
+        $this->roomEntrance = $this->defaultSelect;
+        $this->zone = $this->defaultSelect;
+        $this->year = '';
+        $this->floor = $this->defaultSelect;
+        $this->estateType = $this->defaultSelect;
+        $this->resetPage();
+    }
+
+    public function updatedSearchTerm(): void
     {
         $this->resetPage();
     }
