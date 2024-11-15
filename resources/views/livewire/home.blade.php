@@ -115,7 +115,7 @@
 
                 <div class="col-12 col-lg-4">
                     <div class="section-heading text-left wow fadeInUp" data-wow-delay="250ms">
-                        <h2>{{ label('Proprietati prezentare') }}</h2>
+                        <h2>{{ label('Imobile de interes') }}</h2>
                         <p>{{ label('Proprietati prezentare scurta descriere.') }}</p>
                     </div>
 

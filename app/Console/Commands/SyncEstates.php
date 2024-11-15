@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Zone;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\DB;
 use App\Models\Estate;
 use App\Models\Agency;
@@ -88,8 +89,6 @@ class SyncEstates extends Command
      */
     protected function createOrUpdateEstates(array $estates): void
     {
-
-        // Begin transaction to handle large inserts safely
         // Loop through each estate and update or create it
         foreach ($estates as $estateData) {
             // Convert price fields to integers (if needed)

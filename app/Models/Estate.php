@@ -46,6 +46,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int|null $agency_id
  * @property DateTime|null $published_date
  * @property string|null $slug
+ * @property array|null $estate_properties
+ * @property int|null $offer_type_id
+ * @property int|null $estate_type_id
  */
 class Estate extends Model
 {
@@ -59,6 +62,7 @@ class Estate extends Model
         'rent_price' => MoneyCast::class,
         'rent_price_sqm' => MoneyCast::class,
         'comission' => MoneyCast::class,
+        'estate_properties' => 'array',
     ];
 
     public function agent(): BelongsTo
