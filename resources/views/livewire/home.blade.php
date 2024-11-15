@@ -23,14 +23,27 @@
                         <div class="search-title">
                             <p>{{ label('Cautati o proprietate') }}</p>
                         </div>
+
                         <!-- Search Form -->
                         <div class="row">
                             <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                 <div class="form-group">
-                                    <select id="select-transaction-types" class="form-control" wire:model="transactionType">
-                                        <option value="none" @if($transactionType === 'none') selected @endif>{{ label('Selecteaza tipul tranzactiei') }}</option>
-                                        @foreach($filters['transactionTypes'] as $key => $value)
-                                            <option value="{{ $key }}" @if($key === $transactionType) selected @endif>{{ $value }}</option>
+                                    <select id="select-transaction-types" class="form-control" wire:model="offerType">
+                                        <option value="none" @if($offerType === 'none') selected @endif>{{ label('Selecteaza tipul tranzactiei') }}</option>
+                                        @foreach($filters['offerTypes'] as $key => $value)
+                                            <option value="{{ $key }}" @if($key === $offerType) selected @endif>{{ $value }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 col-lg-3" wire:ignore>
+                                <div class="form-group">
+                                    <select id="select-estate-type" class="form-control" wire:model="estateType">
+                                        <!-- 'none' option is always available for resetting the filter -->
+                                        <option value="none" @if($estateType === 'none') selected @endif>{{ label('Selecteaza tipul proprietatii') }}</option>
+                                        @foreach($filters['estateTypes'] as $key => $value)
+                                            <option value="{{ $key }}" @if($key === $roomEntrance) selected @endif>{{ $value }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -190,14 +203,15 @@
             const yearInput = $('#year').select2();
             const floorsInput = $('#floors').select2();
             const transactionTypeInput = $('#select-transaction-types').select2();
+            const estateTypesInput = $('#select-estate-type').select2();
 
             // Local variables to store selected values
             let selectedRoomEntrance = 'none';
             let selectedZones = 'none';
             let selectedYear = 'none';
             let selectedFloor = 'none';
-            let selectedTransactionType = 'sale';
-
+            let selectedTransactionType = 1;
+            let selectedEstateType = 'none';
 
             // Update local variables on selection change (no Livewire re-render here)
             selectRoomEntranceInput.on('change', function () {
@@ -220,6 +234,10 @@
                 selectedTransactionType = $(this).val(); // Store selected transaction type locally
             });
 
+            estateTypesInput.on('change', function () {
+                selectedEstateType = $(this).val(); // Store selected floor locally
+            });
+
             document.querySelector('.btn.south-btn').addEventListener('click', function () {
                 // Set Livewire properties right before calling applyFilters()
 
@@ -231,7 +249,9 @@
 
                 @this.set('floor', selectedFloor);
 
-                @this.set('transactionType', selectedTransactionType);
+                @this.set('offerType', selectedTransactionType);
+
+                @this.set('estateType', selectedEstateType);
 
                 @this.call('applyFilters');
             });

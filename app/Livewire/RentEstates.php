@@ -10,7 +10,7 @@ use Livewire\WithPagination;
 
 class RentEstates extends SaleEstates
 {
-   public $type = 'rent';
+   public $offerType = 2;
 
    public $title = '';
 

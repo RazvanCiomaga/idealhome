@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Estate;
+use App\Models\EstateType;
 use App\Models\RoomEntrance;
 use App\Models\Zone;
 use Livewire\Component;
@@ -26,15 +27,18 @@ class SaleEstates extends Component
 
     public $title = '';
 
-    public $type = 'sale';
+    public $offerType = 1;
 
     public $searchTerm = '';
+
+    public $estateType = 'none';
 
     protected $queryString = [
         'roomEntrance',
         'zone',
         'year',
-        'floor'
+        'floor',
+        'estateType',
     ];
 
     public function mount(): void
@@ -44,6 +48,7 @@ class SaleEstates extends Component
         $this->zone = request()->query('zone', 'none');
         $this->year = request()->query('year', '');
         $this->floor = request()->query('floor', 'none');
+        $this->estateType = request()->query('estateType', 'none');
         $this->title = label('Proprietati de vanzare');
     }
 
@@ -71,6 +76,7 @@ class SaleEstates extends Component
                     9 => 9,
                     10 => 10,
                 ],
+                'estateTypes' => EstateType::query()->orderBy('name')->get()->pluck('name', 'imobmanager_id')->toArray(),
             ],
         ]);
     }
@@ -78,15 +84,7 @@ class SaleEstates extends Component
     public function getEstates(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         return Estate::query()
-            ->when($this->type, function ($query) {
-                if ($this->type === 'sale') {
-                    $query->where('sale_price', '>', 0)
-                        ->where('rent_price', '=', 0);
-                } elseif ($this->type === 'rent') {
-                    $query->where('sale_price', '=', 0)
-                        ->where('rent_price', '>', 0);
-                }
-            })
+            ->when($this->offerType, fn($query) => $query->where('offer_type_id', '=', $this->offerType))
             ->when($this->roomEntrance !== $this->defaultSelect, fn($query) => $query->where('room_entrances', '=', $this->roomEntrance))
             ->when($this->zone !== $this->defaultSelect, fn($query) => $query->where('zone', '=', $this->zone))
             ->when($this->year, function ($query) {
@@ -97,6 +95,7 @@ class SaleEstates extends Component
                 }
             })
             ->when($this->floor !== $this->defaultSelect, fn($query) => $query->where('floor', '=', $this->floor))
+            ->when($this->estateType !== $this->defaultSelect, fn($query) => $query->where('estate_type_id', '=', $this->estateType))
             ->orderBy('published_date', 'desc')
             ->paginate(12);
     }

@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\EstateType;
+use App\Models\OfferType;
 use App\Models\RoomEntrance;
 use App\Models\Zone;
 use Livewire\Component;
@@ -19,11 +21,13 @@ class Home extends Component
     public $floor = 'none';
 
 
-    public $transactionType = 'sale';
+    public $offerType = 1;
 
     public string $constructionYear = 'none';
 
     public  array $filters = [];
+
+    public $estateType = 'none';
 
     public $featuredProperties;
 
@@ -60,21 +64,20 @@ class Home extends Component
                 9 => 9,
                 10 => 10,
             ],
-            'transactionTypes' => [
-                'sale' => label('Vanzari'),
-                'rent' => label('Inchirieri'),
-            ],
+            'estateTypes' => EstateType::query()->orderBy('name')->get()->pluck('name', 'imobmanager_id')->toArray(),
+            'offerTypes' => OfferType::query()->orderBy('name')->get()->pluck('name', 'imobmanager_id')->toArray(),
         ];
     }
 
     public function applyFilters()
     {
-        if ($this->transactionType === 'sale') {
+        if ($this->offerType === 1) {
             return redirect()->route('sales-listings', [
                 'roomEntrance' => $this->roomEntrance,
                 'zone' => $this->zone,
                 'year' => $this->year,
                 'floor' => $this->floor,
+                'estateType' => $this->estateType,
             ]);
         } else {
             return redirect()->route('rent-listings', [
@@ -82,6 +85,7 @@ class Home extends Component
                 'zone' => $this->zone,
                 'year' => $this->year,
                 'floor' => $this->floor,
+                'estateType' => $this->estateType,
             ]);
         }
     }

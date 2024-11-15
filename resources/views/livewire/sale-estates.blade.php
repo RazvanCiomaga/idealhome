@@ -32,6 +32,18 @@
 
                                 <div class="col-12 col-md-4 col-lg-3" wire:ignore>
                                     <div class="form-group">
+                                        <select id="select-estate-type" class="form-control" wire:model="estateType">
+                                            <!-- 'none' option is always available for resetting the filter -->
+                                            <option value="none" @if($estateType === 'none') selected @endif>{{ label('Selecteaza tipul proprietatii') }}</option>
+                                            @foreach($filters['estateTypes'] as $key => $value)
+                                                <option value="{{ $key }}" @if($key === $roomEntrance) selected @endif>{{ $value }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4 col-lg-3" wire:ignore>
+                                    <div class="form-group">
                                         <select id="select-room-entrance" class="form-control" wire:model="roomEntrance">
                                             <!-- 'none' option is always available for resetting the filter -->
                                             <option value="none" @if($roomEntrance === 'none') selected @endif>{{ label('Selecteaza compartimentarea') }}</option>
@@ -128,10 +140,10 @@
                                 <img src="{{ $estate->featured_image }}" alt="{{ $estate->title . 'featured image' }}" style="height: 250px; width: 100%">
 
                                 <div class="tag">
-                                    <span>{{ $this->type === 'rent' ? 'For Rent' : 'For Sale' }} </span>
+                                    <span>{{ $this->offerType === 2 ? label('Tag inchiriere') : label('Tag vanzare') }} </span>
                                 </div>
                                 <div class="list-price">
-                                    <p>€{{ $this->type === 'sale' ?  number_format($estate->sale_price, 2, ',', '.') : number_format($estate->rent_price, 2, ',', '.') }}</p>
+                                    <p>€{{ $this->offerType === 1 ?  number_format($estate->sale_price, 2, ',', '.') : number_format($estate->rent_price, 2, ',', '.') }}</p>
                                 </div>
                             </div>
                             <!-- Property Content -->
@@ -183,12 +195,14 @@
             const zonesInput = $('#zones').select2();
             const yearInput = $('#year').select2();
             const floorsInput = $('#floors').select2();
+            const estateTypesInput = $('#select-estate-type').select2();
 
             // Local variables to store selected values
             let selectedRoomEntrance = 'none';
             let selectedZones = 'none';
             let selectedYear = 'none';
             let selectedFloor = 'none';
+            let selectedEstateType = 'none';
 
             // Update local variables on selection change (no Livewire re-render here)
             selectRoomEntranceInput.on('change', function () {
@@ -207,6 +221,10 @@
                 selectedFloor = $(this).val(); // Store selected floor locally
             });
 
+            estateTypesInput.on('change', function () {
+                selectedEstateType = $(this).val(); // Store selected floor locally
+            });
+
             document.querySelector('.btn.south-btn').addEventListener('click', function () {
                 // Set Livewire properties right before calling applyFilters()
 
@@ -217,6 +235,8 @@
                 @this.set('year', selectedYear);
 
                 @this.set('floor', selectedFloor);
+
+                @this.set('estateType', selectedEstateType);
 
                 @this.call('applyFilters');
             });
