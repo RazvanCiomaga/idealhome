@@ -35,8 +35,8 @@
                                         <select id="select-estate-type" class="form-control" wire:model="estateType">
                                             <!-- 'none' option is always available for resetting the filter -->
                                             <option value="none" @if($estateType === 'none') selected @endif>{{ label('Selecteaza tipul proprietatii') }}</option>
-                                            @foreach($filters['estateTypes'] as $key => $value)
-                                                <option value="{{ $key }}" @if($key === $roomEntrance) selected @endif>{{ $value }}</option>
+                                            @foreach($this->filters['estateTypes'] as $key => $value)
+                                                <option value="{{ $key }}" @if($key === $this->estateType) selected @endif>{{ $value }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -46,9 +46,9 @@
                                     <div class="form-group">
                                         <select id="select-room-entrance" class="form-control" wire:model="roomEntrance">
                                             <!-- 'none' option is always available for resetting the filter -->
-                                            <option value="none" @if($roomEntrance === 'none') selected @endif>{{ label('Selecteaza compartimentarea') }}</option>
-                                            @foreach($filters['roomEntrances'] as $key => $value)
-                                                <option value="{{ $key }}" @if($key === $roomEntrance) selected @endif>{{ $value }}</option>
+                                            <option value="none" @if($this->roomEntrance === 'none') selected @endif>{{ label('Selecteaza compartimentarea') }}</option>
+                                            @foreach($this->filters['roomEntrances'] as $key => $value)
+                                                <option value="{{ $key }}" @if($key === $this->roomEntrance) selected @endif>{{ $value }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -58,9 +58,9 @@
                                     <div class="form-group">
                                         <select id="zones" class="form-control" wire:model="zone">
                                             <!-- 'none' option for zone, similar to roomEntrance -->
-                                            <option value="{{ $defaultSelect }}" @if($zone === $defaultSelect) selected @endif>{{ label('Selecteaza zona') }}</option>
-                                            @foreach($filters['zones'] as $key => $value)
-                                                <option value="{{ $key }}" @if($key === $zone) selected @endif>{{ $value }}</option>
+                                            <option value="{{ $this->defaultSelect }}" @if($this->zone === $this->defaultSelect) selected @endif>{{ label('Selecteaza zona') }}</option>
+                                            @foreach($this->filters['zones'] as $key => $value)
+                                                <option value="{{ $key }}" @if($key === $this->zone) selected @endif>{{ $value }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -70,9 +70,9 @@
                                     <div class="form-group">
                                         <select id="floors" class="form-control" wire:model="floor">
                                             <!-- 'none' option for floor -->
-                                            <option value="{{ $defaultSelect }}" @if($floor === $defaultSelect) selected @endif>{{ label('Selecteaza etaj') }}</option>
-                                            @foreach($filters['floors'] as $key => $value)
-                                                <option value="{{ $key }}" @if($key === $floor) selected @endif>{{ $value }}</option>
+                                            <option value="{{ $this->defaultSelect }}" @if($this->floor === $this->defaultSelect) selected @endif>{{ label('Selecteaza etaj') }}</option>
+                                            @foreach($this->filters['floors'] as $key => $value)
+                                                <option value="{{ $key }}" @if($key === $this->floor) selected @endif>{{ $value }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -82,9 +82,9 @@
                                     <div class="form-group">
                                         <select id="year" class="form-control" wire:model="year">
                                             <!-- 'none' should not be selected as default here, so 'year' is empty -->
-                                            <option value="{{ $defaultSelect }}" @if($year === '') selected @endif>{{ label('Selecteaza anul constructiei') }}</option>
-                                            @foreach($filters['construction_year'] as $key => $value)
-                                                <option value="{{ $key }}" @if($key === $year) selected @endif>{{ $value }}</option>
+                                            <option value="{{ $this->defaultSelect }}" @if($this->year === '') selected @endif>{{ label('Selecteaza anul constructiei') }}</option>
+                                            @foreach($this->filters['construction_year'] as $key => $value)
+                                                <option value="{{ $key }}" @if($key === $this->year) selected @endif>{{ $value }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -112,22 +112,21 @@
     <!-- ##### Listing Content Wrapper Area Start ##### -->
     <section class="listings-content-wrapper section-padding-100">
         <div class="container">
-{{--            <div class="row">--}}
-{{--                <div class="col-12">--}}
-{{--                    <div class="listings-top-meta d-flex justify-content-between mb-100">--}}
-{{--                        <div class="order-by-area d-flex align-items-center">--}}
-{{--                            <span class="mr-15">Order by:</span>--}}
-{{--                            <select>--}}
-{{--                                <option selected>Default</option>--}}
-{{--                                <option value="1">Newest</option>--}}
-{{--                                <option value="2">Sales</option>--}}
-{{--                                <option value="3">Ratings</option>--}}
-{{--                                <option value="3">Popularity</option>--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            <div class="row">
+                <div class="col-12">
+                    <div class="listings-top-meta d-flex justify-content-between mb-100">
+                        <div class="order-by-area d-flex align-items-center">
+                            <span class="mr-15">{{ label('Ordoneaza rezultate') }}</span>
+                            <select wire:model.live="sortOption">
+                                <option value="{{ $this->defaultSelect }}" @if($this->sortOption === $this->defaultSelect) selected @endif>
+                                @foreach($this->sortOptions as $key => $value)
+                                    <option value="{{ $key }}" @if($key === $this->sortOption) selected @endif>{{ $value }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 @if ($this->getEstates()->total() > 0)
