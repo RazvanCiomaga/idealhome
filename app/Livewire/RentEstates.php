@@ -57,7 +57,7 @@ class RentEstates extends Component
         $this->year = request()->query('year', '');
         $this->floor = request()->query('floor', 'none');
         $this->estateType = request()->query('estateType', 'none');
-        $this->title = label('Proprietati de vanzare');
+        $this->title = label('Proprietati de inchiriat');
 
         // Define sorting options using the custom label() translation function
         $this->sortOptions = [
