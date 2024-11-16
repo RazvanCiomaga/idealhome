@@ -3,9 +3,13 @@
 namespace App\Livewire;
 
 use App\Mail\PossibleClient as PossibleClientMail;
+use App\Models\EstateType;
+use App\Models\OfferType;
 use App\Models\PossibleClient;
+use App\Models\RoomEntrance;
 use App\Models\User;
 use App\Models\Estate as EstateModel;
+use App\Models\Zone;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
@@ -20,11 +24,30 @@ class Estate extends Component
     public string $clientPhone = '';
     public string $clientMessage = '';
 
+    public string $defaultSelect = 'none';
+
+    public string $roomEntrance = 'none';
+
+    public string $zone = 'none';
+
+    public $year = '';
+
+    public $floor = 'none';
+
+
+    public $offerType = 1;
+
+    public  array $filters = [];
+
+    public $estateType = 'none';
+
     public function mount($slug): void
     {
         $this->slug = $slug;
         $this->estate = EstateModel::query()->where('slug', $this->slug)->first();
         $this->agent = $this->estate?->agent;
+        $this->offerType = $this->estate?->offer_type_id ?? 1;
+        $this->getFilters();
     }
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
@@ -70,6 +93,54 @@ class Estate extends Component
         } catch (\Exception $e) {
             // Optionally handle the error (e.g., log it or set an error message)
             session()->flash('error', 'Failed to send email: ' . $e->getMessage());
+        }
+    }
+
+    public function getFilters(): void
+    {
+        $this->filters = [
+            'roomEntrances' => RoomEntrance::query()->orderBy('name')->get()->pluck('name', 'name')->toArray(),
+            'zones' => Zone::query()->orderBy('name')->get()->pluck('name', 'name')->toArray(),
+            'construction_year' => [
+                'before' => label('Inainte de 1977'),
+                'after' => label('Dupa 1977'),
+            ],
+            'floors' => [
+                'Parter' => label('Parter'),
+                1 => 1,
+                2 => 2,
+                3 => 3,
+                4 => 4,
+                5 => 5,
+                6 => 6,
+                7 => 7,
+                8 => 8,
+                9 => 9,
+                10 => 10,
+            ],
+            'estateTypes' => EstateType::query()->orderBy('name')->get()->pluck('name', 'imobmanager_id')->toArray(),
+            'offerTypes' => OfferType::query()->orderBy('name')->get()->pluck('name', 'imobmanager_id')->toArray(),
+        ];
+    }
+
+    public function applyFilters()
+    {
+        if ($this->offerType === 1) {
+            return redirect()->route('sales-listings', [
+                'roomEntrance' => $this->roomEntrance,
+                'zone' => $this->zone,
+                'year' => $this->year,
+                'floor' => $this->floor,
+                'estateType' => $this->estateType,
+            ]);
+        } else {
+            return redirect()->route('rent-listings', [
+                'roomEntrance' => $this->roomEntrance,
+                'zone' => $this->zone,
+                'year' => $this->year,
+                'floor' => $this->floor,
+                'estateType' => $this->estateType,
+            ]);
         }
     }
 }

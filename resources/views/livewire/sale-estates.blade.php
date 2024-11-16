@@ -140,10 +140,14 @@
                                     <img src="{{ $estate->featured_image }}" alt="{{ $estate->title . 'featured image' }}" style="height: 250px; width: 100%">
 
                                     <div class="tag">
-                                        <span>{{ $this->offerType === 2 ? label('Tag inchiriere') : label('Tag vanzare') }} </span>
+                                        <a href="{{ route('estate.show', ['slug' => $estate->slug]) }}">
+                                            <span>{{ $this->offerType === 2 ? label('Tag inchiriere') : label('Tag vanzare') }} </span>
+                                        </a>
                                     </div>
                                     <div class="list-price">
-                                        <p>€{{ $this->offerType === 1 ?  number_format($estate->sale_price, 2, ',', '.') : number_format($estate->rent_price, 2, ',', '.') }}</p>
+                                        <a href="{{ route('estate.show', ['slug' => $estate->slug]) }}">
+                                            <p>€{{ $this->offerType === 1 ?  number_format($estate->sale_price, 2, ',', '.') : number_format($estate->rent_price, 2, ',', '.') }}</p>
+                                        </a>
                                     </div>
                                 </div>
                                 <!-- Property Content -->

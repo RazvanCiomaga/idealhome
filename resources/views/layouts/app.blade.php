@@ -174,7 +174,7 @@
                         <!-- Featured Properties Slides -->
                         <div class="featured-properties-slides owl-carousel">
                             @php
-                                $properties = \App\Models\Estate::query()->orderBy('sale_price', 'desc')->limit(3)->get();
+                                $properties = \App\Models\Estate::query()->orderBy('sale_price', 'desc')->limit(5)->get();
                             @endphp
 
                             @foreach($properties as $property)

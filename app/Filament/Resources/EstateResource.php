@@ -49,6 +49,10 @@ class EstateResource extends Resource
                                 ->url()
                                 ->label('Link facebook')
                                 ->columnSpanFull(),
+                            Forms\Components\TextInput::make('slug')
+                                ->readOnly()
+                                ->label('Slug')
+                                ->columnSpanFull(),
                         ])
                         ->columns(2)
                         ->columnSpan(3),

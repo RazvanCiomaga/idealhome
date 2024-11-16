@@ -140,10 +140,14 @@
                                     <img src="{{ $estate->featured_image }}" alt="{{ $estate->title . 'featured image' }}" style="height: 250px; width: 100%">
 
                                     <div class="tag">
-                                        <span>{{ label('Tag vanzare') }}</span>
+                                        <a href="{{ route('estate.show', ['slug' => $estate->slug]) }}">
+                                            <span>{{ label('Tag vanzare') }}</span>
+                                        </a>
                                     </div>
                                     <div class="list-price">
-                                        <p>€{{ number_format($estate->sale_price, 2, ',', '.') }}</p>
+                                        <a href="{{ route('estate.show', ['slug' => $estate->slug]) }}">
+                                            <p>€{{ number_format($estate->sale_price, 2, ',', '.') }}</p>
+                                        </a>
                                     </div>
                                 </div>
                                 <!-- Property Content -->
