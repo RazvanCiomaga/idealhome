@@ -17,8 +17,8 @@
                 <div class="col-12">
                     <!-- Single Listings Slides -->
                     <div class="single-listings-sliders owl-carousel">
-                        @foreach($this->estate->images as $image)
-                            <img src="{{ $image }}" alt="{{ $this->estate->title }}" class="img-fluid" style="height: 70vh; object-fit: contain;">
+                        @foreach($this->estate?->images ?? [] as $image)
+                            <img src="{{ $image }}" alt="{{ $this->estate?->title }}" class="img-fluid" style="height: 70vh; object-fit: contain;">
                         @endforeach
                     </div>
                 </div>
@@ -28,12 +28,13 @@
                 <div class="col-12 col-lg-8">
                     <div class="listings-content">
                         <!-- Price -->
-                        <div class="list-price">
-                            <p>€{{ $this->estate->sale_price > 0 ? number_format($this->estate->sale_price, 2, ',', '.') : number_format($this->estate->rent_price, 2, ',', '.')  }}</p>
+                        <div class="list-price d-flex">
+                            @if ($this->estate?->facebook_url)<a href="{{ $this->estate->facebook_url }}" target="_blank"><img src="img/icons/facebook.png" alt=""/></a>@endif
+                            <p>€{{ $this->estate?->sale_price > 0 ? number_format($this->estate->sale_price, 2, ',', '.') : number_format($this->estate->rent_price, 2, ',', '.')  }}</p>
                         </div>
-                        <h5>{{ $this->estate->title }}</h5>
-                        <p class="location"><img src="img/icons/location.png" alt="">{{ $this->estate->zone }}</p>
-                        <p>{{ $this->estate->description ?? '' }}</p>
+                        <h5> {{ $this->estate?->title }}</h5>
+                        <p class="location"><img src="img/icons/location.png" alt="">{{ $this->estate?->zone }}</p>
+                        <p>{{ $this->estate?->description ?? '' }}</p>
                         <!-- Meta -->
                         <div class="property-meta-data d-flex align-items-end">
                             <div class="new-tag">
@@ -41,20 +42,20 @@
                             </div>
                             <div class="bathroom">
                                 <img src="img/icons/bathtub.png" alt="">
-                                <span>{{ $this->estate->bathrooms }}</span>
+                                <span>{{ $this->estate?->bathrooms }}</span>
                             </div>
                             <div class="garage">
                                 <img src="img/icons/garage.png" alt="">
-                                <span>{{ $this->estate->rooms }}</span>
+                                <span>{{ $this->estate?->rooms }}</span>
                             </div>
                             <div class="space">
                                 <img src="img/icons/space.png" alt="">
-                                <span>{{ $estate->area }} &#13217;</span>
+                                <span>{{ $this->estate?->area }} &#13217;</span>
                             </div>
                         </div>
                         <!-- Core Features -->
                         <ul class="listings-core-features d-flex align-items-center">
-                            @foreach($this->estate->getFormattedProperties() as $property)
+                            @foreach($this->estate?->getFormattedProperties() as $property)
                                 <li><i class="fa fa-check" aria-hidden="true"></i> {{ $property }}</li>
                             @endforeach
                         </ul>
@@ -63,12 +64,12 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="contact-realtor-wrapper">
                         <div class="realtor-info">
-                            <img src="{{ $this->agent->picture }}" alt="">
+                            <img src="{{ $this->agent?->picture }}" alt="">
                             <div class="realtor---info">
-                                <h2>{{ $this->agent->name }}</h2>
-                                <p>{{ ucfirst($this->agent->position) }}</p>
-                                <h6><img src="img/icons/phone-call.png" alt=""> {{ $this->agent->phone }}</h6>
-                                <h6><img src="img/icons/envelope.png" alt=""> {{ $this->agent->email }}</h6>
+                                <h2>{{ $this->agent?->name }}</h2>
+                                <p>{{ ucfirst($this->agent?->position ?? '') }}</p>
+                                <h6><img src="img/icons/phone-call.png" alt=""> {{ $this->agent?->phone }}</h6>
+                                <h6><img src="img/icons/envelope.png" alt=""> {{ $this->agent?->email }}</h6>
                             </div>
                             <div class="realtor--contact-form">
                                 <div class="form-group">

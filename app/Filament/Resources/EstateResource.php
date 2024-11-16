@@ -45,6 +45,10 @@ class EstateResource extends Resource
                             Forms\Components\TextInput::make('county')
                                 ->label('Judet')
                                 ->maxLength(255),
+                            Forms\Components\TextInput::make('facebook_url')
+                                ->url()
+                                ->label('Link facebook')
+                                ->columnSpanFull(),
                         ])
                         ->columns(2)
                         ->columnSpan(3),
@@ -52,7 +56,7 @@ class EstateResource extends Resource
                         ->schema([
                             Forms\Components\Placeholder::make('caracteristici')
                                 ->label('Caracteristici existente')
-                                ->content(fn (Estate $record): string => implode(', ', $record->estate_properties)),
+                                ->content(fn (Estate $record): string => $record->estate_properties ?  implode(', ', $record->estate_properties) : ''),
 
                             Forms\Components\Select::make('properties')
                                 ->label('Caracteristici')

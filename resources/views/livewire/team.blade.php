@@ -23,12 +23,12 @@
             </div>
 
             <div class="row justify-content-center">
-                @foreach($this->agents as $agent)
+                @foreach($this->agents ?? [] as $agent)
                     <div class="col-12 col-sm-6 col-lg-4">
                         <div class="single-team-member mb-100 wow fadeInUp" data-wow-delay="250ms">
                             <!-- Team Member Thumb -->
                             <div class="team-member-thumb">
-                                <img src="{{ $agent->picture }}" alt="{{ $agent->name . ' ' . 'profile' }}">
+                                <img src="img/bg-img/team1.jpg" alt="">
                             </div>
                             <!-- Team Member Info -->
                             <div class="team-member-info">
