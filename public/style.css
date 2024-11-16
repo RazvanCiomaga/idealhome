@@ -1163,14 +1163,17 @@ img {
   padding-top: 130px;
   text-align: center; }
   .breadcumb-area .breadcumb-title {
-    font-size: 60px;
-    margin-bottom: 0;
-    background-color: #000000;
-    padding: 5px 20px 7px;
-    line-height: 1;
-    color: #ffffff;
-    display: inline-block;
-    text-transform: uppercase; }
+      font-size: 60px;
+      background: linear-gradient(135deg, #947054, #d6c58a);
+      border-radius: 8px; /* Rounded corners for a softer look */
+      line-height: 1.2; /* Slightly larger line height for readability */
+      color: #ffffff; /* White text color */
+      display: inline-block;
+      text-transform: uppercase;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+      border: 2px solid #947054; /* Border with a matching color */
+      padding: 0.5rem;
+  }
     @media only screen and (min-width: 992px) and (max-width: 1199px) {
       .breadcumb-area .breadcumb-title {
         font-size: 48px; } }
