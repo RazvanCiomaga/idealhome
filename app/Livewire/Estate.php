@@ -60,6 +60,23 @@ class Estate extends Component
             return;
         }
 
+        $possibleClient = PossibleClient::query()->where('email', $this->clientEmail)->first();
+
+        $possibleClient = PossibleClient::query()->where('email', $this->clientEmail)->first() ?? new PossibleClient();
+
+        $possibleClient->name = $this->clientName;
+        $possibleClient->email = $this->clientEmail;
+        $possibleClient->phone = $this->clientPhone;
+        $possibleClient->message = $this->clientMessage;
+        $possibleClient->save();
+
+        $possibleClient->estates()->syncWithoutDetaching([$this->estate->id]);
+
+        $this->clientName = '';
+        $this->clientEmail = '';
+        $this->clientPhone = '';
+        $this->clientMessage = '';
+
         try {
             // Send the email
             Mail::to($this->agent->email)->send(new PossibleClientMail([
@@ -69,23 +86,6 @@ class Estate extends Component
                 'message' => $this->clientMessage,
                 'subject' => $this->estate->title,
             ]));
-
-            $possibleClient = PossibleClient::query()->where('email', $this->clientEmail)->first();
-
-            $possibleClient = PossibleClient::query()->where('email', $this->clientEmail)->first() ?? new PossibleClient();
-
-            $possibleClient->name = $this->clientName;
-            $possibleClient->email = $this->clientEmail;
-            $possibleClient->phone = $this->clientPhone;
-            $possibleClient->message = $this->clientMessage;
-            $possibleClient->save();
-
-            $possibleClient->estates()->syncWithoutDetaching([$this->estate->id]);
-
-            $this->clientName = '';
-            $this->clientEmail = '';
-            $this->clientPhone = '';
-            $this->clientMessage = '';
 
             // Optionally set a confirmation message
             session()->flash('message', 'Email sent successfully!');

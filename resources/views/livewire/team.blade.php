@@ -24,23 +24,16 @@
 
             <div class="row justify-content-center">
                 @foreach($this->agents ?? [] as $agent)
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="single-team-member mb-100 wow fadeInUp" data-wow-delay="250ms">
-                            <!-- Team Member Thumb -->
-                            <div class="team-member-thumb">
-                                <img src="img/bg-img/team1.jpg" alt="">
-                            </div>
-                            <!-- Team Member Info -->
-                            <div class="team-member-info">
-                                <div class="section-heading">
-                                    <img src="img/icons/prize.png" alt="">
-                                    <h2>{{ $agent->name }}</h2>
-                                    <p>{{ strlen($agent->position ?? '') ? ucfirst($agent->position) : label('Agent') }}</p>
-                                </div>
-                                <div class="address">
-                                    <h6><img src="img/icons/phone-call.png" alt=""> {{ $agent->phone }}</h6>
-                                    <h6><img src="img/icons/envelope.png" alt=""> {{ $agent->email }}</h6>
-                                </div>
+                    <div class="col-12 col-sm-6 col-lg-4 mb-3">
+                        <div class="card">
+{{--                            <img class="card-img-top" src="{{ $agent->picture }}" alt="{{ $agent->name . ' ' . ($agent->position ?? '') }}" style="height: 40vh;">--}}
+                            <img class="card-img-top" src="img/bg-img/team1.jpg" alt="" style="height: 40vh;">
+                            <div class="card-body text-center">
+                                <img src="img/icons/prize.png" alt="">
+                                <h5 class="card-title">{{ $agent->name }}</h5>
+                                <p class="card-text">{{ strlen($agent->position ?? '') ? ucfirst($agent->position) : label('Agent') }}</p>
+                                <h6><img src="img/icons/phone-call.png" alt=""> {{ $agent->phone }}</h6>
+                                <h6><img src="img/icons/envelope.png" alt=""> {{ $agent->email }}</h6>
                             </div>
                         </div>
                     </div>
