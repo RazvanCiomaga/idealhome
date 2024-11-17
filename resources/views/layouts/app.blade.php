@@ -47,7 +47,7 @@
                     <img src="img/icons/phone-call.png" alt="">
                 </div>
                 <div class="number">
-                    <a href="tel:+45 677 8993000 223">{{ $agency?->phone }}</a>
+                    <a href="{{ 'tel:'.$agency?->phone }}">{{ $agency?->phone }}</a>
                 </div>
             </div>
         </div>
