@@ -77,7 +77,7 @@
 
                     <!-- Nav Start -->
                     <div class="classynav row">
-                        <ul>
+                        <ul class="ml-2">
                             <li><a href="{{ route('home') }}">{{ label('Pagina principala') }}</a></li>
                             <li><a href="{{ route('sales-listings') }}">{{ label('Pagina vanzari') }}</a></li>
                             <li><a href="{{ route('rent-listings') }}">{{ label('Pagina inchirieri') }}</a></li>
