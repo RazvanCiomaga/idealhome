@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\EstateResource\Pages;
 use App\Filament\Resources\EstateResource\RelationManagers;
 use App\Models\Estate;
+use App\Models\OfferType;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,6 +14,7 @@ use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EstateResource extends Resource
@@ -27,9 +29,14 @@ class EstateResource extends Resource
             ->schema([
                     Forms\Components\Section::make('Detalii')
                         ->schema([
+                            Forms\Components\Toggle::make('home_page_display')
+                                ->label('Vizibil pe pagina principala'),
                             Forms\Components\Select::make('agent_id')
                                 ->label('Agent')
                                 ->relationship('agent', 'name', fn ($query) => $query->whereNotNull('imobmanager_id')),
+                            Forms\Components\Select::make('offer_type_id')
+                                ->label('Tip oferta')
+                                ->options(fn () => OfferType::query()->pluck('name', 'imobmanager_id')->toArray()),
                             Forms\Components\TextInput::make('title')
                                 ->label('Titlu')
                                 ->maxLength(255),
@@ -158,6 +165,12 @@ class EstateResource extends Resource
                     ->label('Titlu')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\IconColumn::make('home_page_display')
+                    ->boolean()
+                    ->label('Pagina principala'),
+                Tables\Columns\TextColumn::make('offer_type_id')
+                    ->label('Tip oferta')
+                    ->formatStateUsing(fn ($record) => OfferType::query()->where('imobmanager_id', '=', $record->offer_type_id)->first()?->name ?? ''),
                 Tables\Columns\TextColumn::make('city')
                     ->label('Oraș')
                     ->searchable()
@@ -197,16 +210,11 @@ class EstateResource extends Resource
                     ->searchable()
                     ->preload()
                     ->optionsLimit(20),
-                Tables\Filters\TernaryFilter::make('offer_type')
+                Tables\Filters\SelectFilter::make('offer_type_id')
                     ->label('Tip Ofertă')
                     ->placeholder('Tip Ofertă')
-                    ->trueLabel('Vanzare')
-                    ->falseLabel('Inchiriere')
-                    ->queries(
-                        true: fn (Builder $query) => $query->where('sale_price', '>', 0)->where('rent_price', '=', 0),
-                        false: fn (Builder $query) => $query->where('sale_price', '=', 0)->where('rent_price', '>', 0),
-                        blank: fn (Builder $query) => $query,
-                    )
+                    ->options(fn () => OfferType::query()->pluck('name', 'imobmanager_id')->toArray())
+                    ->attribute('offer_type_id'),
 
             ], layout: Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
@@ -215,6 +223,12 @@ class EstateResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('home_page_display')
+                        ->requiresConfirmation()
+                        ->label('Arata proprietati pe prima pagina')
+                        ->icon('heroicon-o-home')
+                        ->action(fn (Collection $records) => $records->each(fn (Estate $estate) => $estate->update(['home_page_display' => true])))
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ]);
     }

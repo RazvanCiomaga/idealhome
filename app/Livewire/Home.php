@@ -34,7 +34,10 @@ class Home extends Component
     public function mount(): void
     {
         $this->getFilters();
-        $this->featuredProperties = \App\Models\Estate::query()->orderBy('sale_price', 'desc')->limit(3)->get();
+        $this->featuredProperties = \App\Models\Estate::query()
+            ->orderByRaw('home_page_display DESC, sale_price DESC') // Prioritize `home_page_display` first, then by `sale_price`
+            ->limit(15) // Limit to the top 15 results
+            ->get();
     }
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application

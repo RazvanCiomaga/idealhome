@@ -132,8 +132,6 @@
                     </div>
 
                     <div class="featured-properties-slides owl-carousel wow fadeInUp" data-wow-delay="350ms">
-
-
                         @foreach($this->featuredProperties as $estate)
                             <div class="single-featured-property">
                                 <div class="property-thumb">
@@ -146,7 +144,7 @@
                                     </div>
                                     <div class="list-price">
                                         <a href="{{ route('estate.show', ['slug' => $estate->slug]) }}">
-                                            <p>€{{ number_format($estate->sale_price, 2, ',', '.') }}</p>
+                                            <p>€{{ $estate->sale_price > 0 ? number_format($estate->sale_price, 2, ',', '.') : number_format($estate->rent_price, 2, ',', '.') }}</p>
                                         </a>
                                     </div>
                                 </div>

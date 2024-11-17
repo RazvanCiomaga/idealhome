@@ -30,6 +30,7 @@ return new class extends Migration
             $table->unsignedBigInteger('offer_type_id')->nullable();
             $table->json('estate_properties')->nullable();
             $table->string('facebook_url')->nullable();
+            $table->boolean('home_page_display')->default(false)->nullable();
         });
     }
 
