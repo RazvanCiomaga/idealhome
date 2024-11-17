@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('estates', function (Blueprint $table) {
-            $table->foreignIdFor(\App\Models\Agent::class, 'agent_id')->nullable();
+            $table->foreignIdFor(\App\Models\User::class, 'agent_id')->nullable();
             $table->foreignIdFor(\App\Models\Agency::class, 'agency_id')->nullable();
         });
     }
