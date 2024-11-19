@@ -24,7 +24,7 @@
                         </div>
                         <!-- Search Form -->
                             <div class="row">
-                                <div class="col-12 col-md-4 col-lg-3">
+                                <div class="col-12 col-md-8 col-lg-6">
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="input" wire:model.live="searchTerm" placeholder="{{ label('Cauta...') }}" style="background-color: #fff; border: 1px solid #aaa; border-radius: 4px; height: 1.75rem;">
                                     </div>
