@@ -30,7 +30,6 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->brandLogo(asset('img/core-img/logo.png'))
             ->brandLogoHeight('3.5rem')
-            ->passwordReset()
             ->colors([
                 'primary' => Color::Yellow,
             ])
@@ -60,6 +59,8 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 FilamentShieldPlugin::make(),
             ])
-            ->topNavigation();
+            ->topNavigation()
+            ->passwordReset()
+            ->profile();
     }
 }
