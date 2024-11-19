@@ -34,9 +34,9 @@
                                     <div class="form-group">
                                         <select id="select-estate-type" class="form-control" wire:model="estateType">
                                             <!-- 'none' option is always available for resetting the filter -->
-                                            <option value="none" @if($estateType === 'none') selected @endif>{{ label('Selecteaza tipul proprietatii') }}</option>
+                                            <option value="none" @if($this->estateType === 'none') selected @endif>{{ label('Selecteaza tipul proprietatii') }}</option>
                                             @foreach($this->filters['estateTypes'] as $key => $value)
-                                                <option value="{{ $key }}" @if($key === $this->estateType) selected @endif>{{ $value }}</option>
+                                                <option value="{{ $key }}" @if($key == $this->estateType) selected @endif>{{ $value }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -72,7 +72,7 @@
                                             <!-- 'none' option for floor -->
                                             <option value="{{ $this->defaultSelect }}" @if($this->floor === $this->defaultSelect) selected @endif>{{ label('Selecteaza etaj') }}</option>
                                             @foreach($this->filters['floors'] as $key => $value)
-                                                <option value="{{ $key }}" @if($key === $this->floor) selected @endif>{{ $value }}</option>
+                                                <option value="{{ $key }}" @if($key == $this->floor) selected @endif>{{ $value }}</option>
                                             @endforeach
                                         </select>
                                     </div>
