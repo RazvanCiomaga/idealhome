@@ -60,24 +60,17 @@ class Estate extends Component
             return;
         }
 
-        $possibleClient = PossibleClient::query()->where('email', $this->clientEmail)->first();
-
-        $possibleClient = PossibleClient::query()->where('email', $this->clientEmail)->first() ?? new PossibleClient();
-
-        $possibleClient->name = $this->clientName;
-        $possibleClient->email = $this->clientEmail;
-        $possibleClient->phone = $this->clientPhone;
-        $possibleClient->message = $this->clientMessage;
-        $possibleClient->save();
-
-        $possibleClient->estates()->syncWithoutDetaching([$this->estate->id]);
-
-        $this->clientName = '';
-        $this->clientEmail = '';
-        $this->clientPhone = '';
-        $this->clientMessage = '';
-
         try {
+            $possibleClient = PossibleClient::query()->where('email', $this->clientEmail)->first() ?? new PossibleClient();
+
+            $possibleClient->name = $this->clientName;
+            $possibleClient->email = $this->clientEmail;
+            $possibleClient->phone = $this->clientPhone;
+            $possibleClient->message = $this->clientMessage;
+            $possibleClient->save();
+
+            $possibleClient->estates()->syncWithoutDetaching([$this->estate->id]);
+
             // Send the email
             Mail::to($this->agent->email)->send(new PossibleClientMail([
                 'name' => $this->clientName,
@@ -90,6 +83,10 @@ class Estate extends Component
             // Optionally set a confirmation message
             session()->flash('message', 'Email sent successfully!');
 
+            $this->clientName = '';
+            $this->clientEmail = '';
+            $this->clientPhone = '';
+            $this->clientMessage = '';
         } catch (\Exception $e) {
             // Optionally handle the error (e.g., log it or set an error message)
             session()->flash('error', 'Failed to send email: ' . $e->getMessage());

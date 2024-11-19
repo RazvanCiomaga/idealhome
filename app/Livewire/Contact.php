@@ -33,20 +33,15 @@ class Contact extends Component
             return;
         }
 
-        $possibleClient = PossibleClient::query()->where('email', $this->clientEmail)->first() ?? new PossibleClient();
-
-        $possibleClient->name = $this->clientName;
-        $possibleClient->email = $this->clientEmail;
-        $possibleClient->phone = $this->clientPhone;
-        $possibleClient->message = $this->clientMessage;
-        $possibleClient->save();
-
-        $this->clientName = '';
-        $this->clientEmail = '';
-        $this->clientPhone = '';
-        $this->clientMessage = '';
-
         try {
+            $possibleClient = PossibleClient::query()->where('email', $this->clientEmail)->first() ?? new PossibleClient();
+
+            $possibleClient->name = $this->clientName;
+            $possibleClient->email = $this->clientEmail;
+            $possibleClient->phone = $this->clientPhone;
+            $possibleClient->message = $this->clientMessage;
+            $possibleClient->save();
+
             // Send the email
             Mail::to($this->agency->email)->send(new PossibleClientMail([
                 'name' => $this->clientName,
@@ -55,6 +50,11 @@ class Contact extends Component
                 'message' => $this->clientMessage,
                 'subject' => 'Posibil Client',
             ]));
+
+            $this->clientName = '';
+            $this->clientEmail = '';
+            $this->clientPhone = '';
+            $this->clientMessage = '';
 
             // Optionally set a confirmation message
             session()->flash('message', 'Email sent successfully!');
