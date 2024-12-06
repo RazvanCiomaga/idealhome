@@ -181,6 +181,18 @@
         </div>
     </section>
 
+    <div class="map-area mb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div id="googleMap" class="googleMap">
+                        <div style="overflow:hidden;max-width:100%;height:30rem;"><div id="display-google-map" style="height:100%; width:100%;max-width:100%;"><iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=ideal+home+iasi&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"></iframe></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section class="call-to-action-area bg-fixed bg-overlay-black" style="background-image: url(img/bg-img/cta.jpg)">
         <div class="container h-100">
             <div class="row align-items-center h-100">
