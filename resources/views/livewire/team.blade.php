@@ -27,7 +27,7 @@
                     <div class="col-12 col-sm-6 col-lg-4 mb-3">
                         <div class="card">
 {{--                            <img class="card-img-top" src="{{ $agent->picture }}" alt="{{ $agent->name . ' ' . ($agent->position ?? '') }}" style="height: 40vh;">--}}
-                            <img class="card-img-top" src="img/bg-img/team1.jpg" alt="" style="height: 40vh;">
+                            <img class="card-img-top" src="{{ $agent->picture ?? 'img/bg-img/team1.jpg' }}" alt="">
                             <div class="card-body text-center">
                                 <img src="img/icons/prize.png" alt="">
                                 <h5 class="card-title">{{ $agent->name }}</h5>
