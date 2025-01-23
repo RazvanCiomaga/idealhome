@@ -3,9 +3,11 @@
 namespace App\Console\Commands;
 
 use App\Models\Estate;
+use App\Models\EstateSync;
 use App\Models\EstateType;
 use App\Models\OfferType;
 use App\Services\ImobManager as ImobManagerService;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Http\Client\ConnectionException;
@@ -32,7 +34,22 @@ class SyncEstatesInfo extends Command
      */
     public function handle(): int
     {
-        Estate::query()->chunk(100, function ($estates) {
+        $lastLog = EstateSync::query()->orderBy('last_sync', 'desc')->first();
+
+        $estates = $this->imobManager->get("estate", [
+            'page' => 1,
+            'per_page' => 9999,
+        ]);
+
+        $estateIds = [];
+
+        foreach ($estates['data'] as $estate) {
+            if (!$lastLog || ($estate['modified'] > $lastLog->last_sync)) {
+                $estateIds[] = $estate['id'];
+            }
+        }
+
+        Estate::query()->whereIntegerInRaw('imobmanager_id', $estateIds)->chunk(100, function ($estates) {
             $fieldsToCheck = [
                 'general_formatted',
                 'heating_formatted',
@@ -93,6 +110,11 @@ class SyncEstatesInfo extends Command
                 $estate->save();
             }
         });
+
+
+        EstateSync::query()->create([
+            'last_sync' => now()
+        ]);
 
         return 0;
     }
