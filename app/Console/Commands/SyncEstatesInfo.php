@@ -91,6 +91,8 @@ class SyncEstatesInfo extends Command
                     }
                 }
 
+                $estate->last_sync_at = now();
+
                 $estate->save();
             }
         });
