@@ -76,14 +76,14 @@ class SyncEstatesInfo extends Command
                 }
 
                 if (!empty($extraInfo['offer_type'])) {
-                    $estate->offer_type_id = $extraInfo['offer_type']['original_value'];
+                    $estate->offer_type_id = explode(',', $extraInfo['offer_type']['original_value'])[0];
 
                     foreach ($extraInfo['offer_type']['values'] as $value) {
                         $offerType = OfferType::query()->where('imobmanager_id', $extraInfo['offer_type']['original_value'])->first();
 
                         if (!$offerType) {
                             $offerType = new OfferType();
-                            $offerType->imobmanager_id = $extraInfo['offer_type']['original_value'];
+                            $offerType->imobmanager_id = explode(',', $extraInfo['offer_type']['original_value'])[0];
                             $offerType->name = $value;
                             $offerType->save();
                         }
@@ -91,14 +91,14 @@ class SyncEstatesInfo extends Command
                 }
 
                 if (!empty($extraInfo['estate_type'])) {
-                    $estate->estate_type_id = $extraInfo['estate_type']['original_value'];
+                    $estate->estate_type_id = explode(',', $extraInfo['estate_type']['original_value'])[0];
 
                     foreach ($extraInfo['estate_type']['values'] as $value) {
                         $estateType = EstateType::query()->where('imobmanager_id', $extraInfo['estate_type']['original_value'])->first();
 
                         if (!$estateType) {
                             $estateType = new EstateType();
-                            $estateType->imobmanager_id = $extraInfo['estate_type']['original_value'];
+                            $estateType->imobmanager_id = explode(',', $extraInfo['estate_type']['original_value'])[0];
                             $estateType->name = $value;
                             $estateType->save();
                         }
