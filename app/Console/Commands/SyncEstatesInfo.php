@@ -32,9 +32,6 @@ class SyncEstatesInfo extends Command
      */
     public function handle(): int
     {
-        ini_set('memory_limit', '2048M');
-        ini_set('max_execution_time', '3600');
-
         Estate::query()->chunk(100, function ($estates) {
             $fieldsToCheck = [
                 'general_formatted',
@@ -91,7 +88,7 @@ class SyncEstatesInfo extends Command
                     }
                 }
 
-                $estate->last_sync_at = now();
+                $estate->last_sync = now();
 
                 $estate->save();
             }
