@@ -82,6 +82,8 @@ class UserResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->limit(50),
+                Tables\Columns\TextColumn::make('order')
+                    ->label('Ordine pe site'),
             ])
             ->filters([
                 //
@@ -93,7 +95,8 @@ class UserResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->reorderable('order');
     }
 
     public static function getRelations(): array
