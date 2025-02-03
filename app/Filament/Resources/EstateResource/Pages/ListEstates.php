@@ -28,13 +28,13 @@ class ListEstates extends ListRecords
                     SyncEstates::dispatch(new ImobManager());
                     self::$wasSynced = !self::$wasSynced;
                 }),
-            Actions\Action::make('sync_estates_info')
-                ->label(fn () => self::$wasSyncedTwo ? label('Info Sincrionizate') : label('Sincronizare info'))
-                ->icon(fn () => self::$wasSyncedTwo ? 'heroicon-o-check' : 'heroicon-o-arrow-path')
-                ->action(function () {
-                    SyncEstatesInfo::dispatch(new ImobManager());
-                    self::$wasSyncedTwo = !self::$wasSyncedTwo;
-                }),
+//            Actions\Action::make('sync_estates_info')
+//                ->label(fn () => self::$wasSyncedTwo ? label('Info Sincrionizate') : label('Sincronizare info'))
+//                ->icon(fn () => self::$wasSyncedTwo ? 'heroicon-o-check' : 'heroicon-o-arrow-path')
+//                ->action(function () {
+//                    SyncEstatesInfo::dispatch(new ImobManager());
+//                    self::$wasSyncedTwo = !self::$wasSyncedTwo;
+//                }),
         ];
     }
 }
