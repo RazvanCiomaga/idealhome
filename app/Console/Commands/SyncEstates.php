@@ -106,7 +106,7 @@ class SyncEstates extends Command
             $counter = 1;
 
             // Loop until we find a unique slug
-            while (Estate::query()->where('slug', $slug)->exists()) {
+            while (Estate::query()->where('slug', $slug)->where('imobmanager_id', '!=', $estateData['id'])->exists()) {
                 $slug = "{$baseSlug}-{$counter}";
                 $counter++;
             }
