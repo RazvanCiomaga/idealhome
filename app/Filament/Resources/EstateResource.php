@@ -52,6 +52,10 @@ class EstateResource extends Resource
                             Forms\Components\TextInput::make('county')
                                 ->label('Judet')
                                 ->maxLength(255),
+                            Forms\Components\TextInput::make('visits')
+                                ->label('Accesari')
+                                ->numeric()
+                                ->readOnly(),
                             Forms\Components\TextInput::make('facebook_url')
                                 ->url()
                                 ->label('Link facebook')
@@ -163,6 +167,10 @@ class EstateResource extends Resource
                     ->label('Agent'),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Titlu')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('visits')
+                    ->label('Accesari')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('home_page_display')

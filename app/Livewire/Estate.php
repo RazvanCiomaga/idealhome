@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Estate as EstateModel;
 use App\Models\Zone;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class Estate extends Component
@@ -48,6 +49,19 @@ class Estate extends Component
         $this->agent = $this->estate?->agent;
         $this->offerType = $this->estate?->offer_type_id ?? 1;
         $this->getFilters();
+
+        // Get the visited estates array from session or create an empty one
+        $visitedEstates = Session::get('visited_estates', []);
+
+        if (!in_array($slug, $visitedEstates)) {
+            // Increment visits count
+            $this->estate->visits += 1;
+            $this->estate->saveQuietly();
+
+            // Add slug to session array
+            $visitedEstates[] = $slug;
+            Session::put('visited_estates', $visitedEstates);
+        }
     }
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
