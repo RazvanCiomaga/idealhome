@@ -140,12 +140,12 @@
 
                                     <div class="tag">
                                         <a href="{{ route('estate.show', ['slug' => $estate->slug]) }}">
-                                            <span>{{ label('Tag vanzare') }} </span>
+                                            <span>{{ label('Tag inchiriere') }} </span>
                                         </a>
                                     </div>
                                     <div class="list-price">
                                         <a href="{{ route('estate.show', ['slug' => $estate->slug]) }}">
-                                            <p>€{{ number_format($estate->sale_price, 2, ',', '.') }}</p>
+                                            <p>€{{ number_format($estate->rent_price, 2, ',', '.') }}</p>
                                         </a>
                                     </div>
                                 </div>

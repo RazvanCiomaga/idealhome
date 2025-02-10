@@ -84,7 +84,13 @@ class SaleEstates extends Component
     public function getEstates(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         return Estate::query()
-            ->when($this->offerType, fn($query) => $query->where('offer_type_id', '=', $this->offerType))
+            ->when($this->offerType, function ($query) {
+                if ($this->offerType == 1) { // Sale
+                    $query->where('sale_price', '>', 0);
+                } elseif ($this->offerType == 2) { // Rent
+                    $query->where('rent_price', '>', 0);
+                }
+            })
             ->when($this->roomEntrance !== $this->defaultSelect, fn($query) => $query->where('room_entrances', '=', $this->roomEntrance))
             ->when($this->zone !== $this->defaultSelect, fn($query) => $query->where('zone', '=', $this->zone))
             ->when($this->year, function ($query) {
