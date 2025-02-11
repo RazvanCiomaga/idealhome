@@ -167,6 +167,7 @@ class EstateResource extends Resource
                     ->label('Agent'),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Titlu')
+                    ->url(fn (Estate $record) => route('estate.show', ['slug' => $record->slug]), shouldOpenInNewTab: true)
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('visits')
@@ -178,6 +179,7 @@ class EstateResource extends Resource
                     ->label('Pagina principala'),
                 Tables\Columns\TextColumn::make('offer_type_id')
                     ->label('Tip oferta')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->formatStateUsing(fn ($record) => OfferType::query()->where('imobmanager_id', '=', $record->offer_type_id)->first()?->name ?? ''),
                 Tables\Columns\TextColumn::make('city')
                     ->label('Oraș')
