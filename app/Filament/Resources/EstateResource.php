@@ -240,8 +240,7 @@ class EstateResource extends Resource
                         ->action(fn (Collection $records) => $records->each(fn (Estate $estate) => $estate->update(['home_page_display' => true])))
                         ->deselectRecordsAfterCompletion(),
                 ]),
-            ])
-            ->defaultSort('publish_date', 'desc');
+            ]);
     }
 
     public static function getRelations(): array
