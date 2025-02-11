@@ -4,6 +4,7 @@ namespace App\Filament\Resources\EstateResource\Pages;
 
 use App\Console\Commands\SyncEstates;
 use App\Console\Commands\SyncEstatesInfo;
+use App\Console\Commands\SyncLatestEstates;
 use App\Filament\Resources\EstateResource;
 use App\Services\ImobManager;
 use Filament\Actions;
@@ -27,6 +28,13 @@ class ListEstates extends ListRecords
                 ->action(function () {
                     SyncEstates::dispatch(new ImobManager());
                     self::$wasSynced = !self::$wasSynced;
+                }),
+            Actions\Action::make('sync_latest-estates')
+                ->label(fn () => self::$wasSyncedTwo ? label('Sincrionizat') : label('Sinc. ultimele proprietati'))
+                ->icon(fn () => self::$wasSyncedTwo ? 'heroicon-o-check' : 'heroicon-o-arrow-path')
+                ->action(function () {
+                    SyncLatestEstates::dispatch(new ImobManager());
+                    self::$wasSyncedTwo = !self::$wasSyncedTwo;
                 }),
 //            Actions\Action::make('sync_estates_info')
 //                ->label(fn () => self::$wasSyncedTwo ? label('Info Sincrionizate') : label('Sincronizare info'))
