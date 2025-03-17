@@ -140,7 +140,5 @@ class SyncCrm extends Command
                 }
             }
         }
-
-        $this->info('JSON estate data has been stored successfully.');
     }
 }
