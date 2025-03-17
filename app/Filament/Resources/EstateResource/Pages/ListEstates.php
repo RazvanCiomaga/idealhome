@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\EstateResource\Pages;
 
+use App\Console\Commands\SyncCrm;
 use App\Console\Commands\SyncEstates;
 use App\Console\Commands\SyncEstatesInfo;
 use App\Console\Commands\SyncLatestEstates;
@@ -26,23 +27,9 @@ class ListEstates extends ListRecords
                 ->label(fn () => self::$wasSynced ? label('Sincrionizat') : label('Sincronizare'))
                 ->icon(fn () => self::$wasSynced ? 'heroicon-o-check' : 'heroicon-o-arrow-path')
                 ->action(function () {
-                    SyncEstates::dispatch(new ImobManager());
+                    SyncCrm::dispatch();
                     self::$wasSynced = !self::$wasSynced;
                 }),
-            Actions\Action::make('sync_latest-estates')
-                ->label(fn () => self::$wasSyncedTwo ? label('Sincrionizat') : label('Sinc. ultimele proprietati'))
-                ->icon(fn () => self::$wasSyncedTwo ? 'heroicon-o-check' : 'heroicon-o-arrow-path')
-                ->action(function () {
-                    SyncLatestEstates::dispatch(new ImobManager());
-                    self::$wasSyncedTwo = !self::$wasSyncedTwo;
-                }),
-//            Actions\Action::make('sync_estates_info')
-//                ->label(fn () => self::$wasSyncedTwo ? label('Info Sincrionizate') : label('Sincronizare info'))
-//                ->icon(fn () => self::$wasSyncedTwo ? 'heroicon-o-check' : 'heroicon-o-arrow-path')
-//                ->action(function () {
-//                    SyncEstatesInfo::dispatch(new ImobManager());
-//                    self::$wasSyncedTwo = !self::$wasSyncedTwo;
-//                }),
         ];
     }
 }

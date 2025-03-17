@@ -18,13 +18,6 @@ class ListUsers extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
-            Actions\Action::make('sync_agents')
-                ->label(fn () => self::$wasSynced ? label('Sincrionizat') : label('Sincronizare'))
-                ->icon(fn () => self::$wasSynced ? 'heroicon-o-check' : 'heroicon-o-arrow-path')
-                ->action(function () {
-                    SyncAgents::dispatch(new ImobManager());
-                    self::$wasSynced = !self::$wasSynced;
-                }),
         ];
     }
 }

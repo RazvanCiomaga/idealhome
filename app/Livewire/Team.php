@@ -13,7 +13,7 @@ class Team extends Component
 
     public function mount(): void
     {
-        $this->agents = User::query()->whereNotNull('imobmanager_id')->orderBy('order')->get();
+        $this->agents = User::query()->whereRaw('LOWER(position) like ?', ['%agent%'])->get();
     }
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application

@@ -131,7 +131,7 @@
                         </div>
                         <h5> {{ $this->estate?->title }}</h5>
                         <p class="location"><img src="img/icons/location.png" alt="">{{ $this->estate?->zone }}</p>
-                        <p>{{ $this->estate?->description ?? '' }}</p>
+                        <p>{!! $this->estate?->description ?? '' !!}</p>
                         <!-- Meta -->
                         <div class="property-meta-data d-flex align-items-end">
                             <div class="new-tag">
@@ -151,9 +151,9 @@
                             </div>
                         </div>
                         <!-- Core Features -->
-                        <ul class="listings-core-features d-flex align-items-center">
+                        <ul class="listings-core-features row">
                             @foreach($this->estate?->getFormattedProperties() as $property)
-                                <li><i class="fa fa-check" aria-hidden="true"></i> {{ $property }}</li>
+                                <li class="col-12 col-md-6"><i class="fa fa-check" aria-hidden="true"></i> {{ $property }}</li>
                             @endforeach
                         </ul>
                     </div>

@@ -1358,8 +1358,6 @@ img {
     flex-wrap: wrap; }
     .listings-content .listings-core-features li {
       -webkit-box-flex: 0;
-      -ms-flex: 0 0 33.3333333%;
-      flex: 0 0 33.3333333%;
       min-width: 33.3333333%;
       color: #323232;
       font-size: 15px;
