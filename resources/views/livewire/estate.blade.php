@@ -112,9 +112,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <!-- Single Listings Slides -->
+                    @php
+                        $imagesArray = $this->estate?->images ?? [];
+                        $imageCount = count($imagesArray);
+
+                        if ($imageCount === 1) {
+                            $imagesArray[] = $this->estate?->images[0];
+                        }
+                    @endphp
                     <div class="single-listings-sliders owl-carousel">
-                        @foreach($this->estate?->images ?? [] as $image)
+                        @foreach($imagesArray ?? [] as $image)
                             <img src="{{ $image }}" alt="{{ $this->estate?->title }}" class="img-fluid" style="height: 70vh; object-fit: contain;">
                         @endforeach
                     </div>
