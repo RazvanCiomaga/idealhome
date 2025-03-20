@@ -120,7 +120,6 @@ class SyncCrm extends Command
                         'longitude' => $estateData['longitudine'] ?? null,
                         'agency_id' => $agency?->id ?? null,
                         'agent_id' => $agent->id,
-                        'published_date' => now(),
                         'slug' => $slug,
                         'estate_properties' => $estateProperties, // Store options as JSON
                     ]

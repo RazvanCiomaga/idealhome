@@ -65,6 +65,17 @@ class Estate extends Model
         'estate_properties' => 'array',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Set the published_date only when creating a new record
+        static::creating(function ($model) {
+            $model->published_date = now();
+        });
+
+    }
+
     public function agent(): BelongsTo
     {
         return $this->belongsTo(User::class, 'agent_id', 'id');
