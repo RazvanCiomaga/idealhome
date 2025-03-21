@@ -1,0 +1,312 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "IdealHome API",
+        "description": "API for managing real estate listings",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Authenticate and get access token valid for 1 year",
+                "operationId": "574f1cc956a51e68ed53865ca6d520da",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "client_id",
+                                    "client_secret"
+                                ],
+                                "properties": {
+                                    "client_id": {
+                                        "type": "string",
+                                        "example": "b5d5c78f-xxxx-xxxx-xxxx-xxxxxxxx"
+                                    },
+                                    "client_secret": {
+                                        "type": "string",
+                                        "example": "p$asdf234jk23n"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful authentication",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|qwertyuiopasdfghjklzxcvbnm123456"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/estates/create": {
+            "post": {
+                "tags": [
+                    "Estates"
+                ],
+                "summary": "Create a new estate listing",
+                "operationId": "433861835f91a203c87c558bf8bbd62e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "idintern",
+                                    "title",
+                                    "title_en",
+                                    "pretvanzare",
+                                    "pretinchiriere",
+                                    "anulconstructiei",
+                                    "poze"
+                                ],
+                                "properties": {
+                                    "idintern": {
+                                        "type": "integer",
+                                        "example": 704
+                                    },
+                                    "oldid": {
+                                        "type": "integer",
+                                        "example": 1234
+                                    },
+                                    "avemcheile": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "idansamblu": {
+                                        "type": "integer",
+                                        "example": 56
+                                    },
+                                    "idagent": {
+                                        "type": "integer",
+                                        "example": 7
+                                    },
+                                    "numeagent": {
+                                        "type": "string",
+                                        "example": "Nume"
+                                    },
+                                    "prenumeagent": {
+                                        "type": "string",
+                                        "example": "Prenume"
+                                    },
+                                    "emailagent": {
+                                        "type": "string",
+                                        "example": "agent@gmail.com"
+                                    },
+                                    "telefonagent": {
+                                        "type": "string",
+                                        "example": "07******94"
+                                    },
+                                    "pozaagent": {
+                                        "type": "string",
+                                        "example": "http://crm.ideal-home.net/images/admins/agent_id.jpg"
+                                    },
+                                    "numecontact": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "prenumecontact": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "emailcontact": {
+                                        "type": "string",
+                                        "example": "johndoe@example.com"
+                                    },
+                                    "telefoncontact": {
+                                        "type": "string",
+                                        "example": "0712345678"
+                                    },
+                                    "judetul": {
+                                        "type": "string",
+                                        "example": "Iasi"
+                                    },
+                                    "localitatea": {
+                                        "type": "string",
+                                        "example": "Iasi"
+                                    },
+                                    "cartierul": {
+                                        "type": "string",
+                                        "example": "Pacurari"
+                                    },
+                                    "tipoferta": {
+                                        "type": "string",
+                                        "example": "vanzare"
+                                    },
+                                    "tipoperatiune": {
+                                        "type": "string",
+                                        "example": "vanzare"
+                                    },
+                                    "titlu": {
+                                        "type": "string",
+                                        "example": "Apartament cu 2 camere"
+                                    },
+                                    "titluen": {
+                                        "type": "string",
+                                        "example": "2-room apartment"
+                                    },
+                                    "descriere": {
+                                        "type": "string",
+                                        "example": "Apartament modern in zona centrala."
+                                    },
+                                    "descriereen": {
+                                        "type": "string",
+                                        "example": "Modern apartment in the central area."
+                                    },
+                                    "video": {
+                                        "type": "string",
+                                        "example": "http://example.com/video.mp4"
+                                    },
+                                    "vrtour": {
+                                        "type": "string",
+                                        "example": "http://example.com/vrtour"
+                                    },
+                                    "latitudine": {
+                                        "type": "string",
+                                        "example": "47.1585"
+                                    },
+                                    "longitudine": {
+                                        "type": "string",
+                                        "example": "27.6014"
+                                    },
+                                    "pretvanzare": {
+                                        "type": "integer",
+                                        "example": 75000
+                                    },
+                                    "pretinchiriere": {
+                                        "type": "integer",
+                                        "example": 1000
+                                    },
+                                    "moneda": {
+                                        "type": "string",
+                                        "example": "EUR"
+                                    },
+                                    "clasaenergetica": {
+                                        "type": "string",
+                                        "example": "B"
+                                    },
+                                    "numarcamere": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "numarbai": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "etaj": {
+                                        "type": "string",
+                                        "example": "4"
+                                    },
+                                    "etaje": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "suprafatautila": {
+                                        "type": "integer",
+                                        "example": 50
+                                    },
+                                    "suprafataconstruita": {
+                                        "type": "integer",
+                                        "example": 60
+                                    },
+                                    "anulconstructiei": {
+                                        "type": "integer",
+                                        "example": 2000
+                                    },
+                                    "locuriparcare": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "tipspatiu": {
+                                        "type": "string",
+                                        "example": "apartament"
+                                    },
+                                    "tipimobil": {
+                                        "type": "string",
+                                        "example": "bloc"
+                                    },
+                                    "detaliiprivate": {
+                                        "type": "string",
+                                        "example": "Proprietate privata cu facilitati moderne."
+                                    },
+                                    "stadiuconstructie": {
+                                        "type": "string",
+                                        "example": "Finalizat"
+                                    },
+                                    "optiuni": {
+                                        "type": "string",
+                                        "example": "Balcon, Parcare, Lift"
+                                    },
+                                    "poze": {
+                                        "type": "string",
+                                        "example": "http://crm.ideal-home.net/images/propertiessite/img_704_4963.jpeg, http://crm.ideal-home.net/images/propertiessite/img_704_4963.jpeg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Estate created successfully"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "API Authentication Endpoints"
+        },
+        {
+            "name": "Estates",
+            "description": "Endpoints for estate management"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer {token})",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        {
+            "sanctum": []
+        }
+    ]
+}
