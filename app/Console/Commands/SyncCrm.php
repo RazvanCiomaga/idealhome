@@ -12,6 +12,7 @@ use App\Models\Zone;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Stevebauman\Purify\Facades\Purify;
 
@@ -40,7 +41,7 @@ class SyncCrm extends Command
         $data = json_decode($cleanedBody, true);
 
         if (!is_array($data)) {
-            $this->error('Invalid JSON format.');
+            Log::error('Failed to fetch JSON data.');
             return;
         }
 
