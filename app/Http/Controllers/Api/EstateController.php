@@ -269,8 +269,11 @@ class EstateController extends Controller
             RoomEntrance::query()->firstOrCreate(['name' => $estateData['compartimentare']]);
         }
 
+        $slug = Estate::query()->where('crm_id', '=', $estateData['idintern'])->first()?->slug;
+
         return response()->json([
             'success' => 'Estate created successfully.',
+            'estate_url' => route('estate.show', ['slug' => $slug]),
         ]);
     }
 }
