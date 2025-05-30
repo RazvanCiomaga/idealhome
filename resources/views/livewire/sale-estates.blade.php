@@ -90,6 +90,17 @@
                                     </div>
                                 </div>
 
+                                <div class="col-12 col-md-4 col-lg-3" wire:ignore>
+                                    <div class="form-group">
+                                        <select id="rooms" class="form-control" wire:model="rooms">
+                                            <option value="{{ $this->defaultSelect }}" @if($this->floor === $this->defaultSelect) selected @endif>{{ label('Selecteaza numar camere') }}</option>
+                                            @foreach($this->filters['rooms'] as $key => $value)
+                                                <option value="{{ $key }}" @if($key == $this->rooms) selected @endif>{{ $value }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
 
                                 <div class="col-12 d-flex justify-content-between align-items-end">
                                     <!-- More Filter -->
@@ -202,6 +213,7 @@
             const yearInput = $('#year').select2();
             const floorsInput = $('#floors').select2();
             const estateTypesInput = $('#select-estate-type').select2();
+            const roomsInput = $('#rooms').select2();
 
             // Local variables to store selected values
             let selectedRoomEntrance = 'none';
@@ -209,6 +221,7 @@
             let selectedYear = 'none';
             let selectedFloor = 'none';
             let selectedEstateType = 'none';
+            let selectedRooms = 'none';
 
             // Update local variables on selection change (no Livewire re-render here)
             selectRoomEntranceInput.on('change', function () {
@@ -231,6 +244,10 @@
                 selectedEstateType = $(this).val(); // Store selected floor locally
             });
 
+            roomsInput.on('change', function () {
+                selectedRooms = $(this).val(); // Store selected floor locally
+            });
+
             document.querySelector('#apply-filters').addEventListener('click', function () {
                 // Set Livewire properties right before calling applyFilters()
 
@@ -243,6 +260,8 @@
                 @this.set('floor', selectedFloor);
 
                 @this.set('estateType', selectedEstateType);
+
+                @this.set('rooms', selectedRooms);
 
                 @this.call('applyFilters');
             });

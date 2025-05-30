@@ -20,7 +20,7 @@ class Home extends Component
 
     public $floor = 'none';
 
-
+    public $rooms = 'none';
     public $offerType = 1;
 
     public string $constructionYear = 'none';
@@ -69,6 +69,14 @@ class Home extends Component
             ],
             'estateTypes' => EstateType::query()->orderBy('name')->get()->pluck('name', 'imobmanager_id')->toArray(),
             'offerTypes' => OfferType::query()->orderBy('name')->get()->pluck('name', 'imobmanager_id')->toArray(),
+            'rooms' => [
+                1 => 1,
+                2 => 2,
+                3 => 3,
+                4 => 4,
+                5 => 5,
+                6 => 6,
+            ],
         ];
     }
 
@@ -81,6 +89,7 @@ class Home extends Component
                 'year' => $this->year,
                 'floor' => $this->floor,
                 'estateType' => $this->estateType,
+                'rooms' => $this->rooms,
             ]);
         } else {
             return redirect()->route('rent-listings', [
@@ -89,6 +98,7 @@ class Home extends Component
                 'year' => $this->year,
                 'floor' => $this->floor,
                 'estateType' => $this->estateType,
+                'rooms' => $this->rooms,
             ]);
         }
     }

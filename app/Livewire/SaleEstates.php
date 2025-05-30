@@ -35,6 +35,8 @@ class SaleEstates extends Component
 
     public $estateType = 'none';
 
+    public $rooms = 'none';
+
     public $sortOption = 'published_date_desc'; // Default sorting option
 
     public $sortOptions = [];
@@ -45,6 +47,7 @@ class SaleEstates extends Component
         'year',
         'floor',
         'estateType',
+        'rooms',
     ];
 
     public function mount(): void
@@ -58,6 +61,7 @@ class SaleEstates extends Component
         $this->floor = request()->query('floor', 'none');
         $this->estateType = request()->query('estateType', 'none');
         $this->title = label('Proprietati de vanzare');
+        $this->rooms = request()->query('rooms', 'none');
 
         // Define sorting options using the custom label() translation function
         $this->sortOptions = [
@@ -101,6 +105,7 @@ class SaleEstates extends Component
                 }
             })
             ->when($this->floor !== $this->defaultSelect, fn($query) => $query->where('floor', '=', $this->floor))
+            ->when($this->rooms !== $this->defaultSelect, fn($query) => $query->where('rooms', '=', $this->rooms))
             ->when($this->estateType !== $this->defaultSelect, fn($query) => $query->where('estate_type_id', '=', $this->estateType))
             ->when($this->searchTerm, function ($query) {
                 $query->where(function ($query) {
@@ -130,6 +135,7 @@ class SaleEstates extends Component
         $this->year = '';
         $this->floor = $this->defaultSelect;
         $this->estateType = $this->defaultSelect;
+        $this->rooms = $this->defaultSelect;
         $this->resetPage();
     }
 
@@ -166,6 +172,14 @@ class SaleEstates extends Component
                 10 => 10,
             ],
             'estateTypes' => EstateType::query()->orderBy('name')->get()->pluck('name', 'imobmanager_id')->toArray(),
+            'rooms' => [
+                1 => 1,
+                2 => 2,
+                3 => 3,
+                4 => 4,
+                5 => 5,
+                6 => 6,
+            ],
         ];
     }
 }

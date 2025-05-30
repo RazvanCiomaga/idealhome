@@ -26,6 +26,7 @@ class RentEstates extends Component
     public $year = '';
 
     public $floor = 'none';
+    public $rooms = 'none';
 
     public $title = '';
 
@@ -45,6 +46,7 @@ class RentEstates extends Component
         'year',
         'floor',
         'estateType',
+        'rooms',
     ];
 
     public function mount(): void
@@ -57,6 +59,7 @@ class RentEstates extends Component
         $this->year = request()->query('year', '');
         $this->floor = request()->query('floor', 'none');
         $this->estateType = request()->query('estateType', 'none');
+        $this->rooms = request()->query('rooms', 'none');
         $this->title = label('Proprietati de inchiriat');
 
         // Define sorting options using the custom label() translation function
@@ -101,6 +104,7 @@ class RentEstates extends Component
                 }
             })
             ->when($this->floor !== $this->defaultSelect, fn($query) => $query->where('floor', '=', $this->floor))
+            ->when($this->rooms !== $this->defaultSelect, fn($query) => $query->where('rooms', '=', $this->rooms))
             ->when($this->estateType !== $this->defaultSelect, fn($query) => $query->where('estate_type_id', '=', $this->estateType))
             ->when($this->searchTerm, function ($query) {
                 $query->where(function ($query) {
@@ -130,6 +134,7 @@ class RentEstates extends Component
         $this->year = '';
         $this->floor = $this->defaultSelect;
         $this->estateType = $this->defaultSelect;
+        $this->rooms = $this->defaultSelect;
         $this->resetPage();
     }
 
@@ -166,6 +171,14 @@ class RentEstates extends Component
                 10 => 10,
             ],
             'estateTypes' => EstateType::query()->orderBy('name')->get()->pluck('name', 'imobmanager_id')->toArray(),
+            'rooms' => [
+                1 => 1,
+                2 => 2,
+                3 => 3,
+                4 => 4,
+                5 => 5,
+                6 => 6,
+            ],
         ];
     }
 }
