@@ -43,6 +43,7 @@ class UserResource extends Resource
                             ->visible(fn ($record) => !$record),
                         Forms\Components\Textarea::make('description')
                             ->label('Descriere')
+                            ->rows(10)
                             ->columnSpanFull(),
                         Forms\Components\Select::make('roles')
                             ->label('Roluri')

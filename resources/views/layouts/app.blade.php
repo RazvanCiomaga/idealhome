@@ -12,10 +12,10 @@
     <title>{{ __('IdealHome') }}</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="{{ asset('img/core-img/favicon.ico') }}">
 
     <!-- Style CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ asset('style.css') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" integrity="sha512-aD9ophpFQ61nFZP6hXYu4Q/b/USW7rpLCQLX6Bi0WJHXNO7Js/fUENpBQf/+P4NtpzNX0jSgR5zVvPOJp+W2Kg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -44,7 +44,7 @@
             </div>
             <div class="phone-number d-flex">
                 <div class="icon">
-                    <img src="img/icons/phone-call.png" alt="">
+                    <img src="{{ asset('img/icons/phone-call.png') }}" alt="">
                 </div>
                 <div class="number">
                     <a href="{{ 'tel:'.$agency?->phone }}">{{ $agency?->phone }}</a>
@@ -100,7 +100,7 @@
 </main>
 
 <!-- ##### Footer Area Start ##### -->
-<footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(img/bg-img/cta.jpg);">
+<footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url('{{ asset('img/bg-img/cta.jpg') }}');">
     <!-- Main Footer Area -->
     <div class="main-footer-area">
         <div class="container">
@@ -114,9 +114,9 @@
                             <h6>{{ label('Despre noi') }}</h6>
                         </div>
 
-                        <img src="img/bg-img/footer.jpg" alt="">
+                        <img src="{{ asset('img/bg-img/footer.jpg') }}" alt="">
                         <div class="footer-logo my-4">
-                            <img src="img/core-img/logo.png" alt="" style="height: 60%; width: 60%;">
+                            <img src="{{ asset('img/core-img/logo.png') }}" alt="" style="height: 60%; width: 60%;">
                         </div>
                         <p>{{ label('Footer scurta descriere a agentiei.') }}</p>
                     </div>
@@ -139,9 +139,9 @@
                         </div>
                         <!-- Address -->
                         <div class="address">
-                            <h6><img src="img/icons/phone-call.png" alt=""> {{ $agency?->phone }}</h6>
-                            <h6><img src="img/icons/envelope.png" alt=""> {{ $agency?->email }}</h6>
-                            <h6><img src="img/icons/location.png" alt=""> {{ $agency?->address }}</h6>
+                            <h6><img src="{{ asset('img/icons/phone-call.png') }}"> {{ $agency?->phone }}</h6>
+                            <h6><img src="{{ asset("img/icons/envelope.png") }}" alt=""> {{ $agency?->email }}</h6>
+                            <h6><img src="{{ asset('img/icons/location.png') }}" alt=""> {{ $agency?->address }}</h6>
                         </div>
                     </div>
                 </div>
@@ -194,18 +194,13 @@
 </footer>
 <!-- ##### Footer Area End ##### -->
 
-<!-- jQuery (Necessary for All JavaScript Plugins) -->
-<script src="js/jquery/jquery-2.2.4.min.js"></script>
-<!-- Popper js -->
-<script src="js/popper.min.js"></script>
-<!-- Bootstrap js -->
-<script src="js/bootstrap.min.js"></script>
-<!-- Plugins js -->
-<script src="js/plugins.js"></script>
-<script src="js/classy-nav.min.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<!-- Active js -->
-<script src="js/active.js"></script>
+<script src="{{ asset('js/jquery/jquery-2.2.4.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/plugins.js') }}"></script>
+<script src="{{ asset('js/classy-nav.min.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('js/active.js') }}"></script>
 <!-- Google Maps -->
 {{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuyLRa1uKNtbgx6xAJVmWy-zADgegA2s"></script>--}}
 {{--<script src="js/map-active.js"></script>--}}

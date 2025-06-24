@@ -192,6 +192,7 @@ class EstateController extends Controller
             [
                 'name' => $agentName,
                 'email' => $estateData['emailagent'] ?? null,
+                'slug' => User::generateUniqueSlug($agentName, $estateData['emailagent']),
                 'phone' => $estateData['telefonagent'] ?? null,
                 'position' => 'Agent',
                 'agency_id' => Agency::query()->first()->id ?? null,

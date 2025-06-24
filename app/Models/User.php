@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -53,8 +54,35 @@ class User extends Authenticatable
         ];
     }
 
+    protected static function booted()
+    {
+        static::creating(function ($agent) {
+            $agent->slug = static::generateUniqueSlug($agent->name, $agent->email);
+        });
+
+        static::updating(function ($agent) {
+            if ($agent->isDirty('name')) {
+                $agent->slug = static::generateUniqueSlug($agent->name, $agent->email);
+            }
+        });
+    }
+
     public function estates(): HasMany
     {
         return $this->hasMany(Estate::class, 'agent_id', 'id');
+    }
+
+    public static function generateUniqueSlug($name, $email): string
+    {
+        $slug = Str::slug($name);
+        $originalSlug = $slug;
+        $counter = 1;
+
+        while (User::query()->where('slug', $slug)->where('email', '!=', $email)->exists()) {
+            $slug = "{$originalSlug}-{$counter}";
+            $counter++;
+        }
+
+        return $slug;
     }
 }

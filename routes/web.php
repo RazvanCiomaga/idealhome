@@ -24,3 +24,7 @@ Route::get('/echipa', function () {
 Route::get('/{slug}', function ($slug) {
     return view('pages.estate', compact('slug'));
 })->name('estate.show');
+
+Route::get('/agent/{slug}', function ($slug) {
+    return view('pages.agent', compact('slug'));
+})->name('agent.show');

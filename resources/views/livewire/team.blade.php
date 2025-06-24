@@ -30,7 +30,12 @@
                             <img class="card-img-top" src="{{ $agent->picture ?? 'img/bg-img/team1.jpg' }}" alt="">
                             <div class="card-body text-center">
                                 <img src="img/icons/prize.png" alt="">
-                                <h5 class="card-title">{{ $agent->name }}</h5>
+                                <a href="{{ route('agent.show', ['slug' => $agent->slug]) }}">
+                                    <h5 class="card-title">
+                                        {{ $agent->name }}
+                                    </h5>
+                                </a>
+                                <a href="{{ route('agent.show', ['slug' => $agent->slug]) }}"> {{ label('Vizualizați profilul agentului') }} </a>
                                 <p class="card-text">{{ strlen($agent->position ?? '') ? ucfirst($agent->position) : label('Agent') }}</p>
                                 <h6><img src="img/icons/phone-call.png" alt=""> {{ $agent->phone }}</h6>
                                 <h6><img src="img/icons/envelope.png" alt=""> {{ $agent->email }}</h6>
