@@ -60,7 +60,7 @@
             <nav class="classy-navbar justify-content-between" id="southNav">
 
                 <!-- Logo -->
-                <a class="nav-brand" href="{{ route('home') }}"><img src="img/core-img/logo.png" alt="" style="width: 20%; height: 20%;"></a>
+                <a class="nav-brand" href="{{ route('home') }}"><img src="{{ asset('img/core-img/logo.png') }}" alt="" style="width: 20%; height: 20%;"></a>
 
                 <!-- Navbar Toggler -->
                 <div class="classy-navbar-toggler">
