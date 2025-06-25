@@ -28,6 +28,7 @@ class Agent extends Component
     public function getEstates(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         return $this->agent?->estates()
+            ->orderBy('published_date', 'desc')
             ->paginate(6);
     }
 }
