@@ -282,6 +282,69 @@
                     }
                 ]
             }
+        },
+        "/api/estates/delete/{idintern}": {
+            "delete": {
+                "tags": [
+                    "Estates"
+                ],
+                "summary": "Delete an estate listing by CRM ID",
+                "operationId": "ce8b00bb420387d50816ec422a0a0093",
+                "parameters": [
+                    {
+                        "name": "idintern",
+                        "in": "path",
+                        "description": "The unique external CRM ID of the estate to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 704
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Estate deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "string",
+                                            "example": "Estate deleted successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Estate not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Estate not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     },
     "tags": [

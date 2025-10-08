@@ -26,4 +26,5 @@ Route::middleware([RequiresJson::class])->post('/login', [ApiAuthController::cla
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/estates/create', [EstateController::class, 'store']);
+    Route::delete('/estates/delete/{idintern}', [EstateController::class, 'destroy']);
 });

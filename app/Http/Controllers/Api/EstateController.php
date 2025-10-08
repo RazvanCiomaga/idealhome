@@ -277,4 +277,52 @@ class EstateController extends Controller
             'estate_url' => route('estate.show', ['slug' => $slug]),
         ]);
     }
+
+
+    /**
+     * @OA\Delete(
+     *     path="/api/estates/delete/{idintern}",
+     *     summary="Delete an estate listing by CRM ID",
+     *     security={{"sanctum":{}}},
+     *     tags={"Estates"},
+     *     @OA\Parameter(
+     *         name="idintern",
+     *         in="path",
+     *         required=true,
+     *         description="The unique external CRM ID of the estate to delete",
+     *         @OA\Schema(type="integer", example=704)
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Estate deleted successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="string", example="Estate deleted successfully.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Estate not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Estate not found.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized"
+     *     )
+     * )
+     */
+    public function destroy($idintern): \Illuminate\Http\JsonResponse
+    {
+        // Find estate by external CRM ID
+        $estate = Estate::query()->where('crm_id', $idintern)->first();
+
+        if (!$estate) {
+            return response()->json(['error' => 'Estate not found.'], 404);
+        }
+
+        $estate->delete();
+
+        return response()->json(['success' => 'Estate deleted successfully.']);
+    }
 }
