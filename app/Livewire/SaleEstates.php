@@ -171,7 +171,7 @@ class SaleEstates extends Component
                 9 => 9,
                 10 => 10,
             ],
-            'estateTypes' => EstateType::query()->orderBy('name')->get()->pluck('name', 'imobmanager_id')->toArray(),
+            'estateTypes' => EstateType::query()->orderBy('name')->get()->pluck('name', 'id')->toArray(),
             'rooms' => [
                 1 => 1,
                 2 => 2,

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Agency;
 use App\Models\County;
 use App\Models\Estate;
+use App\Models\EstateType;
 use App\Models\OfferType;
 use App\Models\RoomEntrance;
 use App\Models\User;
@@ -88,6 +89,14 @@ class SyncCrm extends Command
                     ? explode(';', $estateData['optiuni'])
                     : [];
 
+                $estateType = EstateType::query()->where('name', $estateData['tipoferta'])->first();
+
+                if (!$estateType) {
+                    $estateType = new EstateType();
+                    $estateType->name = $estateData['tipoferta'];
+                    $estateType->save();
+                }
+
                 // Create or update the estate
                 Estate::query()->updateOrCreate(
                     ['crm_id' => $estateData['idintern']], // Unique external ID
@@ -122,7 +131,8 @@ class SyncCrm extends Command
                         'agency_id' => $agency?->id ?? null,
                         'agent_id' => $agent->id,
                         'slug' => $slug,
-                        'estate_properties' => $estateProperties, // Store options as JSON
+                        'estate_properties' => $estateProperties, // Store options as JSON,
+                        'estate_type_id' => $estateType?->id ?? null,
                     ]
                 );
 

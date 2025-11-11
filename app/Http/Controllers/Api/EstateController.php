@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Agency;
 use App\Models\County;
 use App\Models\Estate;
+use App\Models\EstateType;
 use App\Models\OfferType;
 use App\Models\RoomEntrance;
 use App\Models\User;
@@ -220,6 +221,14 @@ class EstateController extends Controller
             ? explode(';', $estateData['optiuni'])
             : [];
 
+        $estateType = EstateType::query()->where('name', $estateData['tipoferta'])->first();
+
+        if (!$estateType) {
+            $estateType = new EstateType();
+            $estateType->name = $estateData['tipoferta'];
+            $estateType->save();
+        }
+
         Estate::query()->updateOrCreate(
             ['crm_id' => $estateData['idintern']], // Unique external ID
             [
@@ -253,7 +262,8 @@ class EstateController extends Controller
                 'agency_id' => $agency?->id ?? null,
                 'agent_id' => $agent->id,
                 'slug' => $slug,
-                'estate_properties' => $estateProperties, // Store options as JSON
+                'estate_properties' => $estateProperties, // Store options as JSON,
+                'estate_type_id' => $estateType?->id ?? null,
             ]
         );
 
