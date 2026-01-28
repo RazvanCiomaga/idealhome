@@ -36,7 +36,7 @@
                                     </h5>
                                 </a>
                                 <a href="{{ route('agent.show', ['slug' => $agent->slug]) }}"> {{ label('Vizualizați profilul agentului') }} </a>
-                                <p class="card-text">{{ strlen($agent->position ?? '') ? ucfirst($agent->position) : label('Agent') }}</p>
+                                <p class="card-text">{{ strlen($agent->site_position ?? '') ? ucfirst($agent->site_position) : label('Agent') }}</p>
                                 <h6><img src="img/icons/phone-call.png" alt=""> {{ $agent->phone }}</h6>
                                 <h6><img src="img/icons/envelope.png" alt=""> {{ $agent->email }}</h6>
                             </div>

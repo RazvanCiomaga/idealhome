@@ -36,7 +36,11 @@ class UserResource extends Resource
                             ->tel()
                             ->label('Nr. Telefon'),
                         Forms\Components\TextInput::make('position')
-                            ->label('Grad'),
+                            ->label('Grad')
+                            ->default('Agent')
+                            ->readOnly(),
+                        Forms\Components\TextInput::make('site_position')
+                            ->label('Grad pe site'),
                         Forms\Components\TextInput::make('password')
                             ->password()
                             ->label('Parola')

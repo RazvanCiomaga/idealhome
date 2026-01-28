@@ -29,6 +29,7 @@ class User extends Authenticatable
         'description',
         'picture',
         'imobmanager_id',
+        'site_position',
     ];
 
     /**
