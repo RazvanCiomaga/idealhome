@@ -32,7 +32,7 @@ class EstateController extends Controller
     /**
      * @OA\Post(
      *     path="/api/estates/create",
-     *     summary="Create a new estate listing",
+     *     summary="Create or update a estate listing",
      *     security={{"sanctum":{}}},
      *     tags={"Estates"},
      *     @OA\RequestBody(

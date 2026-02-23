@@ -30,7 +30,7 @@ class SyncEstates extends Command
     }
 
     /**
-     * Execute the console command.
+     * Old crm
      *
      * @return int
      */

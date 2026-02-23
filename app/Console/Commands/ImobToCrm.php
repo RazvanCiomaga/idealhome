@@ -24,7 +24,7 @@ class ImobToCrm extends Command
     protected $description = 'Associate old imobmanager data with new crm data.';
 
     /**
-     * Execute the console command.
+     * Associate estates from old crm with the new one
      */
     public function handle()
     {

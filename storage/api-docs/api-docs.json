@@ -65,7 +65,7 @@
                 "tags": [
                     "Estates"
                 ],
-                "summary": "Create a new estate listing",
+                "summary": "Create or update a estate listing",
                 "operationId": "433861835f91a203c87c558bf8bbd62e",
                 "requestBody": {
                     "required": true,

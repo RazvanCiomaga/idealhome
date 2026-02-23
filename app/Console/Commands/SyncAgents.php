@@ -44,7 +44,7 @@ class SyncAgents extends Command
     }
 
     /**
-     * Execute the console command.
+     * old crm.
      */
     public function handle()
     {
