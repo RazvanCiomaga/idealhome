@@ -92,7 +92,8 @@ class EstateController extends Controller
      */
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        $request->validate([
+        // 1. Let validation return only the data needed
+        $validated = $request->validate([
             'idintern' => 'required|integer',
             'titlu' => 'required|string',
             'pretvanzare' => 'required|integer',
@@ -101,190 +102,77 @@ class EstateController extends Controller
             'poze' => 'required|string',
         ]);
 
-        $estateData = [
-            'idintern' => $request->input('idintern'),
-            'oldid' => $request->input('oldid'),
-            'avemcheile' => $request->input('avemcheile'),
-            'idansamblu' => $request->input('idansamblu'),
-            'idagent' => $request->input('idagent'),
-            'numeagent' => $request->input('numeagent'),
-            'prenumeagent' => $request->input('prenumeagent'),
-            'emailagent' => $request->input('emailagent'),
-            'telefonagent' => $request->input('telefonagent'),
-            'pozaagent' => $request->input('pozaagent'),
-            'numecontact' => $request->input('numecontact'),
-            'prenumecontact' => $request->input('prenumecontact'),
-            'emailcontact' => $request->input('emailcontact'),
-            'telefoncontact' => $request->input('telefoncontact'),
-            'judetul' => $request->input('judetul'),
-            'localitatea' => $request->input('localitatea'),
-            'cartierul' => $request->input('cartierul'),
-            'tipoferta' => $request->input('tipoferta'),
-            'tipoperatiune' => $request->input('tipoperatiune'),
-            'titlu' => $request->input('titlu'),
-            'titluen' => $request->input('titluen'),
-            'descriere' => $request->input('descriere'),
-            'descriereen' => $request->input('descriereen'),
-            'video' => $request->input('video'),
-            'vrtour' => $request->input('vrtour'),
-            'latitudine' => $request->input('latitudine'),
-            'longitudine' => $request->input('longitudine'),
-            'promovata' => $request->input('promovata'),
-            'exclusiva' => $request->input('exclusiva'),
-            'comision0' => $request->input('comision0'),
-            'adresa' => $request->input('adresa'),
-            'pretvanzare' => $request->input('pretvanzare'),
-            'pretinchiriere' => $request->input('pretinchiriere'),
-            'negociabil' => $request->input('negociabil'),
-            'pretmp' => $request->input('pretmp'),
-            'plustva' => $request->input('plustva'),
-            'moneda' => $request->input('moneda'),
-            'clasaenergetica' => $request->input('clasaenergetica'),
-            'consumenergieprimara' => $request->input('consumenergieprimara'),
-            'indiceconsumco2' => $request->input('indiceconsumco2'),
-            'consumenergieregenerabila' => $request->input('consumenergieregenerabila'),
-            'etaj' => $request->input('etaj'),
-            'etaje' => $request->input('etaje'),
-            'subsol' => $request->input('subsol'),
-            'demisol' => $request->input('demisol'),
-            'parter' => $request->input('parter'),
-            'mansarda' => $request->input('mansarda'),
-            'pod' => $request->input('pod'),
-            'suprafatautila' => $request->input('suprafatautila'),
-            'suprafataconstruita' => $request->input('suprafataconstruita'),
-            'suprafatateren' => $request->input('suprafatateren'),
-            'deschidere' => $request->input('deschidere'),
-            'numarfronturi' => $request->input('numarfronturi'),
-            'anulconstructiei' => $request->input('anulconstructiei'),
-            'confort' => $request->input('confort'),
-            'compartimentare' => $request->input('compartimentare'),
-            'numarcamere' => $request->input('numarcamere'),
-            'numardormitoare' => $request->input('numardormitoare'),
-            'numarbucatarii' => $request->input('numarbucatarii'),
-            'numarbai' => $request->input('numarbai'),
-            'disponibilitate' => $request->input('disponibilitate'),
-            'numarterase' => $request->input('numarterase'),
-            'suprafataterase' => $request->input('suprafataterase'),
-            'inaltimespatiu' => $request->input('inaltimespatiu'),
-            'clasabirouri' => $request->input('clasabirouri'),
-            'regiminaltime' => $request->input('regiminaltime'),
-            'tipteren' => $request->input('tipteren'),
-            'destinatieteren' => $request->input('destinatieteren'),
-            'terenparcelabil' => $request->input('terenparcelabil'),
-            'amprenta' => $request->input('amprenta'),
-            'pot' => $request->input('pot'),
-            'cut' => $request->input('cut'),
-            'metrou' => $request->input('metrou'),
-            'locuriparcare' => $request->input('locuriparcare'),
-            'tipspatiu' => $request->input('tipspatiu'),
-            'tipimobil' => $request->input('tipimobil'),
-            'detaliiprivate' => $request->input('detaliiprivate'),
-            'stadiuconstructie' => $request->input('stadiuconstructie'),
-            'optiuni' => $request->input('optiuni'),
-            'poze' => $request->input('poze'),
-        ];
+        // 2. Use $request->all() or $request->only() instead of manual mapping
+        $allData = $request->all();
 
+        // 3. Handle Agent logic concisely
+        $agentName = trim(($allData['prenumeagent'] ?? '') . ' ' . ($allData['numeagent'] ?? ''));
 
-        // Find or create the agent
-        $agentName = trim("{$estateData['prenumeagent']} {$estateData['numeagent']}");
-
-        $agent = User::query()->updateOrCreate(
-            ['email' => $estateData['emailagent']], // Identify agents by their unique external ID
+        $agent = User::updateOrCreate(
+            ['email' => $allData['emailagent']],
             [
-                'name' => $agentName,
-                'email' => $estateData['emailagent'] ?? null,
-                'slug' => User::generateUniqueSlug($agentName, $estateData['emailagent']),
-                'phone' => $estateData['telefonagent'] ?? null,
+                'name'     => $agentName,
+                'phone'    => $allData['telefonagent'] ?? null,
                 'position' => 'Agent',
-                'agency_id' => Agency::query()->first()->id ?? null,
-                'picture' => $estateData['pozaagent'] ?? null,
-                'password' => env('FILAMENT_BASE_PASSWORD'),
+                'picture'  => $allData['pozaagent'] ?? null,
+                'password' => bcrypt(config('app.base_password')), // Use config() instead of env()
             ]
         );
 
-        // Convert price fields to integers
-        $salePrice = $estateData['pretvanzare'] ?? null;
-        $rentPrice = $estateData['pretinchiriere'] ?? null;
+        // 4. Handle Estate Type & Offer Type efficiently
+        $estateType = EstateType::firstOrCreate(['name' => $allData['tipoferta']]);
 
-        // Generate unique slug
-        $baseSlug = Str::slug($estateData['titlu']);
-        $slug = $baseSlug;
-        $counter = 1;
+        $offerType = OfferType::whereRaw('LOWER(name) = ?', [strtolower($allData['tipoperatiune'] ?? '')])->first();
 
-        while (Estate::query()->where('slug', $slug)->where('crm_id', '!=', $estateData['idintern'])->exists()) {
-            $slug = "{$baseSlug}-{$counter}";
-            $counter++;
-        }
+        // 5. Parse images once
+        $images = explode(',', $allData['poze'] ?? '');
+        $mainImage = $images[0] ?? null;
 
-        // Convert 'optiuni' string to array
-        $estateProperties = !empty($estateData['optiuni'])
-            ? explode(';', $estateData['optiuni'])
-            : [];
-
-        $estateType = EstateType::query()->where('name', $estateData['tipoferta'])->first();
-
-        if (!$estateType) {
-            $estateType = new EstateType();
-            $estateType->name = $estateData['tipoferta'];
-            $estateType->save();
-        }
-
-        Estate::query()->updateOrCreate(
-            ['crm_id' => $estateData['idintern']], // Unique external ID
+        // 6. Update or Create the Estate
+        $estate = Estate::updateOrCreate(
+            ['crm_id' => $allData['idintern']],
             [
-                'title' => $estateData['titlu'] ?? null,
-                'title_en' => $estateData['titluen'] ?? null,
-                'description' => $estateData['descriere'] ? Purify::clean($estateData['descriere']) : null, // Remove HTML
-                'description_en' => $estateData['descriereen'] ? Purify::clean($estateData['descriereen']) : null,
-                'city' => $estateData['localitatea'] ?? null,
-                'zone' => $estateData['cartierul'] ?? null,
-                'county' => $estateData['judetul'] ?? null,
-                'rooms' => $estateData['numarcamere'] ?? null,
-                'bathrooms' => $estateData['numarbai'] ?? null,
-                'floor' => $estateData['etaj'] ?? null,
-                'max_floor' => $estateData['etaje'] ?? null,
-                'area' => $estateData['suprafataconstruita'] ?? null,
-                'usable_area' => $estateData['suprafatautila'] ?? null,
-                'total_area' => $estateData['suprafataconstruita'] ?? null,
-                'land_area' => $estateData['suprafatateren'] ?? null,
-                'offer_type' => $estateData['tipoperatiune'] ? OfferType::query()->whereRaw('LOWER(name) = ?', [strtolower($estateData['tipoperatiune'])])->first()?->id : null,
-                'sale_price' => (int) $salePrice,
-                'rent_price' => (int) $rentPrice,
-                'construction_year' => $estateData['anulconstructiei'] ?? null,
-                'energy_class' => $estateData['clasaenergetica'] ?? null,
-                'exclusive' => $estateData['exclusiva'] ?? false,
-                'comission' => $estateData['comision0'] ?? null,
-                'thumb' => explode(',', $estateData['poze'])[0] ?? null, // Use first image as thumbnail
-                'featured_image' => explode(',', $estateData['poze'])[0] ?? null,
-                'images' => explode(',', $estateData['poze']) ?? [], // Store images as JSON array
-                'latitude' => $estateData['latitudine'] ?? null,
-                'longitude' => $estateData['longitudine'] ?? null,
-                'agency_id' => $agency?->id ?? null,
-                'agent_id' => $agent->id,
-                'slug' => $slug,
-                'estate_properties' => $estateProperties, // Store options as JSON,
-                'estate_type_id' => $estateType?->id ?? null,
+                'title'             => $allData['titlu'] ?? null,
+                'title_en'          => $allData['titluen'] ?? null,
+                'description'       => isset($allData['descriere']) ? Purify::clean($allData['descriere']) : null,
+                'description_en'    => isset($allData['descriereen']) ? Purify::clean($allData['descriereen']) : null,
+                'city'              => $allData['localitatea'] ?? null,
+                'zone'              => $allData['cartierul'] ?? null,
+                'county'            => $allData['judetul'] ?? null,
+                'rooms'             => $allData['numarcamere'] ?? null,
+                'bathrooms'         => $allData['numarbai'] ?? null,
+                'floor'             => $allData['etaj'] ?? null,
+                'max_floor'         => $allData['etaje'] ?? null,
+                'area'              => $allData['suprafataconstruita'] ?? null,
+                'usable_area'       => $allData['suprafatautila'] ?? null,
+                'land_area'         => $allData['suprafatateren'] ?? null,
+                'offer_type'        => $offerType?->id,
+                'sale_price'        => (int) ($allData['pretvanzare'] ?? 0),
+                'rent_price'        => (int) ($allData['pretinchiriere'] ?? 0),
+                'construction_year' => $allData['anulconstructiei'] ?? null,
+                'energy_class'      => $allData['clasaenergetica'] ?? null,
+                'exclusive'         => (bool) ($allData['exclusiva'] ?? false),
+                'comission'         => $allData['comision0'] ?? null,
+                'thumb'             => $mainImage,
+                'featured_image'    => $mainImage,
+                'images'            => $images,
+                'latitude'          => $allData['latitudine'] ?? null,
+                'longitude'         => $allData['longitudine'] ?? null,
+                'agent_id'          => $agent->id,
+                'estate_properties' => array_filter(explode(';', $allData['optiuni'] ?? '')),
+                'estate_type_id'    => $estateType->id,
             ]
         );
 
-        // Store related zone, county, and room entrances
-        if ($estateData['cartierul']) {
-            Zone::query()->firstOrCreate(['name' => $estateData['cartierul']]);
-        }
+        // 7. Sync ancillary tables (Check only if data exists)
+        if ($val = ($allData['cartierul'] ?? null)) Zone::firstOrCreate(['name' => $val]);
+        if ($val = ($allData['judetul'] ?? null)) County::firstOrCreate(['name' => $val]);
+        if ($val = ($allData['compartimentare'] ?? null)) RoomEntrance::firstOrCreate(['name' => $val]);
 
-        if ($estateData['judetul']) {
-            County::query()->firstOrCreate(['name' => $estateData['judetul']]);
-        }
-
-        if ($estateData['compartimentare']) {
-            RoomEntrance::query()->firstOrCreate(['name' => $estateData['compartimentare']]);
-        }
-
-        $slug = Estate::query()->where('crm_id', '=', $estateData['idintern'])->first()?->slug;
-
+        // 8. Return immediately using the $estate instance
         return response()->json([
-            'success' => 'Estate created successfully.',
-            'estate_url' => route('estate.show', ['slug' => $slug]),
+            'success'    => 'Estate processed successfully.',
+            'estate_url' => route('estate.show', $estate->slug), // Laravel finds the slug automatically
         ]);
     }
 

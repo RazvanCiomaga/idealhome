@@ -62,16 +62,6 @@ class SyncLatestEstates extends Command
             /** @var Agency $agency */
             $agency = Agency::query()->where('imobmanager_id', $estateData['agency_id'])->first();
 
-            $baseSlug = Str::slug($estateData['title']);
-            $slug = $baseSlug;
-            $counter = 1;
-
-            // Loop until we find a unique slug
-            while (Estate::query()->where('slug', $slug)->where('imobmanager_id', '!=', $estateData['id'])->exists()) {
-                $slug = "{$baseSlug}-{$counter}";
-                $counter++;
-            }
-
             // Create or update the estate
             Estate::query()->updateOrCreate(
                 ['imobmanager_id' => $estateData['id']], // Identify estates by their unique external ID
@@ -110,7 +100,6 @@ class SyncLatestEstates extends Command
                     'agency_id' => $agency?->id ?? null,
                     'agent_id' => $agent?->id ?? null,
                     'published_date' => $estateData['publish_date'] ?? null,
-                    'slug' => $slug,
                 ]
             );
 

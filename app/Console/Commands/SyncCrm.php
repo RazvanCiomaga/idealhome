@@ -63,7 +63,6 @@ class SyncCrm extends Command
                     'email' => $firstEstate['emailagent'] ?? null,
                     'phone' => $firstEstate['telefonagent'] ?? null,
                     'position' => 'Agent',
-                    'agency_id' => Agency::query()->first()->id ?? null,
                     'picture' => $firstEstate['pozaagent'] ?? null,
                     'password' => env('FILAMENT_BASE_PASSWORD'),
                 ]
@@ -73,16 +72,6 @@ class SyncCrm extends Command
                 // Convert price fields to integers
                 $salePrice = $estateData['pretvanzare'] ?? null;
                 $rentPrice = $estateData['pretinchiriere'] ?? null;
-
-                // Generate unique slug
-                $baseSlug = Str::slug($estateData['titlu']);
-                $slug = $baseSlug;
-                $counter = 1;
-
-                while (Estate::query()->where('slug', $slug)->where('crm_id', '!=', $estateData['idintern'])->exists()) {
-                    $slug = "{$baseSlug}-{$counter}";
-                    $counter++;
-                }
 
                 // Convert 'optiuni' string to array
                 $estateProperties = !empty($estateData['optiuni'])
@@ -130,24 +119,15 @@ class SyncCrm extends Command
                         'longitude' => $estateData['longitudine'] ?? null,
                         'agency_id' => $agency?->id ?? null,
                         'agent_id' => $agent->id,
-                        'slug' => $slug,
                         'estate_properties' => $estateProperties, // Store options as JSON,
                         'estate_type_id' => $estateType?->id ?? null,
                     ]
                 );
 
                 // Store related zone, county, and room entrances
-                if ($estateData['cartierul']) {
-                    Zone::query()->firstOrCreate(['name' => $estateData['cartierul']]);
-                }
-
-                if ($estateData['judetul']) {
-                    County::query()->firstOrCreate(['name' => $estateData['judetul']]);
-                }
-
-                if ($estateData['compartimentare']) {
-                    RoomEntrance::query()->firstOrCreate(['name' => $estateData['compartimentare']]);
-                }
+                if ($val = ($allData['cartierul'] ?? null)) Zone::firstOrCreate(['name' => $val]);
+                if ($val = ($allData['judetul'] ?? null)) County::firstOrCreate(['name' => $val]);
+                if ($val = ($allData['compartimentare'] ?? null)) RoomEntrance::firstOrCreate(['name' => $val]);
             }
         }
     }

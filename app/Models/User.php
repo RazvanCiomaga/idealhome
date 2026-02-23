@@ -9,11 +9,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, HasSlug;
 
     /**
      * The attributes that are mass assignable.
@@ -30,6 +32,8 @@ class User extends Authenticatable
         'picture',
         'imobmanager_id',
         'site_position',
+        'agency_id',
+        'slug',
     ];
 
     /**
@@ -55,35 +59,15 @@ class User extends Authenticatable
         ];
     }
 
-    protected static function booted()
-    {
-        static::creating(function ($agent) {
-            $agent->slug = static::generateUniqueSlug($agent->name, $agent->email);
-        });
-
-        static::updating(function ($agent) {
-            if ($agent->isDirty('name')) {
-                $agent->slug = static::generateUniqueSlug($agent->name, $agent->email);
-            }
-        });
-    }
-
     public function estates(): HasMany
     {
         return $this->hasMany(Estate::class, 'agent_id', 'id');
     }
 
-    public static function generateUniqueSlug($name, $email): string
+    public function getSlugOptions() : SlugOptions
     {
-        $slug = Str::slug($name);
-        $originalSlug = $slug;
-        $counter = 1;
-
-        while (User::query()->where('slug', $slug)->where('email', '!=', $email)->exists()) {
-            $slug = "{$originalSlug}-{$counter}";
-            $counter++;
-        }
-
-        return $slug;
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 }
