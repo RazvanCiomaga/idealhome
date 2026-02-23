@@ -166,7 +166,7 @@
                                         <h5>{{ $estate->title . ' - ' . $estate->construction_year . ' - ' . $estate->room_entrances }}</h5>
                                     </a>
                                     <p class="location"><img src="img/icons/location.png" alt="">{{ $estate->zone }}</p>
-                                    <p>{{ substr(strip_tags($estate->description), 0, 100) . '...' }}</p>
+                                    <p>{{ Str::limit(strip_tags($estate->description), 100) }}</p>
                                     <div class="property-meta-data d-flex align-items-end justify-content-between">
                                         <div class="new-tag">
                                             <img src="img/icons/new.png" alt="">

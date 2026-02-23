@@ -67,6 +67,8 @@ class Estate extends Model
         'estate_properties' => 'array',
     ];
 
+    protected $appends = ['carousel_images'];
+
     protected static function boot()
     {
         parent::boot();
@@ -76,6 +78,28 @@ class Estate extends Model
             $model->published_date = now();
         });
 
+    }
+
+    /**
+     * Scope a query to only include columns necessary for listing cards.
+     */
+    public function scopeForListingCard($query)
+    {
+        return $query->select([
+            'id',
+            'title',
+            'slug',
+            'featured_image',
+            'sale_price',
+            'rent_price',
+            'construction_year',
+            'room_entrances',
+            'zone',
+            'description',
+            'bathrooms',
+            'rooms',
+            'area'
+        ]);
     }
 
     public function agent(): BelongsTo
@@ -116,5 +140,12 @@ class Estate extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
+    }
+
+    public function getCarouselImagesAttribute(): array
+    {
+        $images = $this->images ?? [];
+
+        return (count($images) === 1) ? [$images[0], $images[0]] : $images;
     }
 }

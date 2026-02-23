@@ -87,6 +87,7 @@ class RentEstates extends Component
     public function getEstates(): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         return Estate::query()
+            ->forListingCard()
             ->when($this->offerType, function ($query) {
                 if ($this->offerType == 1) { // Sale
                     $query->where('sale_price', '>', 0);

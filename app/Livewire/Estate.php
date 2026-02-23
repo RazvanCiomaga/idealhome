@@ -45,7 +45,10 @@ class Estate extends Component
     public function mount($slug): void
     {
         $this->slug = $slug;
-        $this->estate = EstateModel::query()->where('slug', $this->slug)->first();
+        $this->estate = EstateModel::with(['agent'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
         $this->agent = $this->estate?->agent;
         $this->offerType = $this->estate?->offer_type_id ?? 1;
         $this->getFilters();
@@ -63,6 +66,7 @@ class Estate extends Component
             Session::put('visited_estates', $visitedEstates);
         }
     }
+
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
         return view('livewire.estate');
