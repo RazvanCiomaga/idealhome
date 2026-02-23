@@ -5,6 +5,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.home');
 })->name('home');
+
+Route::get('/tw-home', function () {
+    return view('pages.tw-home');
+});
+
 Route::get('/proprietati-vanzare', function () {
     return view('pages.sale-estates');
 })->name('sales-listings');
